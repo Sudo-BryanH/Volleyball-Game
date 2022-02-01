@@ -52,3 +52,12 @@ The following rules will be the ones to apply: </br>
 
 
 
+## User Stories
+
+- As a user, I should be able to create and add an arbitrary number of players to my teams
+- As a user, I should be able to choose which opposing team I want to play
+- As a user, I should be able to choose my starting 6 players
+- As a user, I should be able to systematically arrange my player's positions before an enemy attack
+- As a user, I should be able to decide which player I want to spike (attack) after a receive
+- As a user, I want to see the scoreboard
+- As a user, I want to see which enemies are potential attackers
