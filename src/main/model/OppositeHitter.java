@@ -2,6 +2,7 @@ package model;
 
 public class OppositeHitter implements Players {
 
+    // EFFECTS: constructs an Opposite Hitter object with player number and starting rotation of 4
     public OppositeHitter(int playerNum) {
 
     }
@@ -39,6 +40,16 @@ public class OppositeHitter implements Players {
 
     @Override
     public int getPosY() {
+        return 0;
+    }
+
+    @Override
+    public void setRotation() {
+
+    }
+
+    @Override
+    public int getRotation() {
         return 0;
     }
 }

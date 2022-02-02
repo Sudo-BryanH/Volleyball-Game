@@ -17,28 +17,27 @@ public class Ball {
         return -1;
     }
 
-
+    // REQUIRES: a position X [0, 12]
     // MODIFIES: this
     // EFFECTS: move's this ball to position X
-    public void moveToX() {
+    public void moveToX(int x) {
 
     }
 
+    // REQUIRES: a position Y [0, 24]
     // MODIFIES: this
     // EFFECTS: move's this ball to position Y
-    public void moveToY() {
+    public void moveToY(int y) {
 
     }
 
+    // Do move by methods later
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS:
-    public void moveByX() {
+    //public void moveByX() {}
 
-    }
+    //public void moveByY() {}
 
-    public void moveByY() {
-
-    }
 
 }

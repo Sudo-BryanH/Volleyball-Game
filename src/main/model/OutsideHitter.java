@@ -1,7 +1,7 @@
 package model;
 
 public class OutsideHitter implements Players {
-
+    // EFFECTS: constructs an Outside Hitter object with player number and starting rotation of 0 (TBD)
     public OutsideHitter(int playerNum) {
 
     }
@@ -39,6 +39,16 @@ public class OutsideHitter implements Players {
 
     @Override
     public int getPosY() {
+        return 0;
+    }
+
+    @Override
+    public void setRotation() {
+
+    }
+
+    @Override
+    public int getRotation() {
         return 0;
     }
 }

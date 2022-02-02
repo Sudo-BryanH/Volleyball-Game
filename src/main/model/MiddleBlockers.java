@@ -2,7 +2,7 @@ package model;
 
 public class MiddleBlockers implements Players {
 
-
+    // EFFECTS: constructs an Middle Blocker object with player number and starting rotation of 0 (TBD)
     public MiddleBlockers(int playerNum) {
 
     }
@@ -40,6 +40,16 @@ public class MiddleBlockers implements Players {
 
     @Override
     public int getPosY() {
+        return 0;
+    }
+
+    @Override
+    public void setRotation() {
+
+    }
+
+    @Override
+    public int getRotation() {
         return 0;
     }
 }

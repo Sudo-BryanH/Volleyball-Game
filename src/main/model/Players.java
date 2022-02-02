@@ -2,6 +2,7 @@ package model;
 
 public interface Players {
 
+    // REQUIRES: x[0, 12], y[13, 24], speed[0,5]
     // MODIFIES: this
     // EFFECTS: Moves player to (x, y) with at a given speed
     public void moveTo(int x, int y, int speed);
@@ -20,13 +21,24 @@ public interface Players {
 
     // MODIFIES: ball object
     // EFFECTS: Ball stops
-    public void block();
+    // no blocking for now
+    //public void block();
 
-    // EFFECTS: determines player's x position
+    // EFFECTS: returns player's x position
     public int getPosX();
 
-    // EFFECTS: determines player's x position
+    // EFFECTS: returns player's x position
     public int getPosY();
+
+    // REQUIRES: a rotation number between [0, 6]
+    // EFFECTS: sets the rotation #
+    public void setRotation(int pos);
+
+    // EFFECTS: returns the rotation #
+    public int getRotation();
+
+    // EFFECTS: returns the player num
+    public int getNum();
 
 
 }
