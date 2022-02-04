@@ -6,7 +6,7 @@ public class Game {
     public Game(Team myTeam, Team enemyTeam) {
         //stub
     }
-
+    // MODIFIES: this
     // EFFECTS: Begins the game
     public void startRally() {
 

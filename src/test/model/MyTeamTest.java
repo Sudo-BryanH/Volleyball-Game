@@ -1,12 +1,7 @@
 package model;
 
-import model.Setters;
-import model.MiddleBlockers;
-import model.OutsideHitter;
-import model.OppositeHitter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,6 +16,8 @@ public class MyTeamTest {
     OutsideHitter testOH1;
     OutsideHitter testOH2;
     OppositeHitter testOP;
+    MiddleBlockers testMB3;
+    Setters testSet2;
 
     @BeforeEach
     public void setUp() {
@@ -30,6 +27,8 @@ public class MyTeamTest {
         testOH2 = new OutsideHitter(5);
         testSet = new Setters(9);
         testOP = new OppositeHitter(1);
+        testMB3 = new MiddleBlockers(7);
+        testSet2 = new Setters(2);
 
         testTeam = new MyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
@@ -46,7 +45,8 @@ public class MyTeamTest {
         assertEquals(5, testMB2.getRotation());
         assertEquals(6, testOH2.getRotation());
 
-        assertEquals(6, testTeam.printPositions().size());
+        assertEquals(8, testTeam.printRoster().size());
+        assertEquals(6, testTeam.printStarters().size());
     }
 
     @Test
@@ -301,6 +301,13 @@ public class MyTeamTest {
 
         assertEquals(5, testMB2.getRotation());
         assertEquals(6, testOH2.getRotation());
+    }
+
+    @Test
+    public void testChangeStarter() {
+        testTeam.changeStarters(9, 2);
+        assertEquals(testSet2, testTeam.getStarters(2));
+
     }
 }
 

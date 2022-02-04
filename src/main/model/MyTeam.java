@@ -53,7 +53,32 @@ public class MyTeam implements Team {
     }
 
     @Override
-    public ArrayList<String> printPositions() {
+    public ArrayList<String> printRoster() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Integer> printStarters() {
+        return null;
+    }
+
+    @Override
+    public void changeStarters(int ogNum, int newNum) {
+
+    }
+
+    @Override
+    public void addPlayer() {
+
+    }
+
+    @Override
+    public Players getStarters(int playerNum) {
+        return null;
+    }
+
+    @Override
+    public Players getPlayer(int playerNum) {
         return null;
     }
 }

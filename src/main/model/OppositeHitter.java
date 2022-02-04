@@ -12,24 +12,25 @@ public class OppositeHitter implements Players {
     public void moveTo(int x, int y, int speed) {
 
     }
-
+    // REQUIRES: Dir [1, 2]
+    // Modifies: ball object
+    // EFFECTS: Sends the ball to (6, 3) or (12, 4) depending on dir
     @Override
     public void spike(int dir) {
 
     }
 
+    // MODIFIES: ball object
+    // EFFECTS: Sends the ball to setter position
     @Override
     public void receive() {
 
     }
-
+    // REQUIRES: Dir [1, 2]
+    // Modifies: ball object
+    // EFFECTS: Sends the ball to (6, 3) or (12, 4) depending on dir
     @Override
     public void serve(int dir) {
-
-    }
-
-    @Override
-    public void block() {
 
     }
 
@@ -44,12 +45,18 @@ public class OppositeHitter implements Players {
     }
 
     @Override
-    public void setRotation() {
+    public void setRotation(int pos) {
 
     }
 
+    // EFFECTS: returns the rotation number of the player
     @Override
     public int getRotation() {
+        return 0;
+    }
+
+    @Override
+    public int getNum() {
         return 0;
     }
 }

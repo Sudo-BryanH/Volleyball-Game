@@ -27,10 +27,10 @@ public class OutsideHitter implements Players {
 
     }
 
-    @Override
-    public void block() {
+    //@Override
+    //public void block() {
 
-    }
+    //}
 
     @Override
     public int getPosX() {
@@ -43,12 +43,18 @@ public class OutsideHitter implements Players {
     }
 
     @Override
-    public void setRotation() {
+    public void setRotation(int pos) {
 
     }
 
+
     @Override
     public int getRotation() {
+        return 0;
+    }
+
+    @Override
+    public int getNum() {
         return 0;
     }
 }

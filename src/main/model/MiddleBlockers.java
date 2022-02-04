@@ -12,7 +12,9 @@ public class MiddleBlockers implements Players {
     public void moveTo(int x, int y, int speed) {
 
     }
-
+    // REQUIRES: dir = 1, 2, 3
+    // MODIFIES: ball object
+    // EFFECTS: moves ball to middle (1) left (2) right (3)
     @Override
     public void spike(int dir) {
 
@@ -22,16 +24,18 @@ public class MiddleBlockers implements Players {
     public void receive() {
 
     }
-
+    // REQUIRES: dir = 1, 2, 3
+    // MODIFIES: ball object
+    // EFFECTS: moves ball to middle (1) left (2) right (3)
     @Override
     public void serve(int dir) {
 
     }
 
-    @Override
-    public void block() {
+    //@Override
+    //public void block() {
 
-    }
+    //}
 
     @Override
     public int getPosX() {
@@ -44,12 +48,19 @@ public class MiddleBlockers implements Players {
     }
 
     @Override
-    public void setRotation() {
+    public void setRotation(int pos) {
 
     }
 
+
+
     @Override
     public int getRotation() {
+        return 0;
+    }
+
+    @Override
+    public int getNum() {
         return 0;
     }
 }
