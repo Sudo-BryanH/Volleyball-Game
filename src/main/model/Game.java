@@ -6,30 +6,28 @@ public class Game {
     public Game(Team myTeam, Team enemyTeam) {
         //stub
     }
-    // MODIFIES: this
-    // EFFECTS: Begins the game
-    public void startRally() {
 
-    }
+
     // EFFECTS: Returns the score in the form of "Your Team Score : Enemy Team Score"
     public String getScore() {
         return "___ : ___"; // stub
     }
 
-    // MODIFIES: this
-    // EFFECTS: changes which side will serve
-    public void changeServeSide() {
-        //stub
+
+    // EFFECTS: after attack, check if ball position = any player's positions
+    public boolean checkReceive() {
+        return false;
     }
 
+
     // MODIFIES: this
-    // EFFECTS: awards point to MyTeam
+    // EFFECTS: awards point to MyTeam, sets turn to 1
     public void weScore() {
 
     }
 
     // MODIFIES: this
-    // EFFECTS: awards point to EnemyTeam
+    // EFFECTS: awards point to EnemyTeam, sets turn to 0
     public void enemyScore() {
 
     }
@@ -39,9 +37,21 @@ public class Game {
         return false; //stub
     }
 
-    // EFFECTS: determines if the game is over or not
+    // (runs after attack is done)
+    // EFFECTS: determines if the game is over or not by seeing if any players managed to receive the ball
     public boolean isRallyOver() {
         return false; //stub
+    }
+
+    // EFFECTS: returns the turn number
+    public int getTurnNum() {
+        return -1;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the turn number from 1 to 0 or 0 to 1
+    public void flipTurnNum() {
+
     }
 
 
