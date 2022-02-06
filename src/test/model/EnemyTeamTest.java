@@ -8,25 +8,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EnemyTeamTest {
 
     Team testTeam;
-    Setters testSet;
-    MiddleBlockers testMB1;
-    MiddleBlockers testMB2;
-    OutsideHitter testOH1;
-    OutsideHitter testOH2;
-    OppositeHitter testOP;
-    MiddleBlockers testMB3;
-    Setters testSet2;
+    Players testSet;
+    Players testMB1;
+    Players testMB2;
+    Players testOH1;
+    Players testOH2;
+    Players testOP;
+    Players testMB3;
+    Players testSet2;
+
 
     @BeforeEach
     public void setUp() {
-        testMB1 = new MiddleBlockers(10);
-        testMB2 = new MiddleBlockers(11);
-        testOH1 = new OutsideHitter(3);
-        testOH2 = new OutsideHitter(5);
-        testSet = new Setters(9);
-        testOP = new OppositeHitter(1);
-        testMB3 = new MiddleBlockers(7);
-        testSet2 = new Setters(2);
+        testMB1 = new MiddleBlockers(10, 0);
+        testMB2 = new MiddleBlockers(11, 0);
+        testOH1 = new OutsideHitter(3, 0);
+        testOH2 = new OutsideHitter(5, 0);
+        testSet = new Setters(9, 0);
+        testOP = new OppositeHitter(1, 0);
+        testMB3 = new MiddleBlockers(7, 0);
+        testSet2 = new Setters(2, 0);
 
         testTeam = new EnemyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);

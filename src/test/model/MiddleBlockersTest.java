@@ -11,7 +11,7 @@ public class MiddleBlockersTest {
 
     @BeforeEach
     public void setUp() {
-        testPlayer = new MiddleBlockers(1);
+        testPlayer = new MiddleBlockers(1, 0);
         mikasa = new Ball();
 
     }

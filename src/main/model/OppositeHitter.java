@@ -3,7 +3,7 @@ package model;
 public class OppositeHitter implements Players {
 
     // EFFECTS: constructs an Opposite Hitter object with player number and starting rotation of 4
-    public OppositeHitter(int playerNum) {
+    public OppositeHitter(int playerNum, int side) {
 
     }
 

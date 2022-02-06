@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class EnemyTeam implements Team {
     // EFFECTS: Constructs a new team with 1 setter, 2 middle blockers, 2 outside hitters, and 1 opposite hitter
-    public EnemyTeam(String name, Setters s, MiddleBlockers mb1, MiddleBlockers mb2, OutsideHitter oh1, OutsideHitter oh2,
-                OppositeHitter op) {
+    public EnemyTeam(String name, Players s, Players mb1, Players mb2, Players oh1, Players oh2,
+                     Players op) {
         //stub
     }
 

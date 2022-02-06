@@ -12,7 +12,7 @@ public class OppositeHitterTest {
 
         @BeforeEach
         public void setUp() {
-            testPlayer = new OppositeHitter(1);
+            testPlayer = new OppositeHitter(1, 0);
             mikasa = new Ball();
 
         }

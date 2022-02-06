@@ -11,7 +11,7 @@ public class OutsideHitterTest {
 
     @BeforeEach
     public void setUp() {
-        testPlayer = new OutsideHitter(1);
+        testPlayer = new OutsideHitter(1, 0);
         mikasa = new Ball();
 
     }

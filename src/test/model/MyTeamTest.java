@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -10,28 +13,47 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MyTeamTest {
 
     Team testTeam;
-    Setters testSet;
-    MiddleBlockers testMB1;
-    MiddleBlockers testMB2;
-    OutsideHitter testOH1;
-    OutsideHitter testOH2;
-    OppositeHitter testOP;
-    MiddleBlockers testMB3;
-    Setters testSet2;
+    Players testSet;
+    Players testMB1;
+    Players testMB2;
+    Players testOH1;
+    Players testOH2;
+    Players testOP;
+    Players testMB3;
+    Players testSet2;
+
+    List<Players> roster = new ArrayList<>();
+    List<Players> starters = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
-        testMB1 = new MiddleBlockers(10);
-        testMB2 = new MiddleBlockers(11);
-        testOH1 = new OutsideHitter(3);
-        testOH2 = new OutsideHitter(5);
-        testSet = new Setters(9);
-        testOP = new OppositeHitter(1);
-        testMB3 = new MiddleBlockers(7);
-        testSet2 = new Setters(2);
+        testMB1 = new MiddleBlockers(10, 1);
+        testMB2 = new MiddleBlockers(11, 1);
+        testOH1 = new OutsideHitter(3, 1);
+        testOH2 = new OutsideHitter(5, 1);
+        testSet = new Setters(9, 1);
+        testOP = new OppositeHitter(1, 1);
+        testMB3 = new MiddleBlockers(7, 1);
+        testSet2 = new Setters(2, 1);
 
         testTeam = new MyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
+
+        roster.add(testSet);
+        roster.add(testMB1);
+        roster.add(testOH1);
+        roster.add(testOP);
+        roster.add(testMB2);
+        roster.add(testOH2);
+        roster.add(testSet2);
+        roster.add(testMB3);
+
+        starters.add(testSet);
+        starters.add(testMB1);
+        starters.add(testOH1);
+        starters.add(testOP);
+        starters.add(testMB2);
+        starters.add(testOH2);
 
         testTeam.arrangeMBOH();
     }

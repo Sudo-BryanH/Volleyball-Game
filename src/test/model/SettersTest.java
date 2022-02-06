@@ -12,7 +12,7 @@ public class SettersTest {
 
     @BeforeEach
     public void setUp() {
-        testPlayer = new Setters(9);
+        testPlayer = new Setters(9, 0);
         mikasa = new Ball();
 
     }

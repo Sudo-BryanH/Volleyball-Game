@@ -3,7 +3,7 @@ package model;
 public class MiddleBlockers implements Players {
 
     // EFFECTS: constructs an Middle Blocker object with player number and starting rotation of 0 (TBD)
-    public MiddleBlockers(int playerNum) {
+    public MiddleBlockers(int playerNum, int side) {
 
     }
 

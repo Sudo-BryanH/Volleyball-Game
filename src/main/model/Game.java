@@ -1,8 +1,10 @@
 package model;
 
+import java.util.List;
+
 public class Game {
 
-    // EFFECTS: Constructs a game object with score 0 and two teams to play each other.
+    // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
     public Game(Team myTeam, Team enemyTeam) {
         //stub
     }
@@ -15,7 +17,7 @@ public class Game {
 
 
     // EFFECTS: after attack, check if ball position = any player's positions
-    public boolean checkReceive() {
+    public boolean checkReceive(int ballX, int ballY, List<Players> backrow) {
         return false;
     }
 
