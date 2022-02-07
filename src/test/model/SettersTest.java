@@ -12,7 +12,7 @@ public class SettersTest {
 
     @BeforeEach
     public void setUp() {
-        testPlayer = new Setters(9, 0);
+        testPlayer = new Setters(9, 1);
         mikasa = new Ball();
 
     }
@@ -29,20 +29,20 @@ public class SettersTest {
     @Test
     public void testGetPosX() {
         assertEquals(0, testPlayer.getPosX());
-        testPlayer.moveTo(4, 14, 0);
+        testPlayer.moveToX(4);
         assertEquals(4, testPlayer.getPosX());
     }
 
     @Test
     public void testGetPosY() {
         assertEquals(0, testPlayer.getPosY());
-        testPlayer.moveTo(4, 14, 0);
+        testPlayer.moveToY(14);
         assertEquals(14, testPlayer.getPosY());
     }
 
     @Test
     public void testSpike() {
-        testPlayer.spike(1);
+        testPlayer.spike(1, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(6,mikasa.getYPos());
         assertEquals(1, testPlayer.numDump());
@@ -56,21 +56,24 @@ public class SettersTest {
 
     @Test
     public void testServe() {
-        testPlayer.serve(1);
-        assertEquals(6,mikasa.getXPos());
-        assertEquals(6,mikasa.getYPos());
+        testPlayer.serve(1, mikasa);
+        assertEquals(3,mikasa.getXPos());
+        assertEquals(3,mikasa.getYPos());
+        testPlayer.serve(2, mikasa);
+        assertEquals(9,mikasa.getXPos());
+        assertEquals(3,mikasa.getYPos());
     }
 
     @Test
     public void testGetRotation() {
-        assertEquals(0, testPlayer.getRotation());
-        testPlayer.setRotation(1);
         assertEquals(1, testPlayer.getRotation());
+        testPlayer.setRotation(2);
+        assertEquals(2, testPlayer.getRotation());
     }
 
     @Test
     public void testSetRotation() {
-        assertEquals(0, testPlayer.getRotation());
+        assertEquals(1, testPlayer.getRotation());
         testPlayer.setRotation(1);
         assertEquals(1, testPlayer.getRotation());
         testPlayer.setRotation(2);
@@ -79,15 +82,15 @@ public class SettersTest {
 
     @Test
     public void testSet() {
-        testPlayer.set(3);
+        testPlayer.set(3, mikasa);
         assertEquals(12,mikasa.getXPos());
         assertEquals(13,mikasa.getYPos());
 
-        testPlayer.set(1);
+        testPlayer.set(1, mikasa);
         assertEquals(0,mikasa.getXPos());
         assertEquals(13,mikasa.getYPos());
 
-        testPlayer.set(2);
+        testPlayer.set(2, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(13,mikasa.getYPos());
     }
@@ -95,7 +98,7 @@ public class SettersTest {
     @Test
     public void testNumDump() {
         assertEquals(0, testPlayer.numDump());
-        testPlayer.spike(1);
+        testPlayer.spike(1, mikasa);
         assertEquals(1, testPlayer.numDump());
     }
 
@@ -103,10 +106,10 @@ public class SettersTest {
     public void testCanDump() {
         assertEquals(0, testPlayer.numDump());
         assertTrue(testPlayer.canDump());
-        testPlayer.spike(1);
+        testPlayer.spike(1, mikasa);
         assertEquals(1, testPlayer.numDump());
         assertTrue(testPlayer.canDump());
-        testPlayer.spike(2);
+        testPlayer.spike(2, mikasa);
         assertEquals(2, testPlayer.numDump());
         assertFalse(testPlayer.canDump());
     }

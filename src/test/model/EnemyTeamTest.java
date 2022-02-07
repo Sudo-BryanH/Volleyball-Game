@@ -44,8 +44,8 @@ public class EnemyTeamTest {
         assertEquals(5, testMB2.getRotation());
         assertEquals(6, testOH2.getRotation());
 
-        assertEquals(8, testTeam.printRoster().size());
-        assertEquals(6, testTeam.printStarters().size());
+        assertEquals(8, testTeam.getRoster().size());
+        assertEquals(6, testTeam.getStarters().size());
     }
 
     @Test
@@ -305,7 +305,7 @@ public class EnemyTeamTest {
     @Test
     public void testChangeStarter() {
         testTeam.changeStarters(9, 2);
-        assertEquals(testSet2, testTeam.getStarters(2));
+        assertEquals(testSet2, testTeam.getStartingPlayer(2));
 
     }
 }

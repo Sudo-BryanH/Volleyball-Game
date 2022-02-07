@@ -13,7 +13,7 @@ public class MyTeam implements Team {
     private Players middle2;
     private Players outside2;
 
-    List<Players> roster = new ArrayList<>();
+    private List<Players> roster = new ArrayList<>();
     List<Players> starters = new ArrayList<>();
 
 
@@ -51,22 +51,28 @@ public class MyTeam implements Team {
     public void startPosServe() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
-                p.moveTo(12, 24, 0);
+                p.moveToX(12);
+                p.moveToY(24);
 
             } else if (p.getRotation() == 2) {
-                p.moveTo(6, 20, 0);
+                p.moveToX(6);
+                p.moveToY(20);
 
             } else if (p.getRotation() == 3) {
-                p.moveTo(2, 19, 0);
+                p.moveToX(2);
+                p.moveToY(19);
 
             } else if (p.getRotation() == 4) {
-                p.moveTo(2, 14, 0);
+                p.moveToX(2);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 5) {
-                p.moveTo(6, 14, 0);
+                p.moveToX(6);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 6) {
-                p.moveTo(10, 14, 0);
+                p.moveToX(10);
+                p.moveToY(14);
             }
 
         }
@@ -77,22 +83,28 @@ public class MyTeam implements Team {
     public void startPosNoServe() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
-                p.moveTo(10, 19, 0);
+                p.moveToX(10);
+                p.moveToY(19);
 
             } else if (p.getRotation() == 2) {
-                p.moveTo(6, 20, 0);
+                p.moveToX(6);
+                p.moveToY(20);
 
             } else if (p.getRotation() == 3) {
-                p.moveTo(2, 19, 0);
+                p.moveToX(2);
+                p.moveToY(19);
 
             } else if (p.getRotation() == 4) {
-                p.moveTo(2, 14, 0);
+                p.moveToX(2);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 5) {
-                p.moveTo(6, 14, 0);
+                p.moveToX(6);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 6) {
-                p.moveTo(10, 14, 0);
+                p.moveToX(10);
+                p.moveToY(14);
             }
 
         }
@@ -102,35 +114,133 @@ public class MyTeam implements Team {
     @Override
     public void defendFSetter() {
 
+        for (Players p : starters) {
+            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                p.moveToX(0);
+                p.moveToY(13);
+
+            } else {
+                p.moveToX(0);
+                p.moveToY(21);
+            }
+
+            if (p.equals(setter)) {
+                p.moveToX(13);
+            } else if (p.equals(middle1) || p.equals(middle2)) {
+                p.moveToX(6);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToY(19);
+                }
+            } else if (p.equals(opposite)) {
+                p.moveToX(10);
+            } else if (p.equals(outside1) || p.equals(outside2)) {
+                p.moveToX(2);
+            }
+
+        }
+
     }
 
     @Override
     public void defendBSetter() {
 
+        for (Players p : starters) {
+            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                p.moveToY(13);
+            } else {
+                p.moveToY(21);
+            }
+            if (p.equals(setter)) {
+                p.moveToX(8);
+                p.moveToY(16);
+            } else if (p.equals(middle1) || p.equals(middle2)) {
+                p.moveToX(6);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToX(9);
+                }
+            } else if (p.equals(opposite)) {
+                p.moveToX(10);
+            } else if (p.equals(outside1) || p.equals(outside2)) {
+                p.moveToX(2);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToX(3);
+                }
+
+            }
+
+        }
     }
 
     @Override
     public void attackFSetter() {
+        for (Players p : starters) {
+            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                p.moveToY(13);
+            } else {
+                p.moveToY(21);
+            }
 
+            if (p.equals(setter)) {
+                p.moveToX(8);
+                p.moveToY(14);
+            } else if (p.equals(middle1) || p.equals(middle2)) {
+                p.moveToX(6);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToY(19);
+                }
+            } else if (p.equals(opposite)) {
+                p.moveToX(9);
+            } else if (p.equals(outside1) || p.equals(outside2)) {
+                p.moveToX(0);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToX(2);
+                }
+            }
+
+        }
     }
 
     @Override
     public void attackBSetter() {
+        for (Players p : starters) {
+            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                p.moveToY(21);
+            } else {
+                p.moveToY(13);
+            }
 
+            if (p.equals(setter)) {
+                p.moveToX(8);
+                p.moveToY(14);
+            } else if (p.equals(middle1) || p.equals(middle2)) {
+                p.moveToX(6);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToX(9);
+                }
+            } else if (p.equals(opposite)) {
+                p.moveToX(0);
+            } else if (p.equals(outside1) || p.equals(outside2)) {
+                p.moveToX(0);
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    p.moveToX(3);
+                }
+            }
+
+        }
     }
 
     @Override
     public void changeRotation() {
         for (Players p : starters) {
-            if (p.getRotation() < 5) {
-                p.setRotation(p.getRotation() + 1);
-            } else {
+            if (p.getRotation() == 6) {
                 p.setRotation(1);
+
+            } else {
+                p.setRotation(p.getRotation() + 1);
             }
         }
 
     }
-
 
 
     @Override
@@ -143,32 +253,58 @@ public class MyTeam implements Team {
     }
 
     @Override
-    public ArrayList<String> printRoster() {
-        return null;
+    public List<Players> getRoster() {
+        return roster;
     }
 
     @Override
-    public ArrayList<Integer> printStarters() {
-        return null;
+    public List<Players> getStarters() {
+        return starters;
     }
 
     @Override
     public void changeStarters(int ogNum, int newNum) {
-
+        Players sub = getPlayer(newNum);
+        for (Players p : starters) {
+            if (p.getNum() == ogNum) {
+                starters.remove(p);
+                int rotation = p.getRotation();
+                sub.setRotation(rotation);
+            }
+        }
     }
 
     @Override
-    public void addPlayer() {
-
+    public void addPlayer(Players p) {
+        roster.add(p);
     }
 
     @Override
-    public Players getStarters(int playerNum) {
-        return null;
+    public Players getStartingPlayer(int playerNum) {
+        Players chosenOne = null;
+
+        for (Players p : starters) {
+            if (p.getNum() == playerNum) {
+                chosenOne = p;
+
+            }
+        }
+
+        return chosenOne;
     }
 
     @Override
     public Players getPlayer(int playerNum) {
-        return null;
+        Players chosenOne = null;
+
+        for (Players p : roster) {
+            if (p.getNum() == playerNum) {
+                chosenOne = p;
+
+            }
+        }
+
+        return chosenOne;
     }
 }
+

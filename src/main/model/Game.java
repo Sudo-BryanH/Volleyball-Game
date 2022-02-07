@@ -4,55 +4,82 @@ import java.util.List;
 
 public class Game {
 
+    private int myScore;
+    private int enemyScore;
+    private int turn;
+    private Team myTeam;
+    private Team enemyTeam;
+
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
     public Game(Team myTeam, Team enemyTeam) {
-        //stub
+        this.myScore = 0;
+        this.enemyScore = 0;
+        this.turn = 0;
+        this.myTeam = myTeam;
+        this.enemyTeam = enemyTeam;
     }
 
 
     // EFFECTS: Returns the score in the form of "Your Team Score : Enemy Team Score"
     public String getScore() {
-        return "___ : ___"; // stub
+        String us = Integer.toString(myScore);
+        String them = Integer.toString(enemyScore);
+        return us + " : " + them;
     }
 
 
     // EFFECTS: after attack, check if ball position = any player's positions
     public boolean checkReceive(int ballX, int ballY, List<Players> backrow) {
+
+        for (Players p : backrow) {
+            if (Math.abs(p.getPosX() - ballX) <= 1 && Math.abs(p.getPosY() - ballY) <= 1) {
+                return true;
+            }
+
+        }
         return false;
     }
 
 
     // MODIFIES: this
     // EFFECTS: awards point to MyTeam, sets turn to 1
-    public void weScore() {
+    public void myScore() {
+        myScore++;
 
     }
 
     // MODIFIES: this
     // EFFECTS: awards point to EnemyTeam, sets turn to 0
     public void enemyScore() {
-
+        enemyScore++;
     }
 
     // EFFECTS: determines if the game is over or not
     public boolean isGameOver() {
-        return false; //stub
+        if (myScore >= 15 || enemyScore >= 15) {
+            if (Math.abs(myScore - enemyScore) >= 2) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    // (runs after attack is done)
-    // EFFECTS: determines if the game is over or not by seeing if any players managed to receive the ball
-    public boolean isRallyOver() {
-        return false; //stub
-    }
+
 
     // EFFECTS: returns the turn number
     public int getTurnNum() {
-        return -1;
+        return turn;
     }
 
     // MODIFIES: this
     // EFFECTS: changes the turn number from 1 to 0 or 0 to 1
     public void flipTurnNum() {
+        if (this.turn == 0) {
+            this.turn = 1;
+        } else {
+            this.turn = 0;
+        }
 
     }
 

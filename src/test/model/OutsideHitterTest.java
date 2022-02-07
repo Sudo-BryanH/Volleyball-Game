@@ -11,7 +11,7 @@ public class OutsideHitterTest {
 
     @BeforeEach
     public void setUp() {
-        testPlayer = new OutsideHitter(1, 0);
+        testPlayer = new OutsideHitter(1, 1);
         mikasa = new Ball();
 
     }
@@ -23,50 +23,54 @@ public class OutsideHitterTest {
         assertEquals(0, testPlayer.getPosY());
         testPlayer.setRotation(5);
         assertEquals(5, testPlayer.getRotation());
+        assertEquals(0, mikasa.getXPos());
+        assertEquals(0, mikasa.getYPos());
 
     }
 
     @Test
     public void testGetPosX() {
         assertEquals(0, testPlayer.getPosX());
-        testPlayer.moveTo(4, 14, 0);
+        testPlayer.moveToX(4);
         assertEquals(4, testPlayer.getPosX());
     }
 
     @Test
     public void testGetPosY() {
         assertEquals(0, testPlayer.getPosY());
-        testPlayer.moveTo(4, 14, 0);
+        testPlayer.moveToY(14);
         assertEquals(14, testPlayer.getPosY());
     }
 
     @Test
     public void testSpike() {
-        testPlayer.serve(1);
-        assertEquals(0,mikasa.getXPos());
-        assertEquals(3,mikasa.getYPos());
-        testPlayer.serve(2);
+
+        testPlayer.serve(2, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(2,mikasa.getYPos());
+
+        testPlayer.serve(1, mikasa);
+        assertEquals(0,mikasa.getXPos());
+        assertEquals(3,mikasa.getYPos());
 
 
     }
 
     @Test
     public void testReceive() {
-        testPlayer.receive();
+        testPlayer.receive(mikasa);
         assertEquals(8, mikasa.getXPos());
         assertEquals(14, mikasa.getYPos());
     }
 
     @Test
     public void testServe() {
-        testPlayer.serve(1);
-        assertEquals(0,mikasa.getXPos());
+        testPlayer.serve(1, mikasa);
+        assertEquals(3,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
-        testPlayer.serve(2);
-        assertEquals(6,mikasa.getXPos());
-        assertEquals(2,mikasa.getYPos());
+        testPlayer.serve(2, mikasa);
+        assertEquals(9,mikasa.getXPos());
+        assertEquals(3,mikasa.getYPos());
 
     }
 
@@ -80,7 +84,7 @@ public class OutsideHitterTest {
 
     @Test
     public void testSetRotation() {
-        assertEquals(4, testPlayer.getRotation());
+
         testPlayer.setRotation(5);
         assertEquals(5, testPlayer.getRotation());
         testPlayer.setRotation(6);

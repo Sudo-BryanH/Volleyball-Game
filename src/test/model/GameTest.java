@@ -69,34 +69,34 @@ public class GameTest {
 
     @Test
     public void testConstructor() {
-        assertEquals("0:0", testGame.getScore());
+        assertEquals("0 : 0", testGame.getScore());
         assertEquals(0, testGame.getTurnNum());
-        assertEquals(8, testMyTeam.printRoster().size());
-        assertEquals(6, testMyTeam.printStarters().size());
-        assertEquals(8, testETeam.printRoster().size());
-        assertEquals(6, testETeam.printStarters().size());
+        assertEquals(8, testMyTeam.getRoster().size());
+        assertEquals(6, testMyTeam.getStarters().size());
+        assertEquals(8, testETeam.getRoster().size());
+        assertEquals(6, testETeam.getStarters().size());
     }
 
     @Test
     public void weScore() {
-        testGame.weScore();
-        assertEquals("1:0", testGame.getScore());
-        testGame.weScore();
-        assertEquals("2:0", testGame.getScore());
+        testGame.myScore();
+        assertEquals("1 : 0", testGame.getScore());
+        testGame.myScore();
+        assertEquals("2 : 0", testGame.getScore());
     }
 
     @Test
     public void enemyScore() {
         testGame.enemyScore();
-        assertEquals("0:1", testGame.getScore());
+        assertEquals("0 : 1", testGame.getScore());
         testGame.enemyScore();
-        assertEquals("0:2", testGame.getScore());
+        assertEquals("0 : 2", testGame.getScore());
     }
 
     @Test
     public void testIsGameOver() {
         for (int i = 0; i <= 15; i++) {
-            testGame.weScore();
+            testGame.myScore();
         }
         for (int i = 0; i <= 13; i++) {
             testGame.enemyScore();
@@ -140,12 +140,6 @@ public class GameTest {
 
     }
 
-    @Test
-    public void testIsRallyOver() {
-
-        assertTrue(testGame.isRallyOver());
-
-    }
 
     @Test
     public void testFlipTurnNum() {

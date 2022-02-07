@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class EnemyTeam implements Team {
     // EFFECTS: Constructs a new team with 1 setter, 2 middle blockers, 2 outside hitters, and 1 opposite hitter
@@ -50,12 +50,12 @@ public class EnemyTeam implements Team {
     }
 
     @Override
-    public ArrayList<String> printRoster() {
+    public List<Players> getRoster() {
         return null;
     }
 
     @Override
-    public ArrayList<Integer> printStarters() {
+    public List<Players> getStarters() {
         return null;
     }
 
@@ -65,12 +65,12 @@ public class EnemyTeam implements Team {
     }
 
     @Override
-    public void addPlayer() {
+    public void addPlayer(Players p) {
 
     }
 
     @Override
-    public Players getStarters(int playerNum) {
+    public Players getStartingPlayer(int playerNum) {
         return null;
     }
 
