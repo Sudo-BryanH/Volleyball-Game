@@ -41,7 +41,8 @@ public class MiddleBlockers implements Players {
     //
     // REQUIRES: dir = 1
     // MODIFIES: ball object
-    // EFFECTS: sends the ball to (6, 6) if side 1 or (6, 18) if side 0
+    // EFFECTS: sends the ball to (6, 6)(2, 5)(10, 5) if side 1
+    // or (6, 18)(2, 19)(10, 19) if side 0
     // TODO Change to meet requirements of players
     @Override
     public void spike(int dir, Ball ball) {
@@ -71,8 +72,8 @@ public class MiddleBlockers implements Players {
     }
 
 
-
-    // EFFECTS: none. Setters should not be able to receive
+    // MODIFIES: ball object
+    // EFFECTS: moves ball to (8, 14) or (4, 8) depending on side
     @Override
     public void receive(Ball ball) {
         if (side == 1) {

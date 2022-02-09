@@ -108,6 +108,18 @@ public class SettersTest {
         testPlayer.set(2, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(13,mikasa.getYPos());
+
+        testEPlayer.set(3, mikasa);
+        assertEquals(0,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
+
+        testEPlayer.set(1, mikasa);
+        assertEquals(12,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
+
+        testEPlayer.set(2, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
     }
 
     @Test

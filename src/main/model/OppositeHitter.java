@@ -27,6 +27,7 @@ public class OppositeHitter implements Players {
         posX = x;
 
     }
+
     // REQUIRES: y [0, 24]
     // MODIFIES: this
     // EFFECTS: sends Player to position y
@@ -34,6 +35,7 @@ public class OppositeHitter implements Players {
     public void moveToY(int y) {
         posY = y;
     }
+
     //
     // REQUIRES: dir [0, 1]
     // MODIFIES: ball object

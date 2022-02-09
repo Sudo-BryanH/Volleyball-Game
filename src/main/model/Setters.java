@@ -128,7 +128,29 @@ public class Setters implements Players {
     // MODIFIES: ball object
     // EFFECTS: moves the ball to attack position
     public void set(int dir, Ball ball) {
-
+        if (side == 0) {
+            if (dir == 1) {
+                ball.moveToX(12);
+                ball.moveToY(11);
+            } else if (dir == 2) {
+                ball.moveToX(6);
+                ball.moveToY(11);
+            } else if (dir == 3) {
+                ball.moveToX(0);
+                ball.moveToY(11);
+            }
+        } else if (side == 1) {
+            if (dir == 1) {
+                ball.moveToX(0);
+                ball.moveToY(13);
+            } else if (dir == 2) {
+                ball.moveToX(6);
+                ball.moveToY(13);
+            } else if (dir == 3) {
+                ball.moveToX(12);
+                ball.moveToY(13);
+            }
+        }
     }
 
     // EFFECTS: returns true if dump limit of 2 has exceeded

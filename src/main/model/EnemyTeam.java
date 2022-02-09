@@ -15,6 +15,7 @@ public class EnemyTeam implements Team {
 
     private List<Players> roster = new ArrayList<>();
     private List<Players> starters = new ArrayList<>();
+
     // EFFECTS: Constructs a new team with 1 setter, 2 middle blockers, 2 outside hitters, and 1 opposite hitter
     public EnemyTeam(String name, Players s, Players mb1, Players mb2, Players oh1, Players oh2,
                      Players op) {
@@ -177,6 +178,7 @@ public class EnemyTeam implements Team {
 
         }
     }
+
     // MODIFIES: player positions
     // EFFECTS: moves the players into formation for attack when the setter
     // is in the front row and opposite is in backrow
@@ -300,6 +302,7 @@ public class EnemyTeam implements Team {
     public void addPlayer(Players p) {
         roster.add(p);
     }
+
     // EFFECTS: Adds player p to starters
     @Override
     public void addStartingPlayer(Players p) {
