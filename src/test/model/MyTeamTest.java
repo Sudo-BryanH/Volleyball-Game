@@ -339,9 +339,12 @@ public class MyTeamTest {
 
     @Test
     public void testChangeStarter() {
+        testTeam.changeRotation();
         testTeam.changeStarters(9, 2);
         assertEquals(testSet2, testTeam.getStartingPlayer(2));
         assertEquals(6, testTeam.getStarters().size() );
+        assertEquals(2, testSet2.getRotation());
+
 
     }
 

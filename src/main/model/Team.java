@@ -57,6 +57,7 @@ public interface Team {
     // EFFECTS: gets a player from the roster list
     public Players getPlayer(int playerNum);
 
+    // EFFECTS: adds a player to starter list
     public void addStartingPlayer(Players p);
 
 

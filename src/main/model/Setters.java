@@ -11,8 +11,6 @@ public class Setters implements Players {
     private int posY;
 
 
-
-
     // EFFECTS: constructs an Setter object with player number and starting rotation of 1
     //          and, dumps = 0, position (0, 0)
     public Setters(int playerNum, int side) {
@@ -33,6 +31,7 @@ public class Setters implements Players {
         posX = x;
 
     }
+
     // REQUIRES: y [0, 24]
     // MODIFIES: this
     // EFFECTS: sends Player to position y

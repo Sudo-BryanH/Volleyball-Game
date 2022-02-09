@@ -44,7 +44,8 @@ public class EnemyTeam implements Team {
 
     }
 
-
+    // MODIFIES: player positions
+    // EFFECTS: moves the players into formation for serving
     @Override
     public void startPosServe() {
         for (Players p : starters) {
@@ -77,6 +78,8 @@ public class EnemyTeam implements Team {
 
     }
 
+    // MODIFIES: player positions
+    // EFFECTS: moves the players into formation for receiving opponent serves
     @Override
     public void startPosNoServe() {
         for (Players p : starters) {
@@ -109,6 +112,9 @@ public class EnemyTeam implements Team {
 
     }
 
+    // MODIFIES: player positions
+    // EFFECTS: moves the players into formation for defending when the setter
+    // is in the front row
     @Override
     public void defendFSetter() {
 
@@ -139,6 +145,9 @@ public class EnemyTeam implements Team {
 
     }
 
+    // MODIFIES: player positions
+    // EFFECTS: moves the players into formation for defending when the setter
+    // is in the back row
     @Override
     public void defendBSetter() {
 
@@ -168,7 +177,9 @@ public class EnemyTeam implements Team {
 
         }
     }
-
+    // MODIFIES: player positions
+    // EFFECTS: moves the players into formation for attack when the setter
+    // is in the front row and opposite is in backrow
     @Override
     public void attackFSetter() {
         for (Players p : starters) {
@@ -198,6 +209,9 @@ public class EnemyTeam implements Team {
         }
     }
 
+    // MODIFIES: player positions
+    // EFFECTS: moves the players into formation for attack when the setter
+    // is in the back row and opposite is in front row
     @Override
     public void attackBSetter() {
         for (Players p : starters) {
@@ -227,6 +241,8 @@ public class EnemyTeam implements Team {
         }
     }
 
+    // MODIFIES: player rotations
+    // EFFECTS: changes the rotation of each player in starters
     @Override
     public void changeRotation() {
         for (Players p : starters) {
@@ -240,7 +256,8 @@ public class EnemyTeam implements Team {
 
     }
 
-
+    // MODIFIES: players rotations
+    // EFFECTS: gives middle blockers and outside hitters their starting rotation num
     @Override
     public void arrangeMBOH() {
         middle1.setRotation(2);
@@ -250,16 +267,24 @@ public class EnemyTeam implements Team {
 
     }
 
+    // EFFECTS: returns the list of players in a team's roster
     @Override
     public List<Players> getRoster() {
         return roster;
     }
 
+    // EFFECTS: returns the lsit of players in a team's starting list
     @Override
     public List<Players> getStarters() {
         return starters;
     }
 
+
+    // REQUIRES: ogNum = num of a player already in starters,
+    // newNum be of the same type of player as ogNum and in roster
+    // MODIFIES: this
+    // EFFECTS: removes player of ogNum from starters, gives his rotation number to
+    // player of newNum and adds player of newNum to starters
     @Override
     public void changeStarters(int ogNum, int newNum) {
         Players sub = getPlayer(newNum);
@@ -270,11 +295,12 @@ public class EnemyTeam implements Team {
         addStartingPlayer(sub);
     }
 
+    // EFFECTS: Adds player p to the roster
     @Override
     public void addPlayer(Players p) {
         roster.add(p);
     }
-
+    // EFFECTS: Adds player p to starters
     @Override
     public void addStartingPlayer(Players p) {
         starters.add(p);

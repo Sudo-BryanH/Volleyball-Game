@@ -27,6 +27,7 @@ public class OutsideHitter implements Players {
         this.posX = x;
 
     }
+
     // REQUIRES: y [0, 24]
     // MODIFIES: this
     // EFFECTS: sends Player to position y
@@ -34,6 +35,7 @@ public class OutsideHitter implements Players {
     public void moveToY(int y) {
         this.posY = y;
     }
+
     //
     // REQUIRES: dir = 1
     // MODIFIES: ball object
