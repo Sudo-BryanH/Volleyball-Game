@@ -218,7 +218,7 @@ public class MyTeam implements Team {
                     p.moveToX(9);
                 }
             } else if (p.equals(opposite)) {
-                p.moveToX(0);
+                p.moveToX(12);
             } else if (p.equals(outside1) || p.equals(outside2)) {
                 p.moveToX(0);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {

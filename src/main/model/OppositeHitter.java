@@ -35,9 +35,9 @@ public class OppositeHitter implements Players {
         posY = y;
     }
     //
-    // REQUIRES: dir = 1
+    // REQUIRES: dir [0, 1]
     // MODIFIES: ball object
-    // EFFECTS: sends the ball to (6, 6) if side 1 or (6, 18) if side 0
+    // EFFECTS: sends the ball to (12, 4) (6, 3) if side 1 or (0, 20) (6, 21) if side 0
     // TODO Change to meet requirements of players
     @Override
     public void spike(int dir, Ball ball) {
@@ -51,7 +51,7 @@ public class OppositeHitter implements Players {
                 ball.moveToY(3);
             }
         } else if (side == 0) {
-            if (dir == 0) {
+            if (dir == 1) {
                 ball.moveToX(0);
                 ball.moveToY(20);
             } else if (dir == 2) {
@@ -63,7 +63,8 @@ public class OppositeHitter implements Players {
 
     }
 
-    // EFFECTS: none. Setters should not be able to receive
+    // MODIFIES: ball object
+    // EFFECTS: Moves ball to (8, 14) or (4, 8) depending on side
     @Override
     public void receive(Ball ball) {
         if (side == 1) {

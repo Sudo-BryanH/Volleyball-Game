@@ -6,13 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OutsideHitterTest {
-    OutsideHitter testPlayer;
+    Players testPlayer;
     Ball mikasa;
+    Players testEPlayer;
 
     @BeforeEach
     public void setUp() {
         testPlayer = new OutsideHitter(1, 1);
         mikasa = new Ball();
+        testEPlayer = new OutsideHitter(3, 0);
 
     }
 
@@ -25,6 +27,12 @@ public class OutsideHitterTest {
         assertEquals(5, testPlayer.getRotation());
         assertEquals(0, mikasa.getXPos());
         assertEquals(0, mikasa.getYPos());
+
+        assertEquals(0, testEPlayer.getPosX());
+        assertEquals(0, testEPlayer.getPosY());
+        testEPlayer.setRotation(5);
+        assertEquals(5, testEPlayer.getRotation());
+
 
     }
 
@@ -45,13 +53,21 @@ public class OutsideHitterTest {
     @Test
     public void testSpike() {
 
-        testPlayer.serve(2, mikasa);
+        testPlayer.spike(2, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(2,mikasa.getYPos());
 
-        testPlayer.serve(1, mikasa);
+        testPlayer.spike(1, mikasa);
         assertEquals(0,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
+
+        testEPlayer.spike(2, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(22,mikasa.getYPos());
+
+        testEPlayer.spike(1, mikasa);
+        assertEquals(12,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
 
 
     }
@@ -61,6 +77,10 @@ public class OutsideHitterTest {
         testPlayer.receive(mikasa);
         assertEquals(8, mikasa.getXPos());
         assertEquals(14, mikasa.getYPos());
+
+        testEPlayer.receive(mikasa);
+        assertEquals(4, mikasa.getXPos());
+        assertEquals(8, mikasa.getYPos());
     }
 
     @Test
@@ -71,6 +91,13 @@ public class OutsideHitterTest {
         testPlayer.serve(2, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
+
+        testEPlayer.serve(1, mikasa);
+        assertEquals(3,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
+        testEPlayer.serve(2, mikasa);
+        assertEquals(9,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
 
     }
 

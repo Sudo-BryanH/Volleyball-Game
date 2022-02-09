@@ -14,6 +14,7 @@ public class OutsideHitter implements Players {
         this.playerNum = playerNum;
         this.posX = 0;
         this.posY = 0;
+        this.side = side;
 
 
     }
@@ -61,7 +62,7 @@ public class OutsideHitter implements Players {
 
     }
 
-    // EFFECTS: none. Setters should not be able to receive
+    // EFFECTS: moves the ball to location [8, 14]
     @Override
     public void receive(Ball ball) {
         if (side == 1) {
@@ -83,7 +84,7 @@ public class OutsideHitter implements Players {
     public void serve(int dir, Ball ball) {
 
         if (side == 0) {
-            if (dir == 0) {
+            if (dir == 1) {
                 ball.moveToX(3);
                 ball.moveToY(21);
             } else if (dir == 2) {

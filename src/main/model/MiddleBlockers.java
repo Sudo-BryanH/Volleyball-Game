@@ -57,7 +57,7 @@ public class MiddleBlockers implements Players {
                 ball.moveToY(5);
             }
         } else if (side == 0) {
-            if (side == 1) {
+            if (dir == 1) {
                 ball.moveToX(6);
                 ball.moveToY(18);
             } else if (dir == 2) {

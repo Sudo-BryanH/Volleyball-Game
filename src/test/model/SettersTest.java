@@ -9,10 +9,12 @@ public class SettersTest {
 
     Setters testPlayer;
     Ball mikasa;
+    Setters testEPlayer;
 
     @BeforeEach
     public void setUp() {
         testPlayer = new Setters(9, 1);
+        testEPlayer = new Setters(10, 0);
         mikasa = new Ball();
 
     }
@@ -47,6 +49,11 @@ public class SettersTest {
         assertEquals(6,mikasa.getYPos());
         assertEquals(1, testPlayer.numDump());
 
+        testEPlayer.spike(1, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(18,mikasa.getYPos());
+        assertEquals(1, testPlayer.numDump());
+
     }
 
     @Test
@@ -62,6 +69,14 @@ public class SettersTest {
         testPlayer.serve(2, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
+
+        testEPlayer.serve(1, mikasa);
+        assertEquals(3,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
+        testEPlayer.serve(2, mikasa);
+        assertEquals(9,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
+
     }
 
     @Test

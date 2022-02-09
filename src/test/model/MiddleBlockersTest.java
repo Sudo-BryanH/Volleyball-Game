@@ -6,13 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MiddleBlockersTest {
-    MiddleBlockers testPlayer;
+    Players testPlayer;
     Ball mikasa;
+    Players testEPlayer;
 
     @BeforeEach
     public void setUp() {
         testPlayer = new MiddleBlockers(1, 1);
         mikasa = new Ball();
+        testEPlayer = new MiddleBlockers(12, 0);
 
     }
 
@@ -23,6 +25,12 @@ public class MiddleBlockersTest {
         assertEquals(0, testPlayer.getPosY());
         testPlayer.setRotation(5);
         assertEquals(5, testPlayer.getRotation());
+        assertEquals(0, mikasa.getXPos());
+        assertEquals(0, mikasa.getYPos());
+        assertEquals(0, testEPlayer.getPosX());
+        assertEquals(0, testEPlayer.getPosY());
+        testEPlayer.setRotation(5);
+        assertEquals(5, testEPlayer.getRotation());
 
     }
 
@@ -42,16 +50,25 @@ public class MiddleBlockersTest {
 
     @Test
     public void testSpike() {
-        testPlayer.serve(1, mikasa);
+        testPlayer.spike(1, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(6,mikasa.getYPos());
-        testPlayer.serve(2, mikasa);
+        testPlayer.spike(2, mikasa);
         assertEquals(2,mikasa.getXPos());
         assertEquals(5,mikasa.getYPos());
-        testPlayer.serve(2, mikasa);
+        testPlayer.spike(3, mikasa);
         assertEquals(10,mikasa.getXPos());
         assertEquals(5,mikasa.getYPos());
 
+        testEPlayer.spike(1, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(18,mikasa.getYPos());
+        testEPlayer.spike(2, mikasa);
+        assertEquals(2,mikasa.getXPos());
+        assertEquals(19,mikasa.getYPos());
+        testEPlayer.spike(3, mikasa);
+        assertEquals(10,mikasa.getXPos());
+        assertEquals(19,mikasa.getYPos());
 
     }
 
@@ -60,6 +77,10 @@ public class MiddleBlockersTest {
         testPlayer.receive(mikasa);
         assertEquals(8, mikasa.getXPos());
         assertEquals(14, mikasa.getYPos());
+
+        testEPlayer.receive(mikasa);
+        assertEquals(4, mikasa.getXPos());
+        assertEquals(8, mikasa.getYPos());
     }
 
     @Test
@@ -70,6 +91,13 @@ public class MiddleBlockersTest {
         testPlayer.serve(2, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
+
+        testEPlayer.serve(1, mikasa);
+        assertEquals(3,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
+        testEPlayer.serve(2, mikasa);
+        assertEquals(9,mikasa.getXPos());
+        assertEquals(21,mikasa.getYPos());
 
 
 

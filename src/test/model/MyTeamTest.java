@@ -240,6 +240,7 @@ public class MyTeamTest {
         assertEquals(21, testOH2.getPosY());
 
         testTeam.changeRotation();
+        testTeam.attackFSetter();
 
         assertEquals(8, testSet.getPosX());
         assertEquals(14, testSet.getPosY());
@@ -255,6 +256,7 @@ public class MyTeamTest {
         assertEquals(13, testOH2.getPosY());
 
         testTeam.changeRotation();
+        testTeam.attackFSetter();
 
         assertEquals(8, testSet.getPosX());
         assertEquals(14, testSet.getPosY());
@@ -288,6 +290,7 @@ public class MyTeamTest {
         assertEquals(13, testOH2.getPosY());
 
         testTeam.changeRotation();
+        testTeam.attackBSetter();
 
         assertEquals(8, testSet.getPosX());
         assertEquals(14, testSet.getPosY());
