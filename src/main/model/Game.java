@@ -32,7 +32,10 @@ public class Game {
     public boolean checkReceive(int ballX, int ballY, List<Players> backrow) {
 
         for (Players p : backrow) {
-            if (Math.abs(p.getPosX() - ballX) <= 1 && Math.abs(p.getPosY() - ballY) <= 1) {
+
+            int x = p.getPosX();
+            int y = p.getPosY();
+            if ((Math.abs(x - ballX) <= 1) && (Math.abs(y - ballY) <= 1)) {
                 return true;
             }
 

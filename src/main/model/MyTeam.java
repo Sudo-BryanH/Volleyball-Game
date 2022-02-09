@@ -14,7 +14,7 @@ public class MyTeam implements Team {
     private Players outside2;
 
     private List<Players> roster = new ArrayList<>();
-    List<Players> starters = new ArrayList<>();
+    private List<Players> starters = new ArrayList<>();
 
 
     // EFFECTS: Constructs a new team with 1 setter, 2 middle blockers, 2 outside hitters, and 1 opposite hitter
@@ -117,15 +117,15 @@ public class MyTeam implements Team {
         for (Players p : starters) {
             if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                 p.moveToX(0);
-                p.moveToY(13);
+                p.moveToY(21);
 
             } else {
                 p.moveToX(0);
-                p.moveToY(21);
+                p.moveToY(13);
             }
 
             if (p.equals(setter)) {
-                p.moveToX(13);
+                p.moveToX(11);
             } else if (p.equals(middle1) || p.equals(middle2)) {
                 p.moveToX(6);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
@@ -146,9 +146,9 @@ public class MyTeam implements Team {
 
         for (Players p : starters) {
             if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
-                p.moveToY(13);
-            } else {
                 p.moveToY(21);
+            } else {
+                p.moveToY(13);
             }
             if (p.equals(setter)) {
                 p.moveToX(8);
@@ -175,9 +175,9 @@ public class MyTeam implements Team {
     public void attackFSetter() {
         for (Players p : starters) {
             if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
-                p.moveToY(13);
-            } else {
                 p.moveToY(21);
+            } else {
+                p.moveToY(13);
             }
 
             if (p.equals(setter)) {
@@ -265,13 +265,11 @@ public class MyTeam implements Team {
     @Override
     public void changeStarters(int ogNum, int newNum) {
         Players sub = getPlayer(newNum);
-        for (Players p : starters) {
-            if (p.getNum() == ogNum) {
-                starters.remove(p);
-                int rotation = p.getRotation();
-                sub.setRotation(rotation);
-            }
-        }
+        Players og = getStartingPlayer(ogNum);
+        int rotation = og.getRotation();
+        sub.setRotation(rotation);
+        starters.remove(og);
+        addStartingPlayer(sub);
     }
 
     @Override
@@ -280,12 +278,20 @@ public class MyTeam implements Team {
     }
 
     @Override
+    public void addStartingPlayer(Players p) {
+        starters.add(p);
+    }
+
+    // REQUIRES: a player number of a player already in the starters list
+    // EFFECTS: retrieves a starting player from the starters list
+    @Override
     public Players getStartingPlayer(int playerNum) {
         Players chosenOne = null;
 
         for (Players p : starters) {
             if (p.getNum() == playerNum) {
                 chosenOne = p;
+                return chosenOne;
 
             }
         }
@@ -293,6 +299,8 @@ public class MyTeam implements Team {
         return chosenOne;
     }
 
+    // REQUIRES: a player number of a player already in the roster list
+    // EFFECTS: retrieves a starting player from the roster list
     @Override
     public Players getPlayer(int playerNum) {
         Players chosenOne = null;
@@ -300,6 +308,7 @@ public class MyTeam implements Team {
         for (Players p : roster) {
             if (p.getNum() == playerNum) {
                 chosenOne = p;
+                return chosenOne;
 
             }
         }
