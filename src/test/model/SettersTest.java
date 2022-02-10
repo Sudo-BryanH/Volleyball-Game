@@ -141,5 +141,10 @@ public class SettersTest {
         assertFalse(testPlayer.canDump());
     }
 
+    @Test
+    public void testGetNum() {
+        assertEquals(9, testPlayer.getNum());
+    }
+
 
 }

@@ -34,7 +34,7 @@ public class EnemyTeamTest {
 
         testTeam.addPlayer(testMB3);
         testTeam.addPlayer(testSet2);
-        testTeam.arrangeMBOH();
+        testTeam.arrangeMbOh();
     }
 
     @Test
@@ -293,5 +293,31 @@ public class EnemyTeamTest {
         testTeam.changeStarters(9, 2);
         assertEquals(testSet2, testTeam.getStartingPlayer(2));
 
+    }
+
+    @Test
+    public void testAddPlayer() {
+        testTeam.addPlayer(testSet2);
+        assertEquals(9, testTeam.getRoster().size() );
+    }
+
+    @Test
+    public void testAddStartingPlayer() {
+        testTeam.addStartingPlayer(testSet2);
+        assertEquals(7, testTeam.getStarters().size() );
+    }
+
+    @Test
+    public void testGetRoster() {
+        assertEquals(8, testTeam.getRoster().size() );
+        testTeam.addPlayer(testSet2);
+        assertEquals(9, testTeam.getRoster().size() );
+    }
+
+    @Test
+    public void testGetStarters() {
+        assertEquals(6, testTeam.getStarters().size() );
+        testTeam.addStartingPlayer(testSet2);
+        assertEquals(7, testTeam.getStarters().size() );
     }
 }

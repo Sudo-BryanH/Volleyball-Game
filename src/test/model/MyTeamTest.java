@@ -22,8 +22,6 @@ public class MyTeamTest {
     Players testMB3;
     Players testSet2;
 
-    List<Players> roster = new ArrayList<>();
-    List<Players> starters = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -43,7 +41,7 @@ public class MyTeamTest {
         testTeam.addPlayer(testSet2);
         testTeam.addPlayer(testMB3);
 
-        testTeam.arrangeMBOH();
+        testTeam.arrangeMbOh();
     }
 
     @Test
@@ -360,6 +358,33 @@ public class MyTeamTest {
         assertEquals(testSet2, testTeam.getPlayer(2));
         assertEquals(testMB3, testTeam.getPlayer(7));
     }
+
+    @Test
+    public void testAddPlayer() {
+        testTeam.addPlayer(testSet2);
+        assertEquals(9, testTeam.getRoster().size() );
+    }
+
+    @Test
+    public void testAddStartingPlayer() {
+        testTeam.addStartingPlayer(testSet2);
+        assertEquals(7, testTeam.getStarters().size() );
+    }
+
+    @Test
+    public void testGetRoster() {
+        assertEquals(8, testTeam.getRoster().size() );
+        testTeam.addPlayer(testSet2);
+        assertEquals(9, testTeam.getRoster().size() );
+    }
+
+    @Test
+    public void testGetStarters() {
+        assertEquals(6, testTeam.getStarters().size() );
+        testTeam.addStartingPlayer(testSet2);
+        assertEquals(7, testTeam.getStarters().size() );
+    }
+
 
 
 

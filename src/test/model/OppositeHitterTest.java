@@ -111,6 +111,10 @@ public class OppositeHitterTest {
             assertEquals(6, testPlayer.getRotation());
         }
 
+    @Test
+    public void testGetNum() {
+        assertEquals(1, testPlayer.getNum());
+    }
 
 
 

@@ -46,7 +46,7 @@ public class GameTest {
         testETeam = new EnemyTeam("testETeam", testESet, testEMB1, testEMB2,
                 testEOH1, testEOH2, testEOP);
 
-        testETeam.arrangeMBOH();
+        testETeam.arrangeMbOh();
 
         testMB1 = new MiddleBlockers(10, 0);
         testMB2 = new MiddleBlockers(11, 0);
@@ -60,7 +60,7 @@ public class GameTest {
         testMyTeam = new MyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
 
-        testMyTeam.arrangeMBOH();
+        testMyTeam.arrangeMbOh();
 
         testGame = new Game(testMyTeam, testETeam);
 
@@ -78,7 +78,7 @@ public class GameTest {
     }
 
     @Test
-    public void weScore() {
+    public void testMyScore() {
         testGame.myScore();
         assertEquals("1 : 0", testGame.getScore());
         testGame.myScore();
@@ -86,7 +86,7 @@ public class GameTest {
     }
 
     @Test
-    public void enemyScore() {
+    public void testEnemyScore() {
         testGame.enemyScore();
         assertEquals("0 : 1", testGame.getScore());
         testGame.enemyScore();
@@ -150,6 +150,20 @@ public class GameTest {
         assertEquals(0, testGame.getTurnNum());
     }
 
+    @Test
+    public void testGetScore() {
+        assertEquals("0 : 0", testGame.getScore());
+        testGame.myScore();
+        assertEquals("1 : 0", testGame.getScore());
+    }
+
+    @Test
+    public void testGetTurnNum() {
+        testGame.flipTurnNum();
+        assertEquals(1, testGame.getTurnNum());
+        testGame.flipTurnNum();
+        assertEquals(0, testGame.getTurnNum());
+    }
 
 
 

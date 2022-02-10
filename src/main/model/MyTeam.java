@@ -42,7 +42,7 @@ public class MyTeam implements Team {
         starters.add(middle2);
         starters.add(outside2);
 
-        arrangeMBOH();
+        arrangeMbOh();
 
     }
 
@@ -265,7 +265,7 @@ public class MyTeam implements Team {
     // EFFECTS: gives middle blockers and outside hitters their starting rotation num
 
     @Override
-    public void arrangeMBOH() {
+    public void arrangeMbOh() {
         middle1.setRotation(2);
         middle2.setRotation(5);
         outside1.setRotation(3);
@@ -280,7 +280,7 @@ public class MyTeam implements Team {
         return roster;
     }
 
-    // EFFECTS: returns the lsit of players in a team's starting list
+    // EFFECTS: returns the list of players in a team's starting list
 
     @Override
     public List<Players> getStarters() {

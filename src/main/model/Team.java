@@ -35,7 +35,7 @@ public interface Team {
 
     // MODIFIES: middle blockers and outside hitters
     // EFFECTS: Arrange MB and OH to their rotations
-    public void arrangeMBOH();
+    public void arrangeMbOh();
 
     public List<Players> getRoster();
 

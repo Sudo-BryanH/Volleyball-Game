@@ -12,6 +12,7 @@ public class EnemyTeam implements Team {
     private Players opposite;
     private Players middle2;
     private Players outside2;
+    private int chance;
 
     private List<Players> roster = new ArrayList<>();
     private List<Players> starters = new ArrayList<>();
@@ -41,7 +42,7 @@ public class EnemyTeam implements Team {
         starters.add(middle2);
         starters.add(outside2);
 
-        arrangeMBOH();
+        arrangeMbOh();
 
     }
 
@@ -261,7 +262,7 @@ public class EnemyTeam implements Team {
     // MODIFIES: players rotations
     // EFFECTS: gives middle blockers and outside hitters their starting rotation num
     @Override
-    public void arrangeMBOH() {
+    public void arrangeMbOh() {
         middle1.setRotation(2);
         middle2.setRotation(5);
         outside1.setRotation(3);
@@ -342,5 +343,14 @@ public class EnemyTeam implements Team {
 
         return chosenOne;
     }
+
+    public int getChance() {
+        return chance;
+    }
+
+    public void setChance(int c) {
+        this.chance = c;
+    }
+
 
 }

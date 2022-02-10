@@ -52,6 +52,34 @@ public class BallTest {
         assertEquals(6, molten.getXPos());
     }
 
+    @Test
+    public void testMoveToX() {
+        assertEquals(0, mikasa.getXPos());
+        mikasa.moveToX(12);
+        assertEquals(12, mikasa.getXPos());
+        mikasa.moveToX(6);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(0, molten.getXPos());
+        molten.moveToX(12);
+        assertEquals(12, molten.getXPos());
+        molten.moveToX(6);
+        assertEquals(6, molten.getXPos());
+    }
+
+    @Test
+    public void testMoveToY() {
+        assertEquals(0, mikasa.getYPos());
+        mikasa.moveToY(24);
+        assertEquals(24, mikasa.getYPos());
+        mikasa.moveToY(16);
+        assertEquals(16, mikasa.getYPos());
+        assertEquals(0, molten.getXPos());
+        molten.moveToX(12);
+        assertEquals(12, molten.getXPos());
+        molten.moveToX(6);
+        assertEquals(6, molten.getXPos());
+    }
+
 
 
 }

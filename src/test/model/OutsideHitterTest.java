@@ -117,4 +117,8 @@ public class OutsideHitterTest {
         testPlayer.setRotation(6);
         assertEquals(6, testPlayer.getRotation());
     }
+    @Test
+    public void testGetNum() {
+        assertEquals(1, testPlayer.getNum());
+    }
 }
