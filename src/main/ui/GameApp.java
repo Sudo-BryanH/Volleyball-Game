@@ -550,9 +550,13 @@ public class GameApp {
         if (turn == 0) {
             System.out.println("Rally is over, enemy team scored");
             game.enemyScore();
+            enemyTeam.changeRotation();
+            System.out.println("Enemy team rotated");
         } else {
             System.out.println("Rally is over, our team scored");
             game.myScore();
+            myTeam.changeRotation();
+            System.out.println("Our team rotated");
         }
     }
 
