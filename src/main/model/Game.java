@@ -85,6 +85,12 @@ public class Game {
         }
 
     }
+    // TODO write tests
+    // MODIFIES: this
+    // EFFECTS: sets the turn number
+    public void setTurnNum(int turn) {
+        this.turn = turn;
+    }
 
 
 

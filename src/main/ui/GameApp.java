@@ -34,6 +34,7 @@ public class GameApp {
     Game game;
     EnemyTeam enemyTeam;
     Ball ball = new Ball();
+    int turn;
 
 
     public GameApp() {
@@ -44,7 +45,8 @@ public class GameApp {
 
     // EFFECTS: Creates enemies teams and sets up your team. Then, decide which team you will be playing
     public void setUp() {
-
+        String input;
+        boolean status = false;
         // Make enemy teams
         weakTeam = (EnemyTeam) enemyTeamConstructor("weakTeam", weakMB1, weakMB2, weakSet, weakOP, weakOH1, weakOH2, 10);
         strongTeam = (EnemyTeam) enemyTeamConstructor("strongTeam", strongMB1, strongMB2, strongSet,
@@ -52,44 +54,43 @@ public class GameApp {
 
         // Make our team
         System.out.println("Let's create your team. What would you like to call your team?");
-        String name = scan.nextLine();
-        myTeam = myTeamConstructor(name, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
-
-        // TODO: Allow user to make a new player and add it to the team
-        System.out.println("Which team would you like to choose to play against? "
-                + "Your options are \n the weak team or the strong team");
-        String input;
         input = scan.nextLine();
-        while (!input.equals("weak team") && !input.equals("strong team")) {
-            System.out.println("Please type in either 'weak team' or 'strong team'");
-            input = scan.nextLine();
+        myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
+
+        chooseEnemyTeam();
+        while (status == false) {
+            System.out.println("Would you like to add another player to the roster? Type y or n");
+            input = scan.next();
+            if (input.equals("y")) {
+                addPlayerToTeam();
+            } else {
+                System.out.println("no more added. There are " + myTeam.getRoster().size() + "Players in roster");
+                status = true;
+            }
         }
 
-        if (input.equals("strong team")) {
-            game = new Game(myTeam, strongTeam);
-            enemyTeam = strongTeam;
-            System.out.println("You will now be playing against the strong team");
-        } else {
-            game = new Game(myTeam, weakTeam);
-            enemyTeam = weakTeam;
-            System.out.println("You will now be playing against the weak team");
-        }
 
+        beginGame();
     }
 
     public void beginGame() {
         boolean gameOver = false;
-        int turn = 0;
+        turn = game.getTurnNum();
+        enemyTeam.changeRotation();
+        enemyTeam.changeRotation();
+        enemyTeam.changeRotation();
 
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
 
-        beginRally(turn);
+
         while (gameOver == false) {
+            System.out.println(game.getScore());
             beginRally(turn);
+
+            turn = game.getTurnNum();
             if (game.isGameOver()) {
                 gameOver = true;
             }
-            turn = game.getTurnNum();
         }
 
         // TODO check if user wants to change starting players
@@ -99,41 +100,47 @@ public class GameApp {
 
     }
 
-    public void beginRally(int turn) {
+    public int beginRally(int turn) {
         boolean isOver = false;
         int setNum;
         int attackNum;
-
+        System.out.println("Turn number is " + turn);
         serve(turn);
         while (!isOver) {
+
             game.flipTurnNum();
-            // receive
+            turn = game.getTurnNum();
+            System.out.println("Turn number changed to " + turn);
             receive(turn);
-            // choose set
             setNum = chooseSet(turn);
             attackNum = chooseAttack(setNum, turn);
-            // other team defend
             chooseDefend(turn, setNum, attackNum);
-            // Set and attack
             attack(turn, setNum, attackNum);
-            game.flipTurnNum();
-            isOver = checkReceive(turn);
-
+            isOver = !checkReceive(turn);
         }
 
+        System.out.println("Turn number is " + turn);
+        if (turn == 0) {
+            System.out.println("Rally is over, enemy team scored");
+            game.enemyScore();
+        } else {
+            System.out.println("Rally is over, our team scored");
+            game.myScore();
+        }
+        return turn;
     }
 
     private boolean checkReceive(int turn) {
         List<Players> backrow = new ArrayList<>();
         boolean check = false;
-        if (turn == 0) {
+        if (turn == 1) {
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     backrow.add(p);
                 }
             }
             check = game.checkReceive(ball.getXPos(), ball.getYPos(), backrow);
-        } else if (turn == 1) {
+        } else if (turn == 0) {
             for (Players p : myTeam.getStarters()) {
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     backrow.add(p);
@@ -148,14 +155,15 @@ public class GameApp {
     }
 
     private void attack(int turn, int setNum, int attackNum) {
+        attackPositions(turn);
         if (turn == 0) {
             enemyTeam.set(setNum, ball);
             if (setNum == 0) {
-                System.out.println("Ball has been set to the left");
+                System.out.println("Ball has been set to the left and is attack towards" + attackNum);
             } else if (setNum == 1) {
-                System.out.println("Ball has been set to the middle");
+                System.out.println("Ball has been set to the middle and is attack towards" + attackNum);
             } else {
-                System.out.println("Ball has been set to the right");
+                System.out.println("Ball has been set to the right and is attack towards" + attackNum);
             }
 
             enemyTeam.attack(setNum, attackNum, ball);
@@ -163,36 +171,55 @@ public class GameApp {
         } else if (turn == 1) {
             myTeam.set(setNum, ball);
             if (setNum == 0) {
-                System.out.println("Ball has been set to the left");
+                System.out.println("Ball has been set to the left and is attack towards" + attackNum);
             } else if (setNum == 1) {
-                System.out.println("Ball has been set to the middle");
+                System.out.println("Ball has been set to the middle and is attack towards" + attackNum);
             } else {
-                System.out.println("Ball has been set to the right");
+                System.out.println("Ball has been set to the right and is attack towards" + attackNum);
             }
         }
         myTeam.attack(setNum, attackNum, ball);
     }
 
+    private void attackPositions(int turn) {
+        if (turn == 0) {
+            if (enemyTeam.isSetterBack()) {
+                enemyTeam.attackBSetter();
+            } else {
+                enemyTeam.attackFSetter();
+            }
+        } else {
+            if (myTeam.isSetterBack()) {
+                myTeam.attackBSetter();
+            } else {
+                myTeam.attackFSetter();
+            }
+        }
+    }
+
     private void serve(int turn) {
-        int chance = (int) Math.random() * 2;
+        int chance = (int) (Math.random() * 2);
+        int input;
         if (turn == 0) {
             enemyTeam.startPosServe();
             myTeam.startPosNoServe();
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
                     p.serve(chance, ball);
-                    System.out.println(p.getNum() + "Has served");
                 }
             }
+            System.out.println("Serve has been made");
         } else if (turn == 1) {
             enemyTeam.startPosNoServe();
             myTeam.startPosServe();
+            System.out.println("Do you want to serve left[0] or right [1]");
+            input = scan.nextInt();
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
-                    p.serve(chance, ball);
-                    System.out.println(p.getNum() + "Has served");
+                    p.serve(input, ball);
                 }
             }
+            System.out.println("Serve has been made");
         }
     }
 
@@ -203,23 +230,27 @@ public class GameApp {
                     p.receive(ball);
                 }
             }
+            System.out.println("Ball has been received by the enemy");
         } else if (turn == 1) {
             for (Players p : myTeam.getStarters()) {
                 if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
                     p.receive(ball);
                 }
             }
+            System.out.println("Ball has been received by us");
         }
     }
 
     private int chooseSet(int turn) {
-        int chance2 = (int) Math.random() * 2;
-        int chance3 = (int) Math.random() * 3;
+        int chance2 = (int) (Math.random() * 2);
+        int chance3 = (int) (Math.random() * 3);
         int choice;
         if (turn == 0) {
             if (enemyTeam.isSetterBack()) {
+                System.out.println("Enemy can attack from the left, middle, or right");
                 return chance3;
-            } else if (enemyTeam.isSetterBack()) {
+            } else if (!enemyTeam.isSetterBack()) {
+                System.out.println("Enemy can only attack form the left or middle");
                 return chance2;
             }
         } else if (turn == 1) {
@@ -230,14 +261,15 @@ public class GameApp {
             }
         }
         choice = scan.nextInt();
-        System.out.println("you have picked" + choice);
+        System.out.println("you have picked " + choice);
         return choice;
     }
 
     private void chooseDefend(int turn, int setNum, int attackNum) {
-        if (turn == 0) {
+        if (turn == 1) {
             enemyDefend(setNum, attackNum);
         } else {
+            System.out.println("Let's choose our defence formation");
             myDefence();
         }
 
@@ -245,7 +277,7 @@ public class GameApp {
 
     private void enemyDefend(int setNum, int attackNum) {
         int multiplier = enemyTeam.getChance();
-        int chance = (int) Math.random() * multiplier;
+        int chance = (int) (Math.random() * multiplier);
         if (enemyTeam.isSetterBack()) {
             enemyTeam.defendBSetter();
         } else {
@@ -275,22 +307,22 @@ public class GameApp {
 
         for (Players p : myTeam.getStarters()) {
 
-            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
-                System.out.println("Choose this " + p.getNum() + p.getPlayingPosition() + "'s x positioning");
+            if (p.getRotation() >= 4) {
+                System.out.println("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s block position");
                 int x = scan.nextInt();
                 p.moveToX(x);
-                System.out.println(p.getNum() + p.getPlayingPosition()
+                System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosX() + ")");
 
             } else if (p.getPlayingPosition() != "Setter") {
-                System.out.println("Choose this " + p.getNum() + p.getPlayingPosition() + "'s x positioning");
+                System.out.println("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s x receive position");
                 int x = scan.nextInt();
-                System.out.println("Choose this " + p.getNum() + p.getPlayingPosition() + "'s y positioning");
+                System.out.println("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s y receive position");
                 int y = scan.nextInt();
                 p.moveToX(x);
                 p.moveToY(y);
-                System.out.println(p.getNum() + p.getPlayingPosition()
-                        + "has been moved to (" + p.getPosX() + "," + p.getPosX() + ")");
+                System.out.println(p.getRotation() + p.getPlayingPosition()
+                        + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");
 
             }
         }
@@ -347,8 +379,8 @@ public class GameApp {
 
     private int chooseAttack(int setNum, int turn) {
         int choice = 1;
-        int chance2 = (int) Math.random() * 2;
-        int chance3 = (int) Math.random() * 3;
+        int chance2 = (int) (Math.random() * 2);
+        int chance3 = (int) (Math.random() * 3);
         if (turn == 1) {
             if (setNum == 0 || setNum == 2) {
                 System.out.println("Choose whether you want to spike straight[0] or to the middle of the court[1]");
@@ -367,7 +399,7 @@ public class GameApp {
                 return 1;
             }
         }
-
+        System.out.println(choice);
         return -1; // Should only happen if all else fails
     }
 
@@ -383,7 +415,7 @@ public class GameApp {
         oh2 = new OutsideHitter(6, 0);
 
         EnemyTeam e;
-        e = new EnemyTeam(name, mb1, mb2, set, op, oh1, oh2);
+        e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
         e.setChance(chance);
 
         return e; // May cause errors with subtypes
@@ -416,13 +448,58 @@ public class GameApp {
         oh2 = new OutsideHitter(n, 1);
 
         MyTeam m;
-        m = new MyTeam(name, mb1, mb2, set, op, oh1, oh2);
+        m = new MyTeam(name, set, mb1, mb2, oh1, oh2, op);
 
         return m; // May cause errors with subtypes
     }
 
-    public void playerConstructor(String position) {
+    public void addPlayerToTeam() {
 
+        int num;
+        String pos;
+
+        Players p;
+        System.out.println("Which player do you want to make? type 's' for setter, "
+                + "'m' for middle, 'oh' for outside hitter, or 'op' for opposite");
+        pos = scan.next();
+        System.out.println("Which number would you like to assign to this player?");
+        num = scan.nextInt();
+        if (pos.equals("s")) {
+            p = new Setters(num, 1);
+            myTeam.addPlayer(p);
+        } else if (pos.equals("m")) {
+            p = new MiddleBlockers(num, 1);
+            myTeam.addPlayer(p);
+        } else if (pos.equals("oh")) {
+            p = new OutsideHitter(num, 1);
+            myTeam.addPlayer(p);
+        } else if (pos.equals("op")) {
+            p = new OppositeHitter(num, 1);
+            myTeam.addPlayer(p);
+        }
+        System.out.println(pos + " num " + num + "has been added to the roster");
+        System.out.println("there are now " + myTeam.getRoster().size() + " Players in your team's roster");
+    }
+
+    private void chooseEnemyTeam() {
+        System.out.println("Which team would you like to choose to play against? "
+                + "Your options are \n the weak team or the strong team");
+        String input;
+        input = scan.nextLine();
+        while (!input.equals("weak team") && !input.equals("strong team")) {
+            System.out.println("Please type in either 'weak team' or 'strong team'");
+            input = scan.nextLine();
+        }
+
+        if (input.equals("strong team")) {
+            game = new Game(myTeam, strongTeam);
+            enemyTeam = strongTeam;
+            System.out.println("You will now be playing against the strong team");
+        } else {
+            game = new Game(myTeam, weakTeam);
+            enemyTeam = weakTeam;
+            System.out.println("You will now be playing against the weak team");
+        }
     }
 
 
