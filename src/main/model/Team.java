@@ -60,6 +60,17 @@ public interface Team {
     // EFFECTS: adds a player to starter list
     public void addStartingPlayer(Players p);
 
+    // EFFECTS: returns whether or not the setter is in the back
+    public boolean isSetterBack();
 
+    // REQUIRES: dir [0, 3]
+    // MODIFIES: ball object
+    // EFFECTS: ball moves to a specified position
+    public void set(int dir, Ball ball);
+
+    // REQUIRES: dir [0, 2]
+    // MODIFIES: ball object
+    // EFFECTS: ball moves to a specified position
+    public void attack(int who, int dir, Ball ball);
 
 }

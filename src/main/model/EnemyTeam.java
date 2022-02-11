@@ -135,7 +135,7 @@ public class EnemyTeam implements Team {
             } else if (p.equals(middle1) || p.equals(middle2)) {
                 p.moveToX(6);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
-                    p.moveToY(5);
+                    p.moveToY(4); // adjust later
                 }
             } else if (p.equals(opposite)) {
                 p.moveToX(2);
@@ -310,6 +310,45 @@ public class EnemyTeam implements Team {
         starters.add(p);
     }
 
+    @Override
+    public boolean isSetterBack() {
+        if (setter.getRotation() == 1 || setter.getRotation() == 2 || setter.getRotation() == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void set(int dir, Ball ball) {
+        setter.set(dir, ball);
+    }
+
+    @Override
+    public void attack(int who, int dir, Ball ball) {
+        if (who == 0) {
+            for (Players p : starters) {
+                if ((p.getRotation() >= 4) && p.getPlayingPosition() == "Outside Hitter") {
+                    p.spike(dir, ball);
+                }
+            }
+        } else if (who == 1) {
+            for (Players p : starters) {
+                if ((p.getRotation() >= 4) && p.getPlayingPosition() == "Middle Blocker") {
+                    p.spike(dir, ball);
+                }
+            }
+        } else if (who == 2) {
+            for (Players p : starters) {
+                if ((p.getRotation() >= 4) && p.getPlayingPosition() == "Opposite Hitter") {
+                    p.spike(dir, ball);
+                }
+            }
+        } else if (who == 3) {
+            setter.spike(1, ball);
+        }
+    }
+
     // REQUIRES: a player number of a player already in the starters list
     // EFFECTS: retrieves a starting player from the starters list
     @Override
@@ -344,10 +383,12 @@ public class EnemyTeam implements Team {
         return chosenOne;
     }
 
+    // TODO write tests
     public int getChance() {
         return chance;
     }
 
+    // TODO write tests
     public void setChance(int c) {
         this.chance = c;
     }

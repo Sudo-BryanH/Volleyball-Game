@@ -21,6 +21,7 @@ public class MyTeamTest {
     Players testOP;
     Players testMB3;
     Players testSet2;
+    Ball mikasa;
 
 
     @BeforeEach
@@ -36,7 +37,7 @@ public class MyTeamTest {
 
         testTeam = new MyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
-
+        mikasa = new Ball();
 
         testTeam.addPlayer(testSet2);
         testTeam.addPlayer(testMB3);
@@ -54,7 +55,12 @@ public class MyTeamTest {
         assertEquals(6, testOH2.getRotation());
         assertEquals(6, testTeam.getStarters().size());
         assertEquals(8, testTeam.getRoster().size());
-
+        assertEquals("Setter" ,testSet.getPlayingPosition());
+        assertEquals("Middle Blocker", testMB1.getPlayingPosition());
+        assertEquals("Outside Hitter", testOH1.getPlayingPosition());
+        assertEquals("Opposite Hitter", testOP.getPlayingPosition());
+        assertEquals("Middle Blocker", testMB2.getPlayingPosition());
+        assertEquals("Outside Hitter", testOH2.getPlayingPosition());
     }
 
     @Test
@@ -383,6 +389,57 @@ public class MyTeamTest {
         assertEquals(6, testTeam.getStarters().size() );
         testTeam.addStartingPlayer(testSet2);
         assertEquals(7, testTeam.getStarters().size() );
+    }
+
+    @Test
+    public void testSet() {
+        testTeam.set(0, mikasa);
+        assertEquals(0, mikasa.getXPos());
+        assertEquals(13, mikasa.getYPos());
+
+        testTeam.set(1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(13, mikasa.getYPos());
+
+        testTeam.set(2, mikasa);
+        assertEquals(12, mikasa.getXPos());
+        assertEquals(13, mikasa.getYPos());
+    }
+
+    @Test
+    public void testAttack() {
+        testTeam.attack(0, 0, mikasa);
+        assertEquals(0, mikasa.getXPos());
+        assertEquals(3, mikasa.getYPos());
+
+        testTeam.attack(0, 1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(2, mikasa.getYPos());
+
+        testTeam.attack(1, 0, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(6, mikasa.getYPos());
+
+        testTeam.attack(1, 1, mikasa);
+        assertEquals(2, mikasa.getXPos());
+        assertEquals(5, mikasa.getYPos());
+
+        testTeam.attack(1, 2, mikasa);
+        assertEquals(10, mikasa.getXPos());
+        assertEquals(5, mikasa.getYPos());
+
+        testTeam.attack(2, 0, mikasa);
+        assertEquals(12, mikasa.getXPos());
+        assertEquals(4, mikasa.getYPos());
+
+        testTeam.attack(2, 1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(3, mikasa.getYPos());
+
+        testTeam.attack(3, 1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(6, mikasa.getYPos());
+
     }
 
 

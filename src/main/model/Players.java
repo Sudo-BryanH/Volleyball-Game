@@ -45,5 +45,12 @@ public interface Players {
     // EFFECTS: returns the player num
     public int getNum();
 
+    // EFFECTS: returns the playing position of this player
+    public String getPlayingPosition();
+
+    // REQUIRES: int 0 (left) 1 (middle) 2 (right) or 3 (dump)
+    // MODIFIES: ball object
+    // EFFECTS: moves the ball to attack position
+    public void set(int d, Ball ball);
 
 }

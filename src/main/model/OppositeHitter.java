@@ -4,7 +4,7 @@ public class OppositeHitter implements Players {
 
     private int side;
     private int playerNum;
-    private static String playingPosition = "Opposite Hitter";
+    private static String PLAYINGPOSITION = "Opposite Hitter";
     private int rotationNum;
     private int posX;
     private int posY;
@@ -45,18 +45,18 @@ public class OppositeHitter implements Players {
     public void spike(int dir, Ball ball) {
 
         if (side == 1) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(12);
                 ball.moveToY(4);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(6);
                 ball.moveToY(3);
             }
         } else if (side == 0) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(0);
                 ball.moveToY(20);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(6);
                 ball.moveToY(21);
             }
@@ -83,23 +83,23 @@ public class OppositeHitter implements Players {
     // REQUIRES: dir = [1, 2]
     // MODIFIES: ball object
     // EFFECTS: sends the ball to either (3, 21) or (9, 21) if side 0, or (3, 3) or (9, 3) if side 1
-    // TODO Change to meet requirements of players
+
     @Override
     public void serve(int dir, Ball ball) {
 
         if (side == 0) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(3);
                 ball.moveToY(21);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(9);
                 ball.moveToY(21);
             }
         } else if (side == 1) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(3);
                 ball.moveToY(3);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(9);
                 ball.moveToY(3);
             }
@@ -141,6 +141,16 @@ public class OppositeHitter implements Players {
     @Override
     public int getNum() {
         return playerNum;
+    }
+
+    @Override
+    public String getPlayingPosition() {
+        return PLAYINGPOSITION;
+    }
+
+    @Override
+    public void set(int d, Ball ball) {
+
     }
 
 }

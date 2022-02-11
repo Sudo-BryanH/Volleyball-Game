@@ -5,7 +5,7 @@ public class MiddleBlockers implements Players {
 
     private int side;
     private int playerNum;
-    private static String playingPosition = "Middle Blocker";
+    private static String PLAYINGPOSITION = "Middle Blocker";
     private int rotationNum;
     private int posX;
     private int posY;
@@ -47,24 +47,24 @@ public class MiddleBlockers implements Players {
     @Override
     public void spike(int dir, Ball ball) {
         if (side == 1) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(6);
                 ball.moveToY(6);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(2);
                 ball.moveToY(5);
-            } else if (dir == 3) {
+            } else if (dir == 2) {
                 ball.moveToX(10);
                 ball.moveToY(5);
             }
         } else if (side == 0) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(6);
                 ball.moveToY(18);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(2);
                 ball.moveToY(19);
-            } else if (dir == 3) {
+            } else if (dir == 2) {
                 ball.moveToX(10);
                 ball.moveToY(19);
             }
@@ -95,18 +95,18 @@ public class MiddleBlockers implements Players {
     public void serve(int dir, Ball ball) {
 
         if (side == 0) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(3);
                 ball.moveToY(21);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(9);
                 ball.moveToY(21);
             }
         } else if (side == 1) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(3);
                 ball.moveToY(3);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(9);
                 ball.moveToY(3);
             }
@@ -148,6 +148,16 @@ public class MiddleBlockers implements Players {
     @Override
     public int getNum() {
         return playerNum;
+    }
+
+    @Override
+    public String getPlayingPosition() {
+        return PLAYINGPOSITION;
+    }
+
+    @Override
+    public void set(int d, Ball ball) {
+
     }
 
 }

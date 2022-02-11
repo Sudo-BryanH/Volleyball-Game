@@ -4,7 +4,7 @@ public class Setters implements Players {
 
     private int side;
     private int playerNum;
-    private static String playingPosition = "Setter";
+    private static String PLAYINGPOSITION = "Setter";
     private int rotationNum;
     private int dumps;
     private int posX;
@@ -62,25 +62,25 @@ public class Setters implements Players {
 
     }
 
-    // REQUIRES: dir = [1, 2]
+    // REQUIRES: dir = [0, 1]
     // MODIFIES: ball object
     // EFFECTS: sends the ball to either (3, 21) or (9, 21) if side 0, or (3, 3) or (9, 3) if side 1
     @Override
     public void serve(int dir, Ball ball) {
 
         if (side == 0) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(3);
                 ball.moveToY(21);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(9);
                 ball.moveToY(21);
             }
         } else if (side == 1) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(3);
                 ball.moveToY(3);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(9);
                 ball.moveToY(3);
             }
@@ -124,31 +124,41 @@ public class Setters implements Players {
         return playerNum;
     }
 
-    // REQUIRES: int 1 (left) 2 (middle) or 3 (right)
+    @Override
+    public String getPlayingPosition() {
+        return PLAYINGPOSITION;
+    }
+
+    @Override
+    // REQUIRES: int 0 (left) 1 (middle) 2 (right) or 3 (dump)
     // MODIFIES: ball object
     // EFFECTS: moves the ball to attack position
     public void set(int dir, Ball ball) {
         if (side == 0) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(12);
                 ball.moveToY(11);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(6);
                 ball.moveToY(11);
-            } else if (dir == 3) {
+            } else if (dir == 2) {
                 ball.moveToX(0);
                 ball.moveToY(11);
+            } else if (dir == 3) {
+                spike(1, ball);
             }
         } else if (side == 1) {
-            if (dir == 1) {
+            if (dir == 0) {
                 ball.moveToX(0);
                 ball.moveToY(13);
-            } else if (dir == 2) {
+            } else if (dir == 1) {
                 ball.moveToX(6);
                 ball.moveToY(13);
-            } else if (dir == 3) {
+            } else if (dir == 2) {
                 ball.moveToX(12);
                 ball.moveToY(13);
+            } else if (dir == 3) {
+                spike(1, ball);
             }
         }
     }
