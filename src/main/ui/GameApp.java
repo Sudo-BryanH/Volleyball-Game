@@ -182,8 +182,8 @@ public class GameApp {
             } else {
                 System.out.println("Ball has been set to the right and is attack towards" + attackNum);
             }
+            myTeam.attack(setNum, attackNum, ball);
         }
-        myTeam.attack(setNum, attackNum, ball);
     }
 
     // REQUIRES: turn [0, 1]
@@ -359,12 +359,12 @@ public class GameApp {
     private void enemyMoveDefence1() {
 
         for (Players p : enemyTeam.getStarters()) {
-            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+            if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(2);
-            } else if (p.getPlayingPosition() == "Middle Blocker") {
+            } else if (p.getPlayingPosition().equals("Middle Blocker")) {
                 p.moveToX(2);
                 p.moveToY(5);
-            } else if (p.getPlayingPosition() == "Outside Hitter") {
+            } else if (p.getPlayingPosition().equals("Outside Hitter")) {
                 p.moveToX(10);
                 p.moveToY(5);
             }
@@ -377,29 +377,29 @@ public class GameApp {
     private void enemyMoveDefence0() {
 
         for (Players p : enemyTeam.getStarters()) {
-            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+            if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(6);
-            } else if (p.getPlayingPosition() == "Middle Blocker") {
+            } else if (p.getPlayingPosition().equals("Middle Blocker")) {
                 p.moveToX(0);
                 p.moveToY(3);
-            } else if (p.getPlayingPosition() == "Outside Hitter") {
+            } else if (p.getPlayingPosition().equals("Outside Hitter")) {
                 p.moveToX(6);
                 p.moveToY(2);
             }
         }
-
     }
+
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum == 2
     private void enemyMoveDefence2() {
 
         for (Players p : enemyTeam.getStarters()) {
-            if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+            if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(10);
-            } else if (p.getPlayingPosition() == "Middle Blocker") {
+            } else if (p.getPlayingPosition().equals("Middle Blocker")) {
                 p.moveToX(6);
                 p.moveToY(3);
-            } else if (p.getPlayingPosition() == "Outside Hitter") {
+            } else if (p.getPlayingPosition().equals("Outside Hitter")) {
                 p.moveToX(12);
                 p.moveToY(4);
             }
