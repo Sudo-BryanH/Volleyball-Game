@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+// MyTeam represents the team of players that the user controls.
 
 public class MyTeam implements Team {
 

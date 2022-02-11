@@ -3,11 +3,11 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EnemyTeamTest {
 
-    Team testTeam;
+    EnemyTeam testTeam;
     Players testSet;
     Players testMB1;
     Players testMB2;
@@ -16,6 +16,8 @@ public class EnemyTeamTest {
     Players testOP;
     Players testMB3;
     Players testSet2;
+    Ball mikasa;
+
 
 
     @BeforeEach
@@ -35,6 +37,9 @@ public class EnemyTeamTest {
         testTeam.addPlayer(testMB3);
         testTeam.addPlayer(testSet2);
         testTeam.arrangeMbOh();
+        mikasa = new Ball();
+        testTeam.setChance(10);
+
     }
 
     @Test
@@ -131,7 +136,7 @@ public class EnemyTeamTest {
         assertEquals(2, testOP.getPosX());
         assertEquals(3, testOP.getPosY());
         assertEquals(6, testMB2.getPosX());
-        assertEquals(5, testMB2.getPosY());
+        assertEquals(4, testMB2.getPosY());
         assertEquals(10, testOH2.getPosX());
         assertEquals(3, testOH2.getPosY());
 
@@ -147,7 +152,7 @@ public class EnemyTeamTest {
         assertEquals(2, testOP.getPosX());
         assertEquals(3, testOP.getPosY());
         assertEquals(6, testMB2.getPosX());
-        assertEquals(5, testMB2.getPosY());
+        assertEquals(4, testMB2.getPosY());
         assertEquals(10, testOH2.getPosX());
         assertEquals(11, testOH2.getPosY());
 
@@ -319,5 +324,92 @@ public class EnemyTeamTest {
         assertEquals(6, testTeam.getStarters().size() );
         testTeam.addStartingPlayer(testSet2);
         assertEquals(7, testTeam.getStarters().size() );
+    }
+
+    @Test
+    public void testGetStartingPlayer() {
+        assertEquals(testSet, testTeam.getStartingPlayer(9));
+        assertEquals(testOP, testTeam.getStartingPlayer(1));
+    }
+
+    @Test
+    public void testGetPlayer() {
+        assertEquals(testSet, testTeam.getPlayer(9));
+        assertEquals(testSet2, testTeam.getPlayer(2));
+        assertEquals(testMB3, testTeam.getPlayer(7));
+    }
+
+    @Test
+    public void testIsSetterBack() {
+        assertTrue(testTeam.isSetterBack());
+        testTeam.changeRotation();
+        testTeam.changeRotation();
+        testTeam.changeRotation();
+        assertFalse(testTeam.isSetterBack());
+    }
+
+    @Test
+    public void testSet() {
+        testTeam.set(0, mikasa);
+        assertEquals(12, mikasa.getXPos());
+        assertEquals(11, mikasa.getYPos());
+
+        testTeam.set(1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(11, mikasa.getYPos());
+
+        testTeam.set(2, mikasa);
+        assertEquals(0, mikasa.getXPos());
+        assertEquals(11, mikasa.getYPos());
+    }
+
+    @Test
+    public void testAttack() {
+        testTeam.attack(0, 0, mikasa);
+        assertEquals(12, mikasa.getXPos());
+        assertEquals(21, mikasa.getYPos());
+
+        testTeam.attack(0, 1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(22, mikasa.getYPos());
+
+        testTeam.attack(1, 0, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(18, mikasa.getYPos());
+
+        testTeam.attack(1, 1, mikasa);
+        assertEquals(2, mikasa.getXPos());
+        assertEquals(19, mikasa.getYPos());
+
+        testTeam.attack(1, 2, mikasa);
+        assertEquals(10, mikasa.getXPos());
+        assertEquals(19, mikasa.getYPos());
+
+        testTeam.attack(2, 0, mikasa);
+        assertEquals(0, mikasa.getXPos());
+        assertEquals(20, mikasa.getYPos());
+
+        testTeam.attack(2, 1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(21, mikasa.getYPos());
+
+        testTeam.attack(3, 1, mikasa);
+        assertEquals(6, mikasa.getXPos());
+        assertEquals(18, mikasa.getYPos());
+
+    }
+
+    @Test
+    public void testGetChance() {
+        assertEquals(10, testTeam.getChance());
+        testTeam.setChance(3);
+        assertEquals(3, testTeam.getChance());
+    }
+
+    @Test
+    public void testSetChance() {
+        assertEquals(10, testTeam.getChance());
+        testTeam.setChance(3);
+        assertEquals(3, testTeam.getChance());
     }
 }

@@ -163,6 +163,13 @@ public class GameTest {
         assertEquals(1, testGame.getTurnNum());
         testGame.flipTurnNum();
         assertEquals(0, testGame.getTurnNum());
+
+    }
+
+    @Test
+    public void testSetTurnNum() {
+        testGame.setTurnNum(1);
+        assertEquals(1, testGame.getTurnNum());
     }
 
 

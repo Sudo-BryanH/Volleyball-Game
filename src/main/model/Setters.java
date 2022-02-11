@@ -1,5 +1,8 @@
 package model;
 
+// Setters is a type of player. Unlike other player types, they should not receive but can set
+// Note: they can receive but the program dictates that they won't
+
 public class Setters implements Players {
 
     private int side;
@@ -56,9 +59,18 @@ public class Setters implements Players {
 
     }
 
-    // EFFECTS: none. Setters should not be able to receive
+    // EFFECTS: moves the ball to location [8, 14] or [4, 8] for enemy
+    // NOTE: this is just for implementation sake, setters should never receive
     @Override
     public void receive(Ball ball) {
+        if (side == 1) {
+            ball.moveToX(8);
+            ball.moveToY(14);
+        }
+        if (side == 0) {
+            ball.moveToX(4);
+            ball.moveToY(8);
+        }
 
     }
 
@@ -144,8 +156,6 @@ public class Setters implements Players {
             } else if (dir == 2) {
                 ball.moveToX(0);
                 ball.moveToY(11);
-            } else if (dir == 3) {
-                spike(1, ball);
             }
         } else if (side == 1) {
             if (dir == 0) {
@@ -157,8 +167,6 @@ public class Setters implements Players {
             } else if (dir == 2) {
                 ball.moveToX(12);
                 ball.moveToY(13);
-            } else if (dir == 3) {
-                spike(1, ball);
             }
         }
     }

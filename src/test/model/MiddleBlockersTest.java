@@ -50,23 +50,23 @@ public class MiddleBlockersTest {
 
     @Test
     public void testSpike() {
-        testPlayer.spike(1, mikasa);
+        testPlayer.spike(0, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(6,mikasa.getYPos());
-        testPlayer.spike(2, mikasa);
+        testPlayer.spike(1, mikasa);
         assertEquals(2,mikasa.getXPos());
         assertEquals(5,mikasa.getYPos());
-        testPlayer.spike(3, mikasa);
+        testPlayer.spike(2, mikasa);
         assertEquals(10,mikasa.getXPos());
         assertEquals(5,mikasa.getYPos());
 
-        testEPlayer.spike(1, mikasa);
+        testEPlayer.spike(0, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(18,mikasa.getYPos());
-        testEPlayer.spike(2, mikasa);
+        testEPlayer.spike(1, mikasa);
         assertEquals(2,mikasa.getXPos());
         assertEquals(19,mikasa.getYPos());
-        testEPlayer.spike(3, mikasa);
+        testEPlayer.spike(2, mikasa);
         assertEquals(10,mikasa.getXPos());
         assertEquals(19,mikasa.getYPos());
 
@@ -85,17 +85,17 @@ public class MiddleBlockersTest {
 
     @Test
     public void testServe() {
-        testPlayer.serve(1, mikasa);
+        testPlayer.serve(0, mikasa);
         assertEquals(3,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
-        testPlayer.serve(2, mikasa);
+        testPlayer.serve(1, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
 
-        testEPlayer.serve(1, mikasa);
+        testEPlayer.serve(0, mikasa);
         assertEquals(3,mikasa.getXPos());
         assertEquals(21,mikasa.getYPos());
-        testEPlayer.serve(2, mikasa);
+        testEPlayer.serve(1, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(21,mikasa.getYPos());
 
@@ -123,6 +123,37 @@ public class MiddleBlockersTest {
     @Test
     public void testGetNum() {
         assertEquals(1, testPlayer.getNum());
+    }
+    @Test
+    public void testGetPlayingPosition() {
+        assertEquals("Middle Blocker", testPlayer.getPlayingPosition());
+    }
+
+    @Test
+    public void testSet() {
+        testPlayer.set(2, mikasa);
+        assertEquals(12,mikasa.getXPos());
+        assertEquals(13,mikasa.getYPos());
+
+        testPlayer.set(0, mikasa);
+        assertEquals(0,mikasa.getXPos());
+        assertEquals(13,mikasa.getYPos());
+
+        testPlayer.set(1, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(13,mikasa.getYPos());
+
+        testEPlayer.set(2, mikasa);
+        assertEquals(0,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
+
+        testEPlayer.set(0, mikasa);
+        assertEquals(12,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
+
+        testEPlayer.set(1, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
     }
 }
 

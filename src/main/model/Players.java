@@ -1,5 +1,8 @@
 package model;
 
+// Players is an interface for the classes Setters OutsideHitters OppositeHitters
+// and MiddleBlockers.
+
 public interface Players {
 
     // REQUIRES: x[0, 12],
@@ -51,6 +54,6 @@ public interface Players {
     // REQUIRES: int 0 (left) 1 (middle) 2 (right) or 3 (dump)
     // MODIFIES: ball object
     // EFFECTS: moves the ball to attack position
-    public void set(int d, Ball ball);
+    public void set(int dir, Ball ball);
 
 }

@@ -1,4 +1,5 @@
 package model;
+// The ball object used in this game which has an x, y coordinate
 
 public class Ball {
 

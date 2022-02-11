@@ -1,5 +1,7 @@
 package model;
 
+// MiddleBlocker is a player class with an x, y position and their own type of hitting
+
 public class MiddleBlockers implements Players {
 
 
@@ -90,7 +92,7 @@ public class MiddleBlockers implements Players {
     // REQUIRES: dir = [1, 2]
     // MODIFIES: ball object
     // EFFECTS: sends the ball to either (3, 21) or (9, 21) if side 0, or (3, 3) or (9, 3) if side 1
-    // TODO Change to meet requirements of players
+
     @Override
     public void serve(int dir, Ball ball) {
 
@@ -155,9 +157,36 @@ public class MiddleBlockers implements Players {
         return PLAYINGPOSITION;
     }
 
-    @Override
-    public void set(int d, Ball ball) {
 
+    @Override
+    // REQUIRES: int 0 (left) 1 (middle) 2 (right) or 3 (dump)
+    // MODIFIES: ball object
+    // EFFECTS: moves the ball to attack position
+    // NOTE: no player but the setter should set, this is just for implementaiton sake
+    public void set(int dir, Ball ball) {
+        if (side == 0) {
+            if (dir == 0) {
+                ball.moveToX(12);
+                ball.moveToY(11);
+            } else if (dir == 1) {
+                ball.moveToX(6);
+                ball.moveToY(11);
+            } else if (dir == 2) {
+                ball.moveToX(0);
+                ball.moveToY(11);
+            }
+        } else if (side == 1) {
+            if (dir == 0) {
+                ball.moveToX(0);
+                ball.moveToY(13);
+            } else if (dir == 1) {
+                ball.moveToX(6);
+                ball.moveToY(13);
+            } else if (dir == 2) {
+                ball.moveToX(12);
+                ball.moveToY(13);
+            }
+        }
     }
 
 }

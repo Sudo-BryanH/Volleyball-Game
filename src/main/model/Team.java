@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// This is the interface representing the team.
+// Teams store the default positions of players in different situations
+
 public interface Team {
 
     // MODIFIES: players

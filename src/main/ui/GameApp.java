@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 import model.*;
 
+// This is the GameApp class where most of the user interface happens. Players can see
+// information about the score, their players' positions, ball's positions and turns.
+// Players can also control their players from here.
 
 public class GameApp {
 
@@ -36,19 +39,20 @@ public class GameApp {
     Ball ball = new Ball();
     int turn;
 
-
+    // EFFECTS: constructor for a game
     public GameApp() {
         setUp();
         beginGame();
     }
 
-
-    // EFFECTS: Creates enemies teams and sets up your team. Then, decide which team you will be playing
+    // MODIFIES: this, MyTeam, EnemyTeam, game
+    // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
     public void setUp() {
         String input;
         boolean status = false;
         // Make enemy teams
-        weakTeam = (EnemyTeam) enemyTeamConstructor("weakTeam", weakMB1, weakMB2, weakSet, weakOP, weakOH1, weakOH2, 10);
+        weakTeam = (EnemyTeam) enemyTeamConstructor("weakTeam", weakMB1, weakMB2, weakSet,
+                weakOP, weakOH1, weakOH2, 10);
         strongTeam = (EnemyTeam) enemyTeamConstructor("strongTeam", strongMB1, strongMB2, strongSet,
                 strongOP, strongOH1, strongOH2, 3);
 
@@ -58,7 +62,7 @@ public class GameApp {
         myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
 
         chooseEnemyTeam();
-        while (status == false) {
+        while (!status) {
             System.out.println("Would you like to add another player to the roster? Type y or n");
             input = scan.next();
             if (input.equals("y")) {
@@ -69,10 +73,11 @@ public class GameApp {
             }
         }
 
-
         beginGame();
     }
 
+    // MODIFIES: game
+    // EFFECTS: Runs the game
     public void beginGame() {
         boolean gameOver = false;
         turn = game.getTurnNum();
@@ -98,8 +103,11 @@ public class GameApp {
         System.out.println("The final score for this set is " + game.getScore() + "your team to the enemy team.");
         System.out.println("Thank you for playing");
 
+
     }
 
+    // MODIFIES: game, ball
+    // EFFECTS: Runs each rally. Shows the turn and ball position after every major event. Shows scores when finished.
     public int beginRally(int turn) {
         boolean isOver = false;
         int setNum;
@@ -107,7 +115,7 @@ public class GameApp {
         System.out.println("Turn number is " + turn);
         serve(turn);
         while (!isOver) {
-
+            ballPos();
             game.flipTurnNum();
             turn = game.getTurnNum();
             System.out.println("Turn number changed to " + turn);
@@ -116,20 +124,15 @@ public class GameApp {
             attackNum = chooseAttack(setNum, turn);
             chooseDefend(turn, setNum, attackNum);
             attack(turn, setNum, attackNum);
+            ballPos();
             isOver = !checkReceive(turn);
         }
-
-        System.out.println("Turn number is " + turn);
-        if (turn == 0) {
-            System.out.println("Rally is over, enemy team scored");
-            game.enemyScore();
-        } else {
-            System.out.println("Rally is over, our team scored");
-            game.myScore();
-        }
+        endRally(turn);
         return turn;
     }
 
+
+    // EFFECTS: returns true if a ball has been received, false otherwise
     private boolean checkReceive(int turn) {
         List<Players> backrow = new ArrayList<>();
         boolean check = false;
@@ -154,6 +157,9 @@ public class GameApp {
         return check;
     }
 
+    // REQUIRES: turn[0, 1], setNum[0, 2], attackNum[0,2]
+    // MODIFIES: ball, MyTeam, EnemyTeam, Players, ball
+    // EFFECT: Ball goes to player then goes to opponent court
     private void attack(int turn, int setNum, int attackNum) {
         attackPositions(turn);
         if (turn == 0) {
@@ -165,7 +171,6 @@ public class GameApp {
             } else {
                 System.out.println("Ball has been set to the right and is attack towards" + attackNum);
             }
-
             enemyTeam.attack(setNum, attackNum, ball);
 
         } else if (turn == 1) {
@@ -181,6 +186,9 @@ public class GameApp {
         myTeam.attack(setNum, attackNum, ball);
     }
 
+    // REQUIRES: turn [0, 1]
+    // MODIFIES: MyTeam EnemyTeam Players
+    // EFFECTS: moves the players into position to attack
     private void attackPositions(int turn) {
         if (turn == 0) {
             if (enemyTeam.isSetterBack()) {
@@ -197,6 +205,9 @@ public class GameApp {
         }
     }
 
+    // REQUIRES: turn [0, 1]
+    // MODIFIES: ball
+    // EFFECT: Ball goes to opponent court
     private void serve(int turn) {
         int chance = (int) (Math.random() * 2);
         int input;
@@ -223,6 +234,9 @@ public class GameApp {
         }
     }
 
+    // REQUIRES: turn[0, 1]
+    // MODIFIES: ball
+    // EFFECTS: moves the ball to setter's position
     private void receive(int turn) {
         if (turn == 0) {
             for (Players p : enemyTeam.getStarters()) {
@@ -239,8 +253,12 @@ public class GameApp {
             }
             System.out.println("Ball has been received by us");
         }
+        ballPos();
     }
 
+    // REQUIRES: turn[0,1]
+    // MODIFIES: this
+    // EFFECTS: choose who to set
     private int chooseSet(int turn) {
         int chance2 = (int) (Math.random() * 2);
         int chance3 = (int) (Math.random() * 3);
@@ -255,9 +273,9 @@ public class GameApp {
             }
         } else if (turn == 1) {
             if (myTeam.isSetterBack()) {
-                System.out.println("Do you want to set the left side [0], middle [1], or right side [2] to attack?");
-            } else {
                 System.out.println("Do you want to set the left side [0], middle [1]");
+            } else {
+                System.out.println("Do you want to set the left side [0], middle [1], or right side [2] to attack?");
             }
         }
         choice = scan.nextInt();
@@ -265,6 +283,8 @@ public class GameApp {
         return choice;
     }
 
+    // REQUIRES: turn [0, 1] attackNum[0, 2] setNum[0, 2]
+    // EFFECTS: Choose how to defend before an attack
     private void chooseDefend(int turn, int setNum, int attackNum) {
         if (turn == 1) {
             enemyDefend(setNum, attackNum);
@@ -275,6 +295,9 @@ public class GameApp {
 
     }
 
+    // REQUIRES: turn [0, 1] attackNum[0, 2] setNum[0, 2]
+    // MODIFIES: EnemyTeam, this, players
+    // EFFECTS: Enemy choose how to defend before an attack
     private void enemyDefend(int setNum, int attackNum) {
         int multiplier = enemyTeam.getChance();
         int chance = (int) (Math.random() * multiplier);
@@ -298,6 +321,9 @@ public class GameApp {
 
     }
 
+
+    // MODIFIES: EnemyTeam, this, players
+    // EFFECTS: We choose how to defend before an attack
     private void myDefence() {
         if (myTeam.isSetterBack()) {
             myTeam.defendBSetter();
@@ -314,7 +340,7 @@ public class GameApp {
                 System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosX() + ")");
 
-            } else if (p.getPlayingPosition() != "Setter") {
+            } else if (!p.getPlayingPosition().equals("Setter")) {
                 System.out.println("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s x receive position");
                 int x = scan.nextInt();
                 System.out.println("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s y receive position");
@@ -328,6 +354,8 @@ public class GameApp {
         }
     }
 
+    // MODIFIES: EnemyTeam, this, players
+    // EFFECTS: Enemy choose how to defend before an attack if setNum ==1
     private void enemyMoveDefence1() {
 
         for (Players p : enemyTeam.getStarters()) {
@@ -344,6 +372,8 @@ public class GameApp {
 
     }
 
+    // MODIFIES: EnemyTeam, this, players
+    // EFFECTS: Enemy choose how to defend before an attack if setNum == 0
     private void enemyMoveDefence0() {
 
         for (Players p : enemyTeam.getStarters()) {
@@ -359,7 +389,8 @@ public class GameApp {
         }
 
     }
-
+    // MODIFIES: EnemyTeam, this, players
+    // EFFECTS: Enemy choose how to defend before an attack if setNum == 2
     private void enemyMoveDefence2() {
 
         for (Players p : enemyTeam.getStarters()) {
@@ -376,7 +407,9 @@ public class GameApp {
 
     }
 
-
+    // REQUIRES: setNum [0, 2], turn [0, 1]
+    // MODIFIES: tis
+    // EFFECTS: teams choose how to attack
     private int chooseAttack(int setNum, int turn) {
         int choice = 1;
         int chance2 = (int) (Math.random() * 2);
@@ -404,6 +437,7 @@ public class GameApp {
     }
 
 
+    // EFFECTS: constructs an enemy team
     public Team enemyTeamConstructor(String name, Players mb1, Players mb2,
                                      Players set, Players op, Players oh1,
                                      Players oh2, int chance) {
@@ -422,6 +456,7 @@ public class GameApp {
 
     }
 
+    // EFFECTS: constructs our team
     public Team myTeamConstructor(String name, Players mb1, Players mb2,
                                   Players set, Players op, Players oh1,
                                   Players oh2) {
@@ -453,6 +488,7 @@ public class GameApp {
         return m; // May cause errors with subtypes
     }
 
+    // EFFECTS: creates and adds a player to our team roster
     public void addPlayerToTeam() {
 
         int num;
@@ -481,6 +517,7 @@ public class GameApp {
         System.out.println("there are now " + myTeam.getRoster().size() + " Players in your team's roster");
     }
 
+    // EFFECTS: picks an enemy team to play against
     private void chooseEnemyTeam() {
         System.out.println("Which team would you like to choose to play against? "
                 + "Your options are \n the weak team or the strong team");
@@ -502,5 +539,21 @@ public class GameApp {
         }
     }
 
+    // EFFECTS: displays the ball's position
+    private void ballPos() {
+        System.out.println("Ball Position is at [" + ball.getXPos() + " , " + ball.getYPos() + "]");
+    }
+
+    // EFFECTS: displays score and other information after a rally has ended
+    private void endRally(int turn) {
+        System.out.println("Turn number is " + turn);
+        if (turn == 0) {
+            System.out.println("Rally is over, enemy team scored");
+            game.enemyScore();
+        } else {
+            System.out.println("Rally is over, our team scored");
+            game.myScore();
+        }
+    }
 
 }

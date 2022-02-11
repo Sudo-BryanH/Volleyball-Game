@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+// EnemyTeam class represents an enemy team holding players and the chance that the
+// interfaces uses to control movements of each player.
 
 public class EnemyTeam implements Team {
 
@@ -310,6 +312,7 @@ public class EnemyTeam implements Team {
         starters.add(p);
     }
 
+    // EFFECTS: determines if the setter is in the backrow
     @Override
     public boolean isSetterBack() {
         if (setter.getRotation() == 1 || setter.getRotation() == 2 || setter.getRotation() == 3) {
@@ -319,11 +322,17 @@ public class EnemyTeam implements Team {
         }
     }
 
+    // REQUIRES: dir [0, 2]
+    // MODIFIES: this
+    // EFFECTS: sets the ball to the direction of dir
     @Override
     public void set(int dir, Ball ball) {
         setter.set(dir, ball);
     }
 
+    // REQUIRES: dir [0, 2]
+    // MODIFIES: this
+    // EFFECTS: Player who attacks the ball in dir direction
     @Override
     public void attack(int who, int dir, Ball ball) {
         if (who == 0) {
@@ -383,12 +392,12 @@ public class EnemyTeam implements Team {
         return chosenOne;
     }
 
-    // TODO write tests
+
     public int getChance() {
         return chance;
     }
 
-    // TODO write tests
+
     public void setChance(int c) {
         this.chance = c;
     }

@@ -53,19 +53,19 @@ public class OutsideHitterTest {
     @Test
     public void testSpike() {
 
-        testPlayer.spike(2, mikasa);
+        testPlayer.spike(1, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(2,mikasa.getYPos());
 
-        testPlayer.spike(1, mikasa);
+        testPlayer.spike(0, mikasa);
         assertEquals(0,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
 
-        testEPlayer.spike(2, mikasa);
+        testEPlayer.spike(1, mikasa);
         assertEquals(6,mikasa.getXPos());
         assertEquals(22,mikasa.getYPos());
 
-        testEPlayer.spike(1, mikasa);
+        testEPlayer.spike(0, mikasa);
         assertEquals(12,mikasa.getXPos());
         assertEquals(21,mikasa.getYPos());
 
@@ -85,17 +85,17 @@ public class OutsideHitterTest {
 
     @Test
     public void testServe() {
-        testPlayer.serve(1, mikasa);
+        testPlayer.serve(0, mikasa);
         assertEquals(3,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
-        testPlayer.serve(2, mikasa);
+        testPlayer.serve(1, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(3,mikasa.getYPos());
 
-        testEPlayer.serve(1, mikasa);
+        testEPlayer.serve(0, mikasa);
         assertEquals(3,mikasa.getXPos());
         assertEquals(21,mikasa.getYPos());
-        testEPlayer.serve(2, mikasa);
+        testEPlayer.serve(1, mikasa);
         assertEquals(9,mikasa.getXPos());
         assertEquals(21,mikasa.getYPos());
 
@@ -120,5 +120,37 @@ public class OutsideHitterTest {
     @Test
     public void testGetNum() {
         assertEquals(1, testPlayer.getNum());
+    }
+
+    @Test
+    public void testGetPlayingPosition() {
+        assertEquals("Outside Hitter", testPlayer.getPlayingPosition());
+    }
+
+    @Test
+    public void testSet() {
+        testPlayer.set(2, mikasa);
+        assertEquals(12,mikasa.getXPos());
+        assertEquals(13,mikasa.getYPos());
+
+        testPlayer.set(0, mikasa);
+        assertEquals(0,mikasa.getXPos());
+        assertEquals(13,mikasa.getYPos());
+
+        testPlayer.set(1, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(13,mikasa.getYPos());
+
+        testEPlayer.set(2, mikasa);
+        assertEquals(0,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
+
+        testEPlayer.set(0, mikasa);
+        assertEquals(12,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
+
+        testEPlayer.set(1, mikasa);
+        assertEquals(6,mikasa.getXPos());
+        assertEquals(11,mikasa.getYPos());
     }
 }

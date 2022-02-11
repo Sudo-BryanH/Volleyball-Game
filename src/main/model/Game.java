@@ -1,5 +1,7 @@
 package model;
 
+// Game class. Information about the game such as score and turn are stored here.
+
 import java.util.List;
 
 public class Game {
@@ -85,7 +87,9 @@ public class Game {
         }
 
     }
-    // TODO write tests
+
+
+    // REQUIRES: turn [0, 1]
     // MODIFIES: this
     // EFFECTS: sets the turn number
     public void setTurnNum(int turn) {

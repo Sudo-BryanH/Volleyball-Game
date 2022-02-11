@@ -56,10 +56,6 @@ public class SettersTest {
 
     }
 
-    @Test
-    public void testReceive() {
-
-    }
 
     @Test
     public void testServe() {
@@ -146,5 +142,20 @@ public class SettersTest {
         assertEquals(9, testPlayer.getNum());
     }
 
+    @Test
+    public void testReceive() {
+        testPlayer.receive(mikasa);
+        assertEquals(8, mikasa.getXPos());
+        assertEquals(14, mikasa.getYPos());
+
+        testEPlayer.receive(mikasa);
+        assertEquals(4, mikasa.getXPos());
+        assertEquals(8, mikasa.getYPos());
+    }
+
+    @Test
+    public void testGetPlayingPosition() {
+        assertEquals("Setter", testPlayer.getPlayingPosition());
+    }
 
 }
