@@ -61,3 +61,9 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 - As a user, I should be able to decide which player I want to spike (attack) after a receive
 - As a user, I want to see the scoreboard
 - As a user, I want to see which enemies are potential attackers
+
+### Phase 2 user stories
+
+- As a user, I should be able to save my teams to be used later on. 
+- As a user, I should be able to save my current match. 
+- As a user, I should be able to retrieve and continue playing saved matches.
