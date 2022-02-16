@@ -408,7 +408,7 @@ public class GameApp {
     }
 
     // REQUIRES: setNum [0, 2], turn [0, 1]
-    // MODIFIES: tis
+    // MODIFIES: this
     // EFFECTS: teams choose how to attack
     private int chooseAttack(int setNum, int turn) {
         int choice = 1;

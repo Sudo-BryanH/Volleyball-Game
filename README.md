@@ -54,6 +54,7 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 
 ## User Stories
 
+### Phase 1 user stories
 - As a user, I should be able to create and add an arbitrary number of players to my teams
 - As a user, I should be able to choose which opposing team I want to play
 - As a user, I should be able to choose my starting 6 players
@@ -66,4 +67,6 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 
 - As a user, I should be able to save my teams to be used later on. 
 - As a user, I should be able to save my current match. 
+  - This includes the score, rotations of the teams, teams, players, turn numbers etc.
 - As a user, I should be able to retrieve and continue playing saved matches.
+  -This includes the score, rotations of the teams, teams, players, turn numbers etc.
