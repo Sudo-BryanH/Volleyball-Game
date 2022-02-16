@@ -64,8 +64,7 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 - As a user, I want to see which enemies are potential attackers
 
 ### Phase 2 user stories
-
-- As a user, I should be able to save my teams to be used later on. 
+ 
 - As a user, I should be able to save my current match. 
   - This includes the score, rotations of the teams, teams, players, turn numbers etc.
 - As a user, I should be able to retrieve and continue playing saved matches.
