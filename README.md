@@ -68,4 +68,4 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 - As a user, I should be able to save my current match. 
   - This includes the score, rotations of the teams, teams, players, turn numbers etc.
 - As a user, I should be able to retrieve and continue playing saved matches.
-  -This includes the score, rotations of the teams, teams, players, turn numbers etc.
+  - This includes the score, rotations of the teams, teams, players, turn numbers etc.
