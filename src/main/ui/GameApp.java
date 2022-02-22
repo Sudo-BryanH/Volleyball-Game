@@ -62,7 +62,6 @@ public class GameApp {
         input = stringInput("Let's create your team. What would you like to call your team?");
         myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
 
-
         while (!status) {
             input = stringInput("Would you like to add another player to the roster? Type y or n");
             if (input.equals("y")) {
@@ -263,7 +262,7 @@ public class GameApp {
     private int chooseSet(int turn) {
         int chance2 = (int) (Math.random() * 2);
         int chance3 = (int) (Math.random() * 3);
-        int choice;
+        String choice;
         if (turn == 0) {
             if (enemyTeam.isSetterBack()) {
                 System.out.println("Enemy can attack from the left, middle, or right");
@@ -274,15 +273,25 @@ public class GameApp {
             }
         } else if (turn == 1) {
             if (myTeam.isSetterBack()) {
-                System.out.println("Do you want to set the left side [0], middle [1], or right side [2] to attack");
+
+                choice = stringInput("Do you want to set the left side [l], middle [m], or right side [r] to attack?");
             } else {
-                System.out.println("Do you want to set the left side [0], middle [1] to attack");
+                choice = stringInput("Do you want to set the left side [l], or middle [m] to attack");
             }
+            System.out.println("you have picked " + choice);
+            if (choice.equals("l")) {
+                return 0;
+            } else if (choice.equals("m")) {
+                return 1;
+            } else {
+                return 2;
+            }
+
         }
-        choice = intInput(" ");
-        System.out.println("you have picked " + choice);
-        return choice;
+        return -1;
     }
+
+
 
     // REQUIRES: turn [0, 1] attackNum[0, 2] setNum[0, 2]
     // EFFECTS: Choose how to defend before an attack
@@ -488,11 +497,9 @@ public class GameApp {
         String pos;
 
         Players p;
-        System.out.println("Which player do you want to make? type 's' for setter, "
+        pos = stringInput("Which player do you want to make? type 's' for setter, "
                 + "'m' for middle, 'oh' for outside hitter, or 'op' for opposite");
-        pos = scan.next();
-        System.out.println("Which number would you like to assign to this player?");
-        num = scan.nextInt();
+        num = intInput("Which number would you like to assign to this player?");
         if (pos.equals("s")) {
             p = new Setters(num, 1);
             myTeam.addPlayer(p);
@@ -525,6 +532,7 @@ public class GameApp {
             enemyTeam = weakTeam;
             System.out.println("You will now be playing against the weak team");
         }
+
     }
 
     // EFFECTS: displays the ball's position
@@ -549,10 +557,12 @@ public class GameApp {
     }
 
     // EFFECTS: asks the user for input, then accepts input. If input == 'quit', then end game.
-    public String stringInput(String message) {
+    private String stringInput(String message) {
+        String nothing;
         String input;
         System.out.println(message);
         input = scan.next();
+        nothing = scan.nextLine();
         if (input.equals("quit")) {
             quit(); // may cause problems if no return statments
         }
@@ -562,7 +572,7 @@ public class GameApp {
 
 
     // EFFECTS: asks the user for input, then accepts input. If input == 99, then end game.
-    public int intInput(String message) {
+    private int intInput(String message) {
         int input;
         System.out.println(message);
         input = scan.nextInt();
@@ -572,7 +582,8 @@ public class GameApp {
         return input;
     }
 
-    public void quit() {
+    // EFFECTS: ends game
+    private void quit() {
         System.exit(0);
     }
 
