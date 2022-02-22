@@ -503,17 +503,22 @@ public class GameApp {
         num = intInput("Which number would you like to assign to this player?");
         if (pos.equals("s")) {
             p = new Setters(num, 1);
+            p.setRotation(0);
             myTeam.addPlayer(p);
         } else if (pos.equals("m")) {
             p = new MiddleBlockers(num, 1);
+            p.setRotation(0);
             myTeam.addPlayer(p);
         } else if (pos.equals("oh")) {
             p = new OutsideHitter(num, 1);
+            p.setRotation(0);
             myTeam.addPlayer(p);
         } else if (pos.equals("op")) {
             p = new OppositeHitter(num, 1);
+            p.setRotation(0);
             myTeam.addPlayer(p);
         }
+
         System.out.println(pos + " num " + num + "has been added to the roster");
         System.out.println("there are now " + myTeam.getRoster().size() + " Players in your team's roster");
     }

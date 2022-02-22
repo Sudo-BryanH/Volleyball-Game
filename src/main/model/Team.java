@@ -76,4 +76,5 @@ public interface Team {
     // EFFECTS: ball moves to a specified position
     public void attack(int who, int dir, Ball ball);
 
+
 }
