@@ -1,9 +1,15 @@
 package ui;
 
 public class Main {
-    // TODO 1: Make Input method in GameApp that accepts '99' as quit game
-    // TODO 2:
+
     public static void main(String[] args) {
         new GameApp();
     }
+
+/* NOTES ON SAVING
+1) The current rally will not be preserved, data will only be saved up to the previous rally
+2) New games will always start with enemy serve
+
+ */
+
 }

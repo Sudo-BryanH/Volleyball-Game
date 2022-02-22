@@ -41,6 +41,7 @@ public class GameApp {
 
     // EFFECTS: constructor for a game
     public GameApp() {
+        // make new to start from saved game
         setUp();
         beginGame();
     }
@@ -52,9 +53,9 @@ public class GameApp {
         boolean status = false;
         // Make enemy teams
         weakTeam = (EnemyTeam) enemyTeamConstructor("weakTeam", weakMB1, weakMB2, weakSet,
-                weakOP, weakOH1, weakOH2, 10);
+                weakOP, weakOH1, weakOH2, 5);
         strongTeam = (EnemyTeam) enemyTeamConstructor("strongTeam", strongMB1, strongMB2, strongSet,
-                strongOP, strongOH1, strongOH2, 3);
+                strongOP, strongOH1, strongOH2, 2);
 
         // Make our team
         System.out.println("Welcome to this volleyball game. If you would like to quit, please type 'quit' if the "
@@ -558,11 +559,11 @@ public class GameApp {
 
     // EFFECTS: asks the user for input, then accepts input. If input == 'quit', then end game.
     private String stringInput(String message) {
-        String nothing;
+
         String input;
         System.out.println(message);
         input = scan.next();
-        nothing = scan.nextLine();
+        scan.nextLine();
         if (input.equals("quit")) {
             quit(); // may cause problems if no return statments
         }
@@ -584,7 +585,13 @@ public class GameApp {
 
     // EFFECTS: ends game
     private void quit() {
+        save();
         System.exit(0);
+    }
+
+    // EFFECTS: determines if the player wants to save. If yes, save game data
+    private void save() {
+
     }
 
 

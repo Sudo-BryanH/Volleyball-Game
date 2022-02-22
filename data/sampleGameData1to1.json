@@ -1,0 +1,83 @@
+{
+  "myScore": 1,
+  "enemyScore": 1,
+  "myName": "nothing",
+  "enemyName": "weak team",
+  "enemyTeamChance": 5,
+  "myTeam": [
+    {
+      "side": 0,
+      "playingPosition": "Setter",
+      "position": 2,
+      "playerNum": 1
+    },
+    {
+      "side": 0,
+      "playingPosition": "Middle Blocker",
+      "position": 3,
+      "playerNum": 2
+    },
+    {
+      "side": 0,
+      "playingPosition": "Outside Hitter",
+      "position": 4,
+      "playerNum": 3
+    },
+    {
+      "side": 0,
+      "playingPosition": "Opposite Hitter",
+      "position": 5,
+      "playerNum": 4
+    },
+    {
+      "side": 0,
+      "playingPosition": "Middle Blocker",
+      "position": 6,
+      "playerNum": 5
+    },
+    {
+      "side": 0,
+      "playingPosition": "Outside Hitter",
+      "position": 1,
+      "playerNum": 6
+    }
+  ],
+  "enemyTeam": [
+    {
+      "side": 1,
+      "playingPosition": "Setter",
+      "position": 5,
+      "playerNum": 1
+    },
+    {
+      "side": 1,
+      "playingPosition": "Middle Blocker",
+      "position": 6,
+      "playerNum": 2
+    },
+    {
+      "side": 1,
+      "playingPosition": "Outside Hitter",
+      "position": 1,
+      "playerNum": 3
+    },
+    {
+      "side": 1,
+      "playingPosition": "Opposite Hitter",
+      "position": 2,
+      "playerNum": 4
+    },
+    {
+      "side": 1,
+      "playingPosition": "Middle Blocker",
+      "position": 3,
+      "playerNum": 5
+    },
+    {
+      "side": 1,
+      "playingPosition": "Outside Hitter",
+      "position": 4,
+      "playerNum": 6
+    }
+  ]
+}
