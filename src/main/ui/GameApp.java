@@ -52,9 +52,9 @@ public class GameApp {
         String input;
         boolean status = false;
         // Make enemy teams
-        weakTeam = (EnemyTeam) enemyTeamConstructor("weakTeam", weakMB1, weakMB2, weakSet,
+        weakTeam = (EnemyTeam) enemyTeamConstructor("weak team", weakMB1, weakMB2, weakSet,
                 weakOP, weakOH1, weakOH2, 5);
-        strongTeam = (EnemyTeam) enemyTeamConstructor("strongTeam", strongMB1, strongMB2, strongSet,
+        strongTeam = (EnemyTeam) enemyTeamConstructor("strong team", strongMB1, strongMB2, strongSet,
                 strongOP, strongOH1, strongOH2, 2);
 
         // Make our team

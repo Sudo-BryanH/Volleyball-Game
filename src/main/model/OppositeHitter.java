@@ -181,6 +181,11 @@ public class OppositeHitter implements Players {
         }
     }
 
+    @Override
+    public int getSide() {
+        return side;
+    }
+
 }
 
 

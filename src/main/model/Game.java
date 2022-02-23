@@ -108,6 +108,14 @@ public class Game {
         return enemyTeam;
     }
 
+    public int getMyScore() {
+        return myScore;
+    }
+
+    public int getEnemyScore() {
+        return enemyScore;
+    }
+
 
 
 

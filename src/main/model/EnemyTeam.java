@@ -358,6 +358,11 @@ public class EnemyTeam implements Team {
         }
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
     // REQUIRES: a player number of a player already in the starters list
     // EFFECTS: retrieves a starting player from the starters list
     @Override

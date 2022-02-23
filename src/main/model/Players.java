@@ -56,4 +56,7 @@ public interface Players {
     // EFFECTS: moves the ball to attack position
     public void set(int dir, Ball ball);
 
+    // EFFECTS: returns the side of this player
+    public int getSide();
+
 }

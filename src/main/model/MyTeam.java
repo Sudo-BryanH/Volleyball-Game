@@ -295,6 +295,7 @@ public class MyTeam implements Team {
     // EFFECTS: removes player of ogNum from starters, gives his rotation number to
     // player of newNum and adds player of newNum to starters
 
+    // TODO make sure that the removed starter has rotation set to 0 or will cause problems with saved file
     @Override
     public void changeStarters(int ogNum, int newNum) {
         Players sub = getPlayer(newNum);
@@ -355,6 +356,11 @@ public class MyTeam implements Team {
         } else if (who == 3) {
             setter.spike(1, ball);
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     // REQUIRES: a player number of a player already in the starters list

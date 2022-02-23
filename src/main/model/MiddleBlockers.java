@@ -189,4 +189,9 @@ public class MiddleBlockers implements Players {
         }
     }
 
+    @Override
+    public int getSide() {
+        return side;
+    }
+
 }

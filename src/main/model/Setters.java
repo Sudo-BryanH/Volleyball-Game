@@ -171,6 +171,11 @@ public class Setters implements Players {
         }
     }
 
+    @Override
+    public int getSide() {
+        return side;
+    }
+
     // EFFECTS: returns true if dump limit of 2 has exceeded
     public boolean canDump() {
         return dumps < 2;

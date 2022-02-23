@@ -179,4 +179,9 @@ public class OutsideHitter implements Players {
         }
     }
 
+    @Override
+    public int getSide() {
+        return side;
+    }
+
 }
