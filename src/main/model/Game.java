@@ -21,6 +21,10 @@ public class Game {
         this.enemyTeam = enemyTeam;
     }
 
+    public Game() {
+
+    }
+
 
     // EFFECTS: Returns the score in the form of "Your Team Score : Enemy Team Score"
     public String getScore() {

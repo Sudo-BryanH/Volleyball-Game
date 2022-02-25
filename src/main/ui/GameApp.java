@@ -1,10 +1,12 @@
 package ui;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import model.*;
+import persistence.*;
 
 // This is the GameApp class where most of the user interface happens. Players can see
 // information about the score, their players' positions, ball's positions and turns.
@@ -38,6 +40,12 @@ public class GameApp {
     EnemyTeam enemyTeam;
     Ball ball = new Ball();
     int turn;
+    JsonWriter jsonWriter;
+    JsonReader jsonReader;
+    GameData gameData;
+    private static final String JSON_STORE = "./data/gameData.json/";
+
+
 
     // EFFECTS: constructor for a game
     public GameApp() {
@@ -57,12 +65,13 @@ public class GameApp {
         strongTeam = (EnemyTeam) enemyTeamConstructor("strong team", strongMB1, strongMB2, strongSet,
                 strongOP, strongOH1, strongOH2, 2);
 
-        // Make our team
+
         System.out.println("Welcome to this volleyball game. If you would like to quit, please type 'quit' if the "
                 + "system is asking for a string or '999' if the system is asking for a number");
         input = stringInput("Let's create your team. What would you like to call your team?");
         myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
 
+        // Make its own method
         while (!status) {
             input = stringInput("Would you like to add another player to the roster? Type y or n");
             if (input.equals("y")) {
@@ -74,8 +83,12 @@ public class GameApp {
         }
 
         chooseEnemyTeam();
-
+        game = new Game(myTeam, enemyTeam);
+        gameData = new GameData(game);
+        jsonWriter = new JsonWriter(JSON_STORE);
         beginGame();
+
+
     }
 
     // MODIFIES: game
@@ -83,9 +96,7 @@ public class GameApp {
     public void beginGame() {
         boolean gameOver = false;
         turn = game.getTurnNum();
-        enemyTeam.changeRotation();
-        enemyTeam.changeRotation();
-        enemyTeam.changeRotation();
+
 
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
 
@@ -530,14 +541,18 @@ public class GameApp {
                 + "Your options are \n the weak team or the strong team");
 
         if (input.equals("strong team")) {
-            game = new Game(myTeam, strongTeam);
+
             enemyTeam = strongTeam;
             System.out.println("You will now be playing against the strong team");
         } else {
-            game = new Game(myTeam, weakTeam);
+
             enemyTeam = weakTeam;
             System.out.println("You will now be playing against the weak team");
         }
+
+        enemyTeam.changeRotation();
+        enemyTeam.changeRotation();
+        enemyTeam.changeRotation();
 
     }
 
@@ -596,6 +611,15 @@ public class GameApp {
 
     // EFFECTS: determines if the player wants to save. If yes, save game data
     private void save() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(gameData);
+            jsonWriter.close();
+            System.out.println("Saved data to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+
+        }
 
     }
 

@@ -47,6 +47,44 @@ public class MyTeam implements Team {
 
     }
 
+    // REQUIRES: a list with at least 6 players with required positions; players must already have their own rotations
+    // EFFECTS: Constructs a new team
+    public MyTeam(List<Players> members, String name) {
+        this.name = name;
+
+        for (Players p : members) {
+            addPlayer(p);
+            if (p.getRotation() != 0) {
+                addStartingPlayer(p);
+                if (p.getPlayingPosition().equals("Setter")) {
+                    this.setter = p;
+                } else if (p.getPlayingPosition().equals("Opposite Hitter")) {
+                    this.opposite = p;
+                } else if (p.getPlayingPosition().equals("Outside Hitter")) {
+                    if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
+                        this.outside2 = p;
+                    } else {
+                        this.outside1 = p;
+                    }
+                } else {
+                    if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
+                        this.middle1 = p;
+                    } else {
+                        this.middle2 = p;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
+
+
+
+
+
     // MODIFIES: player positions
     // EFFECTS: moves the players into formation for serving
 

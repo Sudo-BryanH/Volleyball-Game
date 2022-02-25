@@ -3,22 +3,27 @@ package model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 // Creates objects for JSONWriter to write to the gameData file
 public class GameData {
-    Team myTeam;
-    EnemyTeam enemyTeam;
-    Game game;
+    private Team myTeam;
+    private EnemyTeam enemyTeam;
+    private Game game;
+    private int myScore;
+    private int enemyScore;
+
 
 
     // EFFECTS: constructs a new game data, declaring team objects with empty arrays and other specifications
-    public GameData(String name, Game game) {
+    public GameData(Game game) {
         myTeam = game.getMyTeam();
         enemyTeam = (EnemyTeam) game.getEnemyTeam();
         this.game = game;
     }
 
     // EFFECTS: creates the whole game data
-    public JSONObject prevGame() {
+    public JSONObject makeData() {
         JSONObject json = new JSONObject();
         json.put("myScore", game.getMyScore());
         json.put("enemyScore", game.getEnemyScore());
@@ -35,7 +40,7 @@ public class GameData {
 
     // EFFECTS: creates JSON Array to hold teams
     public JSONArray teamJson(Team team) {
-        JSONArray array = new JSONArray("");
+        JSONArray array = new JSONArray();
 
         for (Players p : team.getRoster()) {
             JSONObject json = new JSONObject();
@@ -49,6 +54,40 @@ public class GameData {
         return array;
     }
 
+    public void setMyTeam(Team myTeam) {
+        this.myTeam = myTeam;
+    }
+
+    public Team getMyTeam() {
+        return myTeam;
+    }
+
+    public EnemyTeam getEnemyTeam() {
+        return enemyTeam;
+    }
+
+    public void setEnemyTeam(EnemyTeam enemyTeam) {
+        this.enemyTeam = enemyTeam;
+
+    }
+
+    public void setMyScore(int score) {
+        this.myScore = score;
+    }
+
+    public void setEnemyScore(int score) {
+        this.enemyScore = score;
+    }
+
+    public int getMyScore() {
+        return myScore;
+    }
+
+    public int getEnemyScore() {
+        return enemyScore;
+    }
+
+    // TODO make method that makes Players and adds them to the right team
 
 
 
