@@ -88,7 +88,7 @@ public class JsonReader {
 
     private void addEnemyTeam(GameData g, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("enemyTeam");
-        String name = jsonObject.getString("enemyTeamName");
+        String name = jsonObject.getString("enemyName");
         int chance = jsonObject.getInt("enemyTeamChance");
         List<Players> members = new ArrayList<>();
         EnemyTeam enemyTeam;
@@ -122,6 +122,8 @@ public class JsonReader {
         } else if (pos.equals("Opposite Hitter")) {
             p = new OppositeHitter(num, side);
         }
+
+        p.setRotation(rotation);
 
         return p;
     }

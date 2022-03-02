@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MyTeamTest {
 
     Team testTeam;
+    Team testTeam2;
     Players testSet;
     Players testMB1;
     Players testMB2;
@@ -21,6 +22,7 @@ public class MyTeamTest {
     Players testMB3;
     Players testSet2;
     Ball mikasa;
+    List<Players> members;
 
 
     @BeforeEach
@@ -33,15 +35,30 @@ public class MyTeamTest {
         testOP = new OppositeHitter(1, 1);
         testMB3 = new MiddleBlockers(7, 1);
         testSet2 = new Setters(2, 1);
-
+        members = new ArrayList<>();
         testTeam = new MyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
         mikasa = new Ball();
-
         testTeam.addPlayer(testSet2);
         testTeam.addPlayer(testMB3);
-
         testTeam.arrangeMbOh();
+
+        arrayListAdder();
+        testTeam2 = new MyTeam(members, "testTeam2");
+    }
+
+    public void arrayListAdder() {
+        testMB3.setRotation(0);
+        testSet2.setRotation(0);
+        members.add(testSet);
+        members.add(testMB1);
+        members.add(testMB2);
+        members.add(testOH1);
+        members.add(testOH2);
+        members.add(testOP);
+        members.add(testMB3);
+        members.add(testSet2);
+
     }
 
     @Test
@@ -54,6 +71,24 @@ public class MyTeamTest {
         assertEquals(6, testOH2.getRotation());
         assertEquals(6, testTeam.getStarters().size());
         assertEquals(8, testTeam.getRoster().size());
+        assertEquals("Setter" ,testSet.getPlayingPosition());
+        assertEquals("Middle Blocker", testMB1.getPlayingPosition());
+        assertEquals("Outside Hitter", testOH1.getPlayingPosition());
+        assertEquals("Opposite Hitter", testOP.getPlayingPosition());
+        assertEquals("Middle Blocker", testMB2.getPlayingPosition());
+        assertEquals("Outside Hitter", testOH2.getPlayingPosition());
+    }
+
+    @Test
+    public void testConstructor2() {
+        assertEquals(1 ,testSet.getRotation());
+        assertEquals(2, testMB1.getRotation());
+        assertEquals(3, testOH1.getRotation());
+        assertEquals(4, testOP.getRotation());
+        assertEquals(5, testMB2.getRotation());
+        assertEquals(6, testOH2.getRotation());
+        assertEquals(6, testTeam2.getStarters().size());
+        assertEquals(8, testTeam2.getRoster().size());
         assertEquals("Setter" ,testSet.getPlayingPosition());
         assertEquals("Middle Blocker", testMB1.getPlayingPosition());
         assertEquals("Outside Hitter", testOH1.getPlayingPosition());
