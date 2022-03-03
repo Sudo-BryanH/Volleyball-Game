@@ -22,7 +22,7 @@ public class Game {
     }
 
     public Game() {
-
+        this.turn = 0;
     }
 
 
@@ -120,7 +120,20 @@ public class Game {
         return enemyScore;
     }
 
+    public void setEnemyTeam(EnemyTeam enemyTeam) {
+        this.enemyTeam = enemyTeam;
+    }
 
+    public void setMyTeam(Team myTeam) {
+        this.myTeam = myTeam;
+    }
 
+    public void setMyScore(int myScore) {
+        this.myScore = myScore;
+    }
+
+    public void setEnemyScore(int enemyScore) {
+        this.enemyScore = enemyScore;
+    }
 
 }

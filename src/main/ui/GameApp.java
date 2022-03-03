@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -48,11 +49,55 @@ public class GameApp {
 
 
 
-    // EFFECTS: constructor for a game
+    // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
     public GameApp() {
         // make new to start from saved game
-        setUp();
+
+        String input = stringInput("Would you like to load an old game? type yes or no");
+
+        if (input.equals("yes")) {
+            loadOldGame();
+        } else {
+            setUp();
+        }
         beginGame();
+    }
+
+    // EFFECTS: loads prev game from file name. If no file is found by that name, will try to dig up most recent game.
+    // else will get player to setUp new game.
+    private void loadOldGame() {
+        game = new Game();
+
+        String input = stringInput("Please type in the exact file name that you are trying to recover in the form of "
+                + "with './data/file_name.json'. if none is found, the program will try to find latest saved game");
+        jsonReader = new JsonReader(input, game);
+        try {
+            gameData = jsonReader.read();
+            System.out.println("All good");
+        } catch (IOException e) {
+            System.out.println("hmm, this file could not be found. We will now try to recover the latest "
+                    + "saved game data");
+            try {
+                jsonReader = new JsonReader(JSON_STORE, game);
+                gameData = jsonReader.read();
+            } catch (IOException f) {
+                System.out.println("Well, guess that didn't work. Let's start a new game then.");
+                setUp();
+            }
+
+        }
+        instantiateGame();
+    }
+
+    private void instantiateGame() {
+        game.setEnemyScore(gameData.getEnemyScore());
+        game.setMyScore(gameData.getMyScore());
+        game.setEnemyTeam(gameData.getEnemyTeam());
+        game.setMyTeam(gameData.getMyTeam());
+
+        this.enemyTeam = gameData.getEnemyTeam();
+        this.myTeam = gameData.getMyTeam();
+        this.ball = new Ball();
     }
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
