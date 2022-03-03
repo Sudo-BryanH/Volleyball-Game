@@ -48,7 +48,6 @@ public class GameApp {
     private static final String JSON_STORE = "./data/mostRecentGameData.json";
 
 
-
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
     public GameApp() {
         // make new to start from saved game
@@ -111,13 +110,26 @@ public class GameApp {
         strongTeam = (EnemyTeam) enemyTeamConstructor("strong team", strongMB1, strongMB2, strongSet,
                 strongOP, strongOH1, strongOH2, 2);
 
-
         System.out.println("Welcome to this volleyball game. If you would like to quit, please type 'quit' if the "
                 + "system is asking for a string or '999' if the system is asking for a number");
         input = stringInput("Let's create your team. What would you like to call your team?");
         myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
 
-        // Make its own method
+        checkAddPlayer();
+
+
+        chooseEnemyTeam();
+        game = new Game(myTeam, enemyTeam);
+        gameData = new GameData(game);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        beginGame();
+
+
+    }
+
+    public void checkAddPlayer() {
+        boolean status = false;
+        String input;
         while (!status) {
             input = stringInput("Would you like to add another player to the roster? Type y or n");
             if (input.equals("y")) {
@@ -127,14 +139,6 @@ public class GameApp {
                 status = true;
             }
         }
-
-        chooseEnemyTeam();
-        game = new Game(myTeam, enemyTeam);
-        gameData = new GameData(game);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        beginGame();
-
-
     }
 
     // MODIFIES: game
@@ -318,37 +322,52 @@ public class GameApp {
     // MODIFIES: this
     // EFFECTS: choose who to set
     private int chooseSet(int turn) {
-        int chance2 = (int) (Math.random() * 2);
-        int chance3 = (int) (Math.random() * 3);
-        String choice;
+        int choice;
         if (turn == 0) {
-            if (enemyTeam.isSetterBack()) {
-                System.out.println("Enemy can attack from the left, middle, or right");
-                return chance3;
-            } else if (!enemyTeam.isSetterBack()) {
-                System.out.println("Enemy can only attack form the left or middle");
-                return chance2;
-            }
-        } else if (turn == 1) {
-            if (myTeam.isSetterBack()) {
-
-                choice = stringInput("Do you want to set the left side [l], middle [m], or right side [r] to attack?");
-            } else {
-                choice = stringInput("Do you want to set the left side [l], or middle [m] to attack");
-            }
-            System.out.println("you have picked " + choice);
-            if (choice.equals("l")) {
-                return 0;
-            } else if (choice.equals("m")) {
-                return 1;
-            } else {
-                return 2;
-            }
-
+            choice = chooseEnemySet(turn);
+        } else {
+            choice = chooseMySet(turn);
         }
-        return -1;
+
+        return choice;
     }
 
+
+    private int chooseEnemySet(int turn) {
+        int chance2 = (int) (Math.random() * 2);
+        int chance3 = (int) (Math.random() * 3);
+
+
+        if (enemyTeam.isSetterBack()) {
+            System.out.println("Enemy can attack from the left, middle, or right");
+            return chance3;
+        } else {
+            System.out.println("Enemy can only attack form the left or middle");
+            return chance2;
+        }
+
+    }
+
+    private int chooseMySet(int turn) {
+        String choice = null;
+
+        if (myTeam.isSetterBack()) {
+
+            choice = stringInput("Do you want to set the left side [l], middle [m], or right side [r] to attack?");
+        } else {
+            choice = stringInput("Do you want to set the left side [l], or middle [m] to attack");
+        }
+        System.out.println("you have picked " + choice);
+        if (choice.equals("l")) {
+            return 0;
+        } else if (choice.equals("m")) {
+            return 1;
+        } else {
+            return 2;
+        }
+
+
+    }
 
 
     // REQUIRES: turn [0, 1] attackNum[0, 2] setNum[0, 2]
@@ -402,7 +421,8 @@ public class GameApp {
         for (Players p : myTeam.getStarters()) {
 
             if (p.getRotation() >= 4) {
-                int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s block position");;
+                int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s block position");
+                ;
                 p.moveToX(x);
                 System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");
@@ -554,29 +574,29 @@ public class GameApp {
         int num;
         String pos;
 
-        Players p;
+        Players p = null;
         pos = stringInput("Which player do you want to make? type 's' for setter, "
                 + "'m' for middle, 'oh' for outside hitter, or 'op' for opposite");
         num = intInput("Which number would you like to assign to this player?");
         if (pos.equals("s")) {
             p = new Setters(num, 1);
             p.setRotation(0);
-            myTeam.addPlayer(p);
+
         } else if (pos.equals("m")) {
             p = new MiddleBlockers(num, 1);
             p.setRotation(0);
-            myTeam.addPlayer(p);
+
         } else if (pos.equals("oh")) {
             p = new OutsideHitter(num, 1);
             p.setRotation(0);
-            myTeam.addPlayer(p);
+
         } else if (pos.equals("op")) {
             p = new OppositeHitter(num, 1);
             p.setRotation(0);
-            myTeam.addPlayer(p);
-        }
 
-        System.out.println(pos + " num " + num + "has been added to the roster");
+        }
+        myTeam.addPlayer(p);
+        System.out.println(p.getPlayingPosition() + " num " + num + " has been added to the roster");
         System.out.println("there are now " + myTeam.getRoster().size() + " Players in your team's roster");
     }
 
