@@ -54,6 +54,7 @@ public class GameData {
         return array;
     }
 
+
     public void setMyTeam(Team myTeam) {
         this.myTeam = myTeam;
     }
@@ -71,6 +72,7 @@ public class GameData {
 
     }
 
+
     public void setMyScore(int score) {
         this.myScore = score;
     }
@@ -87,7 +89,7 @@ public class GameData {
         return enemyScore;
     }
 
-    // TODO make method that makes Players and adds them to the right team
+
 
 
 

@@ -112,26 +112,37 @@ public class Game {
         return enemyTeam;
     }
 
+    // EFFECTS: gets score
     public int getMyScore() {
         return myScore;
     }
 
+    // EFFECTS: gets enemy score
     public int getEnemyScore() {
         return enemyScore;
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates the enemyTeam
     public void setEnemyTeam(EnemyTeam enemyTeam) {
         this.enemyTeam = enemyTeam;
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: instantiates my team
     public void setMyTeam(Team myTeam) {
         this.myTeam = myTeam;
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates my score
     public void setMyScore(int myScore) {
         this.myScore = myScore;
     }
 
+    // MODIFIES: this
+    // EFFECTS: instnatiates enemy score
     public void setEnemyScore(int enemyScore) {
         this.enemyScore = enemyScore;
     }

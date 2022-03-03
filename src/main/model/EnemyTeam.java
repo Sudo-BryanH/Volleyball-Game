@@ -72,6 +72,7 @@ public class EnemyTeam implements Team {
     public void chooseMbOh(Players p) {
         if (p.getPlayingPosition().equals("Outside Hitter")) {
             if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
+
                 this.outside2 = p;
             } else {
                 this.outside1 = p;

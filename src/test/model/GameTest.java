@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
 
     Team testMyTeam;
-    Team testETeam;
+    EnemyTeam testETeam;
     Players testESet;
     Players testEMB1;
     Players testEMB2;
@@ -29,6 +29,7 @@ public class GameTest {
     Players testSet2;
     Players testSet;
     Game testGame;
+    Game testGame2;
     Ball mikasa;
 
 
@@ -65,6 +66,8 @@ public class GameTest {
         testGame = new Game(testMyTeam, testETeam);
 
         mikasa = new Ball();
+
+        testGame2 = new Game();
     }
 
     @Test
@@ -75,6 +78,11 @@ public class GameTest {
         assertEquals(6, testMyTeam.getStarters().size());
         assertEquals(6, testETeam.getRoster().size());
         assertEquals(6, testETeam.getStarters().size());
+    }
+
+    @Test
+    public void testConstructor2() {
+        assertEquals(0, testGame2.getTurnNum());
     }
 
     @Test
@@ -170,6 +178,53 @@ public class GameTest {
     public void testSetTurnNum() {
         testGame.setTurnNum(1);
         assertEquals(1, testGame.getTurnNum());
+    }
+
+
+    @Test
+    public void testGetEnemyTeam() {
+        assertEquals(testETeam, testGame.getEnemyTeam());
+
+    }
+
+    @Test
+    public void testGetMyTeam() {
+        assertEquals(testMyTeam, testGame.getMyTeam());
+
+    }
+
+    @Test
+    public void testGetMyScore() {
+        assertEquals(0, testGame.getMyScore());
+    }
+
+    @Test
+    public void testGetEnemyScore() {
+        assertEquals(0, testGame.getEnemyScore());
+    }
+
+    @Test
+    public void testSetEnemyTeam() {
+        testGame2.setEnemyTeam(testETeam);
+        assertEquals(testETeam, testGame2.getEnemyTeam());
+    }
+
+    @Test
+    public void testSetMyTeam() {
+        testGame2.setMyTeam(testMyTeam);
+        assertEquals(testMyTeam, testGame2.getMyTeam());
+    }
+
+    @Test
+    public void testSetMyScore() {
+        testGame2.setMyScore(0);
+        assertEquals(0, testGame2.getMyScore());
+    }
+
+    @Test
+    public void testSetEnemyScore() {
+        testGame2.setEnemyScore(0);
+        assertEquals(0, testGame2.getEnemyScore());
     }
 
 
