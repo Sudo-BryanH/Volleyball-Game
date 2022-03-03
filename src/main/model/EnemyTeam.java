@@ -60,21 +60,29 @@ public class EnemyTeam implements Team {
                 } else if (p.getPlayingPosition().equals("Opposite Hitter")) {
                     this.opposite = p;
                 } else if (p.getPlayingPosition().equals("Outside Hitter")) {
-                    if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
-                        this.outside2 = p;
-                    } else {
-                        this.outside1 = p;
-                    }
+                    chooseMbOh(p);
                 } else {
-                    if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
-                        this.middle1 = p;
-                    } else {
-                        this.middle2 = p;
-                    }
-
+                    chooseMbOh(p);
                 }
             }
 
+        }
+    }
+
+    public void chooseMbOh(Players p) {
+        if (p.getPlayingPosition().equals("Outside Hitter")) {
+            if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
+                this.outside2 = p;
+            } else {
+                this.outside1 = p;
+            }
+        } else {
+            if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
+                this.middle1 = p;
+            } else {
+                this.middle2 = p;
+
+            }
         }
     }
 
