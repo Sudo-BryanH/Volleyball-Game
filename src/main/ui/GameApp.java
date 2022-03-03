@@ -40,10 +40,11 @@ public class GameApp {
     EnemyTeam enemyTeam;
     Ball ball = new Ball();
     int turn;
+
     JsonWriter jsonWriter;
     JsonReader jsonReader;
     GameData gameData;
-    private static final String JSON_STORE = "./data/gameData.json/";
+    private static final String JSON_STORE = "./data/mostRecentGameData.json";
 
 
 
@@ -611,7 +612,21 @@ public class GameApp {
 
     // EFFECTS: determines if the player wants to save. If yes, save game data
     private void save() {
+        String file = "./data/gameData" + java.time.LocalDateTime.now() + ".json";
         try {
+
+            jsonWriter = new JsonWriter(file);
+            jsonWriter.open();
+            jsonWriter.write(gameData);
+            jsonWriter.close();
+            System.out.println("Saved data to " + file);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + file);
+
+        }
+        try {
+
+            jsonWriter = new JsonWriter(JSON_STORE);
             jsonWriter.open();
             jsonWriter.write(gameData);
             jsonWriter.close();
