@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 // JsonReader class which will allow for the game to read saved data
+// CITATIONS: code copied and modified from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class JsonReader {
     private String source;
     private Game game;
@@ -56,11 +57,15 @@ public class JsonReader {
         return g;
     }
 
+    // MODIFIES: game
+    // EFFECTS: reads the score and adds it to game
     private void addMyScore(GameData g, JSONObject jsonObject) {
         int score = jsonObject.getInt("myScore");
         g.setMyScore(score);
     }
 
+    // MODIFIES: game
+    // EFFECTS: reads the score and adds it to game
     private void addEnemyScore(GameData g, JSONObject jsonObject) {
         int score = jsonObject.getInt("enemyScore");
         g.setEnemyScore(score);
@@ -69,7 +74,8 @@ public class JsonReader {
 
 
     // Note: if rotation for a player is 0, do not list in starter. Player infor should be turned into a list
-    // TODO DOCUMENT!!
+    // MODIFIES: game
+    // EFFECTS: creates a team from jsonString and adds it to game
     private void addMyTeam(GameData g, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("myTeam");
         List<Players> members = new ArrayList<>();
@@ -85,6 +91,9 @@ public class JsonReader {
         g.setMyTeam(myTeam);
 
     }
+
+    // MODIFIES: game
+    // EFFECTS: creates a team from jsonString and adds it to game
 
     private void addEnemyTeam(GameData g, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("enemyTeam");
@@ -105,6 +114,8 @@ public class JsonReader {
 
 
     }
+    // MODIFIES: game
+    // EFFECTS: creates a playuer from jsonString and returns a p
 
     private Players addPlayer(GameData g, JSONObject jsonObject) {
         int side = jsonObject.getInt("side");

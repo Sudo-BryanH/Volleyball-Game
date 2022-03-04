@@ -411,7 +411,7 @@ public class EnemyTeam implements Team {
         for (Players p : starters) {
             if (p.getNum() == playerNum) {
                 chosenOne = p;
-                return chosenOne;
+
 
             }
         }
@@ -428,7 +428,7 @@ public class EnemyTeam implements Team {
         for (Players p : roster) {
             if (p.getNum() == playerNum) {
                 chosenOne = p;
-                return chosenOne;
+
 
             }
         }

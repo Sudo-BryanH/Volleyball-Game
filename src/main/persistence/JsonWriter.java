@@ -1,7 +1,7 @@
 package persistence;
 
 // JsonWriter allows game to save game data to JSON file
-// TODO CITATIONS:
+// CITATIONS: code copied and modified from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
 import model.GameData;
 import org.json.JSONObject;
@@ -41,6 +41,8 @@ public class JsonWriter {
         saveToFile(json.toString(TAB));
     }
 
+    // MODIFIES: JSON file
+    // EFFECTS: saves string to file
     public void saveToFile(String json) {
         writer.print(json);
     }

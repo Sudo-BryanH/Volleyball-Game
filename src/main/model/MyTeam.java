@@ -71,6 +71,8 @@ public class MyTeam implements Team {
         }
     }
 
+    // MODIFIES: player object
+    // EFFECTS: assignes initial rotation to players
     public void chooseMbOh(Players p) {
         if (p.getPlayingPosition().equals("Outside Hitter")) {
             if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
@@ -419,7 +421,7 @@ public class MyTeam implements Team {
         for (Players p : starters) {
             if (p.getNum() == playerNum) {
                 chosenOne = p;
-                return chosenOne;
+
 
             }
         }
@@ -436,7 +438,7 @@ public class MyTeam implements Team {
         for (Players p : roster) {
             if (p.getNum() == playerNum) {
                 chosenOne = p;
-                return chosenOne;
+
 
             }
         }

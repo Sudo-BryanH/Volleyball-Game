@@ -100,13 +100,12 @@ public class Game {
         this.turn = turn;
     }
 
-    // TODO: write tests
     // EFFECTS: returns myTeam
     public Team getMyTeam() {
         return myTeam;
     }
 
-    // TODO: write tests
+
     // EFFECTS: returns ememyTeam
     public Team getEnemyTeam() {
         return enemyTeam;
