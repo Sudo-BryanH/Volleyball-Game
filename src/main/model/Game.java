@@ -148,4 +148,6 @@ public class Game {
         this.enemyScore = enemyScore;
     }
 
+    public void update() {
+    }
 }

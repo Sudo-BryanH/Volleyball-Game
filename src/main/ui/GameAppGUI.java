@@ -5,6 +5,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,11 +46,14 @@ public class GameAppGUI extends JFrame {
     Ball ball = new Ball();
     int turn;
     CourtRenderer court;
+    Timer timer;
+
 
     JsonWriter jsonWriter;
     JsonReader jsonReader;
     GameData gameData;
     private static final String JSON_STORE = "./data/mostRecentGameData.json";
+    private static final int INTERVAL = 42;
 
 
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
@@ -94,12 +99,14 @@ public class GameAppGUI extends JFrame {
     private void instantiateGame() {
         game.setEnemyScore(gameData.getEnemyScore());
         game.setMyScore(gameData.getMyScore());
-        game.setEnemyTeam(gameData.getEnemyTeam());
-        game.setMyTeam(gameData.getMyTeam());
 
         this.enemyTeam = gameData.getEnemyTeam();
         this.myTeam = gameData.getMyTeam();
+        game.setEnemyTeam(enemyTeam);
+        game.setMyTeam(myTeam);
         this.ball = new Ball();
+        game.getMyTeam().startPosNoServe();
+        game.getEnemyTeam().startPosServe();
     }
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
@@ -118,11 +125,13 @@ public class GameAppGUI extends JFrame {
         input = stringInput("Let's create your team. What would you like to call your team?");
         myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
 
+
         checkAddPlayer();
 
 
         chooseEnemyTeam();
         game = new Game(myTeam, enemyTeam);
+        game.getMyTeam().startPosNoServe();
         gameData = new GameData(game);
         jsonWriter = new JsonWriter(JSON_STORE);
         beginGame();
@@ -150,6 +159,7 @@ public class GameAppGUI extends JFrame {
         boolean gameOver = false;
         turn = game.getTurnNum();
         court = new CourtRenderer(game);
+
 
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
 
@@ -525,7 +535,7 @@ public class GameAppGUI extends JFrame {
         return -1; // Should only happen if all else fails
     }
 
-
+    // TODO create buttons for each player located at their respective locations from starter list
     // EFFECTS: constructs an enemy team
     public Team enemyTeamConstructor(String name, Players mb1, Players mb2,
                                      Players set, Players op, Players oh1,
@@ -567,6 +577,7 @@ public class GameAppGUI extends JFrame {
 
         MyTeam m;
         m = new MyTeam(name, set, mb1, mb2, oh1, oh2, op);
+        m.startPosNoServe();
 
         return m; // May cause errors with subtypes
     }
@@ -618,6 +629,8 @@ public class GameAppGUI extends JFrame {
             enemyTeam = weakTeam;
             System.out.println("You will now be playing against the weak team");
         }
+
+        enemyTeam.startPosNoServe();
 
         enemyTeam.changeRotation();
         enemyTeam.changeRotation();
@@ -704,6 +717,22 @@ public class GameAppGUI extends JFrame {
 
         }
 
+    }
+
+    // TODO implement player button maker
+    public void makePlayerButton(int x, int y, String pos, int num) {
+        //court.add();
+    }
+
+    public void addTimer() {
+        Timer timer = new Timer(INTERVAL, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.update();
+                court.repaint();
+            }
+
+        });
     }
 
 

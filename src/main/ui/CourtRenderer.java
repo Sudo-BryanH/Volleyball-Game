@@ -1,6 +1,7 @@
 package ui;
 
 import model.Game;
+import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +25,52 @@ public class CourtRenderer extends JFrame {
         this.game = game;
 
         frame = new JFrame();
-        courtSetup();
-        blueSetup();
-        orangeSetup();
 
+        playersSetup();
+        scoreBoard();
+        courtSetup();
+
+    }
+
+    private void playersSetup() {
+
+
+        for (Players p : game.getMyTeam().getStarters()) {
+            //game.getMyTeam().startPosNoServe();
+            JButton button;
+            int x = p.getPosX();
+            int y = p.getPosY();
+            int num = p.getNum();
+            String pos = p.getPlayingPosition();
+
+            button = new JButton("" + num);
+            button.setLayout(null);
+            button.setBounds(x, y, 30, 30);
+            button.setBackground(Color.white);
+            button.setOpaque(true);
+            button.setForeground(Color.black);
+
+            button.setVisible(true);
+
+            frame.add(button);
+        }
+
+        for (Players p: game.getEnemyTeam().getStarters()) {
+            JButton button;
+            int x = p.getPosX();
+            int y = p.getPosY();
+            int num = p.getNum();
+            String pos = p.getPlayingPosition();
+
+            button = new JButton("" + num);
+            button.setBounds(x, y, 30, 30);
+            button.setBackground(new Color(184, 15, 10));
+            button.setOpaque(true);
+            button.setForeground(Color.white);
+            button.setVisible(true);
+
+            frame.add(button);
+        }
     }
 
     private void orangeSetup() {
@@ -66,7 +109,9 @@ public class CourtRenderer extends JFrame {
         frame.setSize(360, 920);
         frame.setResizable(false);
         frame.setVisible(true);
-        frame.getContentPane().setBackground(new Color(255, 255, 255));
+        frame.getContentPane().setBackground(Color.white);
+        blueSetup();
+        orangeSetup();
     }
 
     public void blueSetup() {
@@ -85,6 +130,11 @@ public class CourtRenderer extends JFrame {
 
     public void scoreBoard() {
         scoreBoard = new JLabel();
+        scoreBoard.setText(game.getScore());
+        scoreBoard.setBackground(Color.white);
+        scoreBoard.setVerticalTextPosition(0);
+        frame.add(scoreBoard);
+
 
 
     }
