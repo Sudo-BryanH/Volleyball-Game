@@ -1,21 +1,21 @@
 package ui;
 
+import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import model.*;
-import persistence.*;
-
-import javax.swing.*;
-
 // This is the GameApp class where most of the user interface happens. Players can see
 // information about the score, their players' positions, ball's positions and turns.
 // Players can also control their players from here.
 
-public class GameApp extends JFrame {
+public class GameAppGUI extends JFrame {
 
     Team myTeam;
     EnemyTeam weakTeam;
@@ -52,7 +52,7 @@ public class GameApp extends JFrame {
 
 
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
-    public GameApp() {
+    public GameAppGUI() {
         // make new to start from saved game
 
         String input = stringInput("Would you like to load an old game? type yes or no");
