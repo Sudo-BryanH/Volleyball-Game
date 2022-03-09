@@ -11,6 +11,8 @@ public class Game {
     private int turn;
     private Team myTeam;
     private Team enemyTeam;
+    protected static final int SCALE = 30;
+    protected static final int Y_TRANS = 100;
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
     public Game(Team myTeam, Team enemyTeam) {

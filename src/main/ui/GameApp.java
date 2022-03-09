@@ -149,7 +149,8 @@ public class GameApp extends JFrame {
     public void beginGame() {
         boolean gameOver = false;
         turn = game.getTurnNum();
-        court = new CourtRenderer();
+
+        court = new CourtRenderer(game);
 
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
 

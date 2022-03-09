@@ -26,7 +26,7 @@ public class OppositeHitter implements Players {
     // EFFECTS: sends Player to position x
     @Override
     public void moveToX(int x) {
-        posX = x;
+        posX = x * SCALE;
 
     }
 
@@ -35,7 +35,7 @@ public class OppositeHitter implements Players {
     // EFFECTS: sends Player to position y
     @Override
     public void moveToY(int y) {
-        posY = y;
+        posY = y * SCALE + Y_TRANS;
     }
 
     //

@@ -26,7 +26,7 @@ public class OutsideHitter implements Players {
     // EFFECTS: sends Player to position x
     @Override
     public void moveToX(int x) {
-        this.posX = x;
+        this.posX = x  * SCALE;
 
     }
 
@@ -35,7 +35,7 @@ public class OutsideHitter implements Players {
     // EFFECTS: sends Player to position y
     @Override
     public void moveToY(int y) {
-        this.posY = y;
+        this.posY = y * SCALE + Y_TRANS;
     }
 
     //
