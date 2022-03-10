@@ -91,12 +91,17 @@ public class Ball {
 
 
     public void setDY() {
-        dy = Math.abs(currentYPos - moveToYPos) / 48;
+        dy = Math.abs(currentYPos - moveToYPos) / 24;
     }
 
     public void setDX() {
-        dx = Math.abs(moveToXPos - moveToXPos) / 48;
+        dx = Math.abs(currentXPos - moveToXPos) / 24;
     }
+
+    public boolean getMoveState() {
+        return moveState;
+    }
+    // TODO turn number is likely off
 
 
 }

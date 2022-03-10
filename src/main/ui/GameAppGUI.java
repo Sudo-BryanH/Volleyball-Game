@@ -27,7 +27,7 @@ import javax.swing.Timer;
 // information about the score, their players' positions, ball's positions and turns.
 // Players can also control their players from here.
 
-public class GameAppGUI extends JFrame {
+public class GameAppGUI extends JFrame implements ActionListener {
 
     Team myTeam;
     EnemyTeam weakTeam;
@@ -184,7 +184,17 @@ public class GameAppGUI extends JFrame {
 
 
         while (gameOver == false) {
-
+            if (turn == 0) {
+                enemyTeam.startPosServe();
+                myTeam.startPosNoServe();
+                ball.directX(0);
+                ball.directY(0);
+            } else {
+                enemyTeam.startPosNoServe();
+                myTeam.startPosServe();
+                ball.directX(12);
+                ball.directY(24);
+            }
             System.out.println(game.getScore());
             beginRally(turn);
 
@@ -209,9 +219,14 @@ public class GameAppGUI extends JFrame {
         int setNum;
         int attackNum;
         System.out.println("Turn number is " + turn);
+
+        stringInput("Ready? Type 'Ready'");
         serve(turn);
 
+
+
         while (!isOver) {
+            addTimer();
             ballPos();
             game.flipTurnNum();
             turn = game.getTurnNum();
@@ -220,6 +235,7 @@ public class GameAppGUI extends JFrame {
             setNum = chooseSet(turn);
             attackNum = chooseAttack(setNum, turn);
             chooseDefend(turn, setNum, attackNum);
+            set(turn, setNum);
             attack(turn, setNum, attackNum);
             ballPos();
             isOver = !checkReceive(turn);
@@ -255,10 +271,21 @@ public class GameAppGUI extends JFrame {
         return check;
     }
 
+    private void set(int turn, int setNum) {
+        addTimer();
+        if (turn == 0) {
+            enemyTeam.set(setNum, ball);
+
+        } else if (turn == 1) {
+            myTeam.set(setNum, ball);
+        }
+    }
+
     // REQUIRES: turn[0, 1], setNum[0, 2], attackNum[0,2]
     // MODIFIES: ball, MyTeam, EnemyTeam, Players, ball
     // EFFECT: Ball goes to player then goes to opponent court
     private void attack(int turn, int setNum, int attackNum) {
+        addTimer();
         attackPositions(turn);
         if (turn == 0) {
             enemyTeam.set(setNum, ball);
@@ -288,6 +315,7 @@ public class GameAppGUI extends JFrame {
     // MODIFIES: MyTeam EnemyTeam Players
     // EFFECTS: moves the players into position to attack
     private void attackPositions(int turn) {
+        addTimer();
         if (turn == 0) {
             if (enemyTeam.isSetterBack()) {
                 enemyTeam.attackBSetter();
@@ -307,22 +335,24 @@ public class GameAppGUI extends JFrame {
     // MODIFIES: ball
     // EFFECT: Ball goes to opponent court
     private void serve(int turn) {
+        addTimer();
         int chance = (int) (Math.random() * 2);
         int input;
         if (turn == 0) {
-            ball.directX(0);
-            ball.directY(0);
+            ball.moveToX(0);
+            ball.moveToY(0);
             enemyTeam.startPosServe();
             myTeam.startPosNoServe();
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
                     p.serve(chance, ball);
                 }
+                positionsAfterServe(turn);
             }
             System.out.println("Serve has been made");
         } else if (turn == 1) {
-            ball.directX(12);
-            ball.directY(24);
+            ball.moveToX(12);
+            ball.moveToY(24);
             enemyTeam.startPosNoServe();
             myTeam.startPosServe();
             input = intInput("Do you want to serve left[0] or right [1]");
@@ -330,17 +360,52 @@ public class GameAppGUI extends JFrame {
                 if (p.getRotation() == 1) {
                     p.serve(input, ball);
                 }
+                positionsAfterServe(turn);
             }
+
             System.out.println("Serve has been made");
         }
 
+    }
 
+    private void positionsAfterServe(int turn) {
+        if (turn == 0) {
+            if (enemyTeam.isSetterBack()) {
+                enemyTeam.defendBSetter();
+            } else {
+                enemyTeam.defendFSetter();
+            }
+
+            if (myTeam.isSetterBack()) {
+                myTeam.defendBSetter();
+            } else {
+                myTeam.defendFSetter();
+            }
+
+        } else {
+            if (myTeam.isSetterBack()) {
+                myTeam.defendBSetter();
+            } else {
+                myTeam.defendFSetter();
+            }
+
+            if (enemyTeam.isSetterBack()) {
+                enemyTeam.defendBSetter();
+            } else {
+                enemyTeam.defendFSetter();
+            }
+
+
+        }
+
+        court.repaint();
     }
 
     // REQUIRES: turn[0, 1]
     // MODIFIES: ball
     // EFFECTS: moves the ball to setter's position
     private void receive(int turn) {
+        addTimer();
         if (turn == 0) {
             for (Players p : enemyTeam.getStarters()) {
                 if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
@@ -453,6 +518,7 @@ public class GameAppGUI extends JFrame {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: We choose how to defend before an attack
     private void myDefence() {
+
         if (myTeam.isSetterBack()) {
             myTeam.defendBSetter();
         } else {
@@ -463,8 +529,8 @@ public class GameAppGUI extends JFrame {
 
             if (p.getRotation() >= 4) {
                 int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s block position");
-                ;
-                p.moveToX(x);
+
+                p.directMoveX(x);
                 System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");
 
@@ -472,8 +538,8 @@ public class GameAppGUI extends JFrame {
                 int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s x receive position");
 
                 int y = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s y receive position");
-                p.moveToX(x);
-                p.moveToY(y);
+                p.directMoveX(x);
+                p.directMoveY(y);
                 System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");
 
@@ -484,7 +550,7 @@ public class GameAppGUI extends JFrame {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum ==1
     private void enemyMoveDefence1() {
-
+        addTimer();
         for (Players p : enemyTeam.getStarters()) {
             if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(2);
@@ -502,7 +568,7 @@ public class GameAppGUI extends JFrame {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum == 0
     private void enemyMoveDefence0() {
-
+        addTimer();
         for (Players p : enemyTeam.getStarters()) {
             if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(6);
@@ -519,7 +585,7 @@ public class GameAppGUI extends JFrame {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum == 2
     private void enemyMoveDefence2() {
-
+        addTimer();
         for (Players p : enemyTeam.getStarters()) {
             if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(10);
@@ -752,18 +818,25 @@ public class GameAppGUI extends JFrame {
         //court.add();
     }
 
-    public void addTimer() {
+    private void addTimer() {
         Timer timer = new Timer(INTERVAL, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                game.update();
+            public void actionPerformed(ActionEvent ae) {
+                game.getMyTeam().movePlayers();
+                game.getEnemyTeam().movePlayers();
+                ball.move();
                 court.repaint();
-            }
 
+            }
         });
 
         timer.start();
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        game.update();
+        court.repaint();
+    }
 }

@@ -240,7 +240,7 @@ public class MyTeam implements Team {
             if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                 p.moveToY(21);
             } else {
-                p.moveToY(13);
+                p.moveToY(14);
             }
 
             if (p.equals(setter)) {

@@ -52,7 +52,7 @@ public class Game {
 
             int x = p.getPosX();
             int y = p.getPosY();
-            if ((Math.abs(x - ballX) <= 1) && (Math.abs(y - ballY) <= 1)) {
+            if ((Math.abs(x - ballX) <= 1 * SCALE) && (Math.abs(y - ballY) <= 1 * SCALE)) {
                 return true;
             }
 
@@ -158,8 +158,12 @@ public class Game {
     }
 
     public void update() {
-        myTeam.movePlayers();
-        enemyTeam.movePlayers();
-        ball.move();
+        if (myTeam.getPlayerMovementState() || enemyTeam.getPlayerMovementState()) {
+            myTeam.movePlayers();
+            enemyTeam.movePlayers();
+        }
+        if (ball.getMoveState()) {
+            ball.move();
+        }
     }
 }

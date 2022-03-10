@@ -6,7 +6,7 @@ package model;
 public interface Players {
     static final int SCALE = 30;
     static final int Y_TRANS = 100;
-    static final int SPEED = 72;
+    static final int SPEED = 24;
 
     // REQUIRES: x[0, 12],
     // MODIFIES: this
