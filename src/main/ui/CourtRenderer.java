@@ -1,14 +1,17 @@
 package ui;
 
+import model.Ball;
 import model.Game;
 import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class CourtRenderer extends JFrame {
+public class CourtRenderer extends JPanel {
 
-    JFrame frame;
+    //JFrame frame;
     JPanel blueTop;
     JPanel blueBottom;
     JPanel orange1;
@@ -24,119 +27,123 @@ public class CourtRenderer extends JFrame {
 
         this.game = game;
 
-        frame = new JFrame();
+        //frame = new JFrame();
 
-        playersSetup();
-        scoreBoard();
-        courtSetup();
+        setPreferredSize(new Dimension(360, 920));
+        setBackground(Color.WHITE);
 
     }
 
-    private void playersSetup() {
+    private void ballSetup(Graphics g) {
+        JLabel label;
+        Ball ball = game.getBall();
+
+        int x = ball.getXPos();
+        int y = ball.getYPos();
+    /*
+        label = new JLabel();
+        Icon icon = new ImageIcon("tobs.jpg");
+        label.setBounds(x, y, 20, 20);
+        label.setBackground(Color.yellow);
+        label.setIcon(icon);
+        label.setOpaque(true);
+        frame.add(label);
+    */
+
+        g.setColor(Color.yellow);
+        g.fillOval(x, y, 20, 20);
+
+
+    }
+
+    private void playersSetup(Graphics g) {
 
 
         for (Players p : game.getMyTeam().getStarters()) {
-            //game.getMyTeam().startPosNoServe();
-            JButton button;
+
             int x = p.getPosX();
             int y = p.getPosY();
             int num = p.getNum();
             String pos = p.getPlayingPosition();
+            g.setColor(new Color(46, 196,182));
+            g.fillOval(x, y, 30, 30);
+            g.drawString(pos + ": " + num, x, y);
 
-            button = new JButton("" + num);
-            button.setLayout(null);
-            button.setBounds(x, y, 30, 30);
-            button.setBackground(Color.white);
-            button.setOpaque(true);
-            button.setForeground(Color.black);
-
-            button.setVisible(true);
-
-            frame.add(button);
         }
 
         for (Players p: game.getEnemyTeam().getStarters()) {
-            JButton button;
+
             int x = p.getPosX();
             int y = p.getPosY();
             int num = p.getNum();
             String pos = p.getPlayingPosition();
 
-            button = new JButton("" + num);
-            button.setBounds(x, y, 30, 30);
-            button.setBackground(new Color(184, 15, 10));
-            button.setOpaque(true);
-            button.setForeground(Color.white);
-            button.setVisible(true);
-
-            frame.add(button);
+            g.setColor(new Color(184, 15, 10));
+            g.fillOval(x, y, 30, 30);
+            g.drawString(pos + ": " + num, x, y);
         }
-    }
-
-    private void orangeSetup() {
-        orange1 = new JPanel();
-        orange2 = new JPanel();
-        orange3 = new JPanel();
-        orange4 = new JPanel();
-        net = new JPanel();
-
-        orange1.setBackground(new Color(255, 174, 73));
-        orange1.setBounds(10, 110, 340, 250);
-        frame.add(orange1);
-
-        orange2.setBackground(new Color(255, 174, 73));
-        orange2.setBounds(10, 365, 340, 80);
-        frame.add(orange2);
-
-        net.setBackground(Color.DARK_GRAY);
-        net.setBounds(0, 448, 360, 5);
-        frame.add(net);
-
-        orange3.setBackground(new Color(255, 174, 73));
-        orange3.setBounds(10, 455, 340, 80);
-        frame.add(orange3);
-
-        orange4.setBackground(new Color(255, 174, 73));
-        orange4.setBounds(10, 540, 340, 250);
-        frame.add(orange4);
 
 
     }
 
-    public void courtSetup() {
-        frame.setTitle("Volleyball Game");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(360, 920);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.getContentPane().setBackground(Color.white);
-        blueSetup();
-        orangeSetup();
-    }
+    private void orangeSetup(Graphics g) {
 
-    public void blueSetup() {
-        blueTop = new JPanel();
-        blueBottom = new JPanel();
 
-        blueTop.setBackground(new Color(0, 181, 226));
-        blueTop.setBounds(0, 0, 360, 100);
-        frame.add(blueTop);
+        g.setColor(new Color(255, 174, 73));
+        g.fillRect(10, 110, 340, 250);
 
-        blueBottom.setBackground(new Color(0, 181, 226));
-        blueBottom.setBounds(0, 800, 360, 100);
-        frame.add(blueBottom);
+        g.setColor(new Color(255, 174, 73));
+        g.fillRect(10, 365, 340, 80);
 
-    }
+        g.setColor(Color.darkGray);
+        g.fillRect(0, 448, 360, 5);
 
-    public void scoreBoard() {
-        scoreBoard = new JLabel();
-        scoreBoard.setText(game.getScore());
-        scoreBoard.setBackground(Color.white);
-        scoreBoard.setVerticalTextPosition(0);
-        frame.add(scoreBoard);
+        g.setColor(new Color(255, 174, 73));
+        g.fillRect(10, 455, 340, 80);
 
+        g.setColor(new Color(255, 174, 73));
+        g.fillRect(10, 540, 340, 250);
 
 
     }
+
+    public void courtSetup(Graphics g) {
+
+        g.setColor(Color.white);
+        g.fillRect(0, 0, 360,  920);
+        blueSetup(g);
+        orangeSetup(g);
+    }
+
+    public void blueSetup(Graphics g) {
+
+        g.setColor(new Color(0, 181, 226));
+        g.fillRect(0, 0, 360, 100);
+        g.setColor(new Color(0, 181, 226));
+        g.fillRect(0, 800, 360, 100);
+
+    }
+
+    public void scoreBoard(Graphics2D g) {
+        g.drawString(game.getScore(), 0, 0);
+
+
+
+
+    }
+
+
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        courtSetup(g);
+        playersSetup(g);
+        ballSetup(g);
+        scoreBoard((Graphics2D) g);
+
+
+    }
+
 
 }

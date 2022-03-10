@@ -27,14 +27,29 @@ public class OutsideHitter implements Players {
 
     }
 
+    @Override
+    public void directMoveX(int x) {
+        this.posX = x * SCALE;
+    }
+
+    @Override
+    public void directMoveY(int y) {
+        this.posY = y * SCALE + Y_TRANS;
+    }
+
+
+    // TODO have a move directly to X method so constructor can move players quickly
+    // TODO program must know when to stop moving each player
     // REQUIRES: x [0, 12]
     // MODIFIES: this
     // EFFECTS: sends Player to position x
+
     @Override
     public void moveToX(int x) {
-        this.posX = x  * SCALE;
-        //this.newPosX = x  * SCALE;
-        //setDX();
+        //this.posX = x  * SCALE;
+        this.newPosX = x  * SCALE;
+        setDX();
+        this.moveState = true;
 
     }
 
@@ -46,6 +61,7 @@ public class OutsideHitter implements Players {
         //this.posY = y * SCALE + Y_TRANS;
         this.newPosY = y * SCALE + Y_TRANS;
         setDY();
+        this.moveState = true;
     }
 
     //
@@ -218,26 +234,36 @@ public class OutsideHitter implements Players {
 
     @Override
     public void setDY() {
-        dy = Math.abs(posY - newPosY) / 48;
+        dy = Math.abs(posY - newPosY) / SPEED;
     }
 
     @Override
     public void setDX() {
-        dx = Math.abs(posX - newPosX) / 48;
+        dx = Math.abs(posX - newPosX) / SPEED;
     }
 
     @Override
     public void moveBySpeed() {
-        if (posY > newPosY) {
-            this.posY -= dy;
+        if (Math.abs(posY - newPosY) < dy) {
+            if (posY > newPosY) {
+                this.posY -= dy;
+            } else {
+                this.posY += dy;
+            }
         } else {
-            this.posY += dy;
+            this.posY = newPosX;
+            this.moveState = false;
         }
 
-        if (posX > newPosX) {
-            this.posX -= dx;
+        if (Math.abs(posX - newPosX) < dx) {
+            if (posX > newPosX) {
+                this.posX -= dx;
+            } else {
+                this.posX += dx;
+            }
         } else {
-            this.posX += dx;
+            this.posX = newPosX;
+            this.moveState = false;
         }
 
 

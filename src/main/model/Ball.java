@@ -11,6 +11,7 @@ public class Ball {
     private static int Y_TRANS = 100;
     private int dy;
     private int dx;
+    private boolean moveState;
 
 
 
@@ -19,6 +20,14 @@ public class Ball {
         this.currentXPos = 0;
         this.currentYPos = 0;
 
+    }
+
+    public void directX(int x) {
+        this.currentXPos = x * SCALE;
+    }
+
+    public void directY(int y) {
+        this.currentYPos = y * SCALE + Y_TRANS;
     }
 
     // EFFECTS: returns the ball's X position
@@ -35,7 +44,9 @@ public class Ball {
     // MODIFIES: this
     // EFFECTS: move's this ball to position X
     public void moveToX(int x) {
-        this.currentXPos = x * SCALE;
+        this.moveToXPos = x  * SCALE;
+        setDX();
+        moveState = true;
 
     }
 
@@ -43,25 +54,39 @@ public class Ball {
     // MODIFIES: this
     // EFFECTS: move's this ball to position Y
     public void moveToY(int y) {
-        this.currentYPos = y * SCALE + Y_TRANS;
+        this.moveToYPos = y * SCALE + Y_TRANS;
+        setDY();
+        moveState = true;
     }
 
-    // Do move by methods later
-    // REQUIRES:
-    // MODIFIES: this
-    // EFFECTS:
+
     public void move() {
-        if (currentYPos > moveToYPos) {
-            this.currentYPos -= dy;
-        } else {
-            this.currentYPos += dy;
+
+        if (moveState) {
+            if (Math.abs(currentYPos - currentYPos) < dy) {
+                if (currentYPos > moveToYPos) {
+                    this.currentYPos -= dy;
+                } else {
+                    this.currentYPos += dy;
+                }
+            } else {
+                this.currentYPos = moveToYPos;
+                this.moveState = false;
+            }
+
+            if (Math.abs(currentXPos - currentXPos) < dy) {
+                if (currentXPos > moveToXPos) {
+                    this.currentXPos -= dx;
+                } else {
+                    this.currentXPos += dx;
+                }
+            } else {
+                this.currentXPos = moveToXPos;
+                this.moveState = false;
+            }
         }
 
-        if (currentXPos > moveToXPos) {
-            this.currentXPos -= dx;
-        } else {
-            this.currentXPos += dx;
-        }
+
     }
 
 

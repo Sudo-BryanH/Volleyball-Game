@@ -12,6 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
+import javax.swing.Timer;
 
 // This is the GameApp class where most of the user interface happens. Players can see
 // information about the score, their players' positions, ball's positions and turns.
@@ -60,6 +70,8 @@ public class GameAppGUI extends JFrame {
     public GameAppGUI() {
         // make new to start from saved game
 
+        super("Volleyball Game");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String input = stringInput("Would you like to load an old game? type yes or no");
 
         if (input.equals("yes")) {
@@ -158,13 +170,21 @@ public class GameAppGUI extends JFrame {
     public void beginGame() {
         boolean gameOver = false;
         turn = game.getTurnNum();
+        game.decBall(ball);
         court = new CourtRenderer(game);
+        add(court);
+
+        pack();
+        setVisible(true);
+        addTimer();
+
 
 
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
 
 
         while (gameOver == false) {
+
             System.out.println(game.getScore());
             beginRally(turn);
 
@@ -189,8 +209,8 @@ public class GameAppGUI extends JFrame {
         int setNum;
         int attackNum;
         System.out.println("Turn number is " + turn);
-        addTimer();
         serve(turn);
+
         while (!isOver) {
             ballPos();
             game.flipTurnNum();
@@ -203,6 +223,7 @@ public class GameAppGUI extends JFrame {
             attack(turn, setNum, attackNum);
             ballPos();
             isOver = !checkReceive(turn);
+
         }
         endRally(turn);
         return turn;
@@ -289,6 +310,8 @@ public class GameAppGUI extends JFrame {
         int chance = (int) (Math.random() * 2);
         int input;
         if (turn == 0) {
+            ball.directX(0);
+            ball.directY(0);
             enemyTeam.startPosServe();
             myTeam.startPosNoServe();
             for (Players p : enemyTeam.getStarters()) {
@@ -298,6 +321,8 @@ public class GameAppGUI extends JFrame {
             }
             System.out.println("Serve has been made");
         } else if (turn == 1) {
+            ball.directX(12);
+            ball.directY(24);
             enemyTeam.startPosNoServe();
             myTeam.startPosServe();
             input = intInput("Do you want to serve left[0] or right [1]");
@@ -308,6 +333,8 @@ public class GameAppGUI extends JFrame {
             }
             System.out.println("Serve has been made");
         }
+
+
     }
 
     // REQUIRES: turn[0, 1]
@@ -734,6 +761,8 @@ public class GameAppGUI extends JFrame {
             }
 
         });
+
+        timer.start();
     }
 
 
