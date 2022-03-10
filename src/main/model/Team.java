@@ -78,4 +78,10 @@ public interface Team {
 
     public String getName();
 
+    public void movePlayers();
+
+    public boolean getPlayerMovementState();
+
+
+
 }

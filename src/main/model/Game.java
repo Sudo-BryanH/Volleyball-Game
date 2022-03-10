@@ -13,6 +13,7 @@ public class Game {
     private Team enemyTeam;
     protected static final int SCALE = 30;
     protected static final int Y_TRANS = 100;
+    private Ball ball;
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
     public Game(Team myTeam, Team enemyTeam) {
@@ -33,6 +34,14 @@ public class Game {
         String us = Integer.toString(myScore);
         String them = Integer.toString(enemyScore);
         return us + " : " + them;
+    }
+
+    public void decBall(Ball ball) {
+        this.ball = ball;
+    }
+
+    public Ball getBall() {
+        return ball;
     }
 
 
@@ -149,5 +158,8 @@ public class Game {
     }
 
     public void update() {
+        myTeam.movePlayers();
+        enemyTeam.movePlayers();
+        ball.move();
     }
 }

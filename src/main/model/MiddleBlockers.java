@@ -11,6 +11,11 @@ public class MiddleBlockers implements Players {
     private int rotationNum;
     private int posX;
     private int posY;
+    private int newPosX;
+    private int newPosY;
+    private boolean moveState = false;
+    private int dy;
+    private int dx;
 
     // EFFECTS: constructs an Middle Blocker object with player number and starting rotation of 0 (TBD)
     public MiddleBlockers(int playerNum, int side) {
@@ -22,13 +27,14 @@ public class MiddleBlockers implements Players {
 
     }
 
-
     // REQUIRES: x [0, 12]
     // MODIFIES: this
     // EFFECTS: sends Player to position x
     @Override
     public void moveToX(int x) {
-        posX = x * SCALE;
+        this.posX = x  * SCALE;
+        //this.newPosX = x  * SCALE;
+        //setDX();
 
     }
 
@@ -37,7 +43,9 @@ public class MiddleBlockers implements Players {
     // EFFECTS: sends Player to position y
     @Override
     public void moveToY(int y) {
-        posY = y * SCALE + Y_TRANS;
+        //this.posY = y * SCALE + Y_TRANS;
+        this.newPosY = y * SCALE + Y_TRANS;
+        setDY();
     }
 
     //
@@ -192,6 +200,56 @@ public class MiddleBlockers implements Players {
     @Override
     public int getSide() {
         return side;
+    }
+
+
+    @Override
+    public void setMoveState() {
+
+        moveState = !moveState;
+
+    }
+
+    @Override
+    public boolean getMoveState() {
+        return moveState;
+    }
+
+    @Override
+    public int getNewPosX() {
+        return newPosX;
+    }
+
+    @Override
+    public int getNewPosY() {
+        return newPosY;
+    }
+
+    @Override
+    public void setDY() {
+        dy = Math.abs(posY - newPosY) / 48;
+    }
+
+    @Override
+    public void setDX() {
+        dx = Math.abs(posX - newPosX) / 48;
+    }
+
+    @Override
+    public void moveBySpeed() {
+        if (posY > newPosX) {
+            this.posY -= dy;
+        } else {
+            this.posY += dy;
+        }
+
+        if (posX > newPosX) {
+            this.posX -= dx;
+        } else {
+            this.posX += dx;
+        }
+
+
     }
 
 }

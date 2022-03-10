@@ -412,6 +412,27 @@ public class MyTeam implements Team {
         return name;
     }
 
+    // MODIFIES: players
+    // EFFECTS: moves each player by their speeds
+    @Override
+    public void movePlayers() {
+        while (getPlayerMovementState()) {
+            for (Players p : starters) {
+                if (p.getMoveState()) {
+                    p.moveBySpeed();
+                }
+            }
+        }
+    }
+
+    // EFFECTS: returns whether true (at least one player not moving), false if all are done moving
+    @Override
+    public boolean getPlayerMovementState() {
+        return !setter.getMoveState() && !middle1.getMoveState() && !middle2.getMoveState() && !outside1.getMoveState()
+                && !outside2.getMoveState() && !opposite.getMoveState();
+    }
+
+
     // REQUIRES: a player number of a player already in the starters list
     // EFFECTS: retrieves a starting player from the starters list
     @Override

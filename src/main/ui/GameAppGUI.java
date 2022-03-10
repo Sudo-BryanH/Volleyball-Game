@@ -189,6 +189,7 @@ public class GameAppGUI extends JFrame {
         int setNum;
         int attackNum;
         System.out.println("Turn number is " + turn);
+        addTimer();
         serve(turn);
         while (!isOver) {
             ballPos();

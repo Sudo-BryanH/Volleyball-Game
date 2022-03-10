@@ -9,6 +9,9 @@ public class Ball {
     private int moveToXPos;
     private static int SCALE = 30;
     private static int Y_TRANS = 100;
+    private int dy;
+    private int dx;
+
 
 
     // EFFECTS: constructs a ball object at x = 0, y = 0
@@ -33,6 +36,7 @@ public class Ball {
     // EFFECTS: move's this ball to position X
     public void moveToX(int x) {
         this.currentXPos = x * SCALE;
+
     }
 
     // REQUIRES: a position Y [0, 24]
@@ -46,9 +50,28 @@ public class Ball {
     // REQUIRES:
     // MODIFIES: this
     // EFFECTS:
-    //public void moveByX() {}
+    public void move() {
+        if (currentYPos > moveToYPos) {
+            this.currentYPos -= dy;
+        } else {
+            this.currentYPos += dy;
+        }
 
-    //public void moveByY() {}
+        if (currentXPos > moveToXPos) {
+            this.currentXPos -= dx;
+        } else {
+            this.currentXPos += dx;
+        }
+    }
+
+
+    public void setDY() {
+        dy = Math.abs(currentYPos - moveToYPos) / 48;
+    }
+
+    public void setDX() {
+        dx = Math.abs(moveToXPos - moveToXPos) / 48;
+    }
 
 
 }

@@ -12,6 +12,11 @@ public class Setters implements Players {
     private int dumps;
     private int posX;
     private int posY;
+    private int newPosX;
+    private int newPosY;
+    private boolean moveState = false;
+    private int dy;
+    private int dx;
 
 
     // EFFECTS: constructs an Setter object with player number and starting rotation of 1
@@ -31,7 +36,9 @@ public class Setters implements Players {
     // EFFECTS: sends Player to position x
     @Override
     public void moveToX(int x) {
-        posX = x * SCALE;
+        //this.posX = x  * SCALE;
+        this.newPosX = x  * SCALE;
+        setDX();
 
     }
 
@@ -40,7 +47,9 @@ public class Setters implements Players {
     // EFFECTS: sends Player to position y
     @Override
     public void moveToY(int y) {
-        posY = y * SCALE + Y_TRANS;
+        this.posY = y * SCALE + Y_TRANS;
+        //this.newPosY = y * SCALE + Y_TRANS;
+        //setDY();
     }
 
     // REQUIRES: dir = 1
@@ -185,5 +194,54 @@ public class Setters implements Players {
     // EFFECTS: returns the number of dumps
     public int numDump() {
         return dumps;
+    }
+
+    @Override
+    public void setMoveState() {
+
+        moveState = !moveState;
+
+    }
+
+    @Override
+    public boolean getMoveState() {
+        return moveState;
+    }
+
+    @Override
+    public int getNewPosX() {
+        return newPosX;
+    }
+
+    @Override
+    public int getNewPosY() {
+        return newPosY;
+    }
+
+    @Override
+    public void setDY() {
+        dy = Math.abs(posY - newPosY) / 48;
+    }
+
+    @Override
+    public void setDX() {
+        dx = Math.abs(posX - newPosX) / 48;
+    }
+
+    @Override
+    public void moveBySpeed() {
+        if (posY > newPosY) {
+            this.posY -= dy;
+        } else {
+            this.posY += dy;
+        }
+
+        if (posX > newPosX) {
+            this.posX -= dx;
+        } else {
+            this.posX += dx;
+        }
+
+
     }
 }

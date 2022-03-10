@@ -1,5 +1,6 @@
 package model;
 
+
 // OutsideHitter is a player class with an x, y position and their own type of hitting
 
 public class OutsideHitter implements Players {
@@ -10,6 +11,11 @@ public class OutsideHitter implements Players {
     private int rotationNum;
     private int posX;
     private int posY;
+    private int newPosX;
+    private int newPosY;
+    private boolean moveState = false;
+    private int dy;
+    private int dx;
 
     // EFFECTS: constructs an Outside Hitter object with player number and starting rotation of 0 (TBD)
     public OutsideHitter(int playerNum, int side) {
@@ -27,6 +33,8 @@ public class OutsideHitter implements Players {
     @Override
     public void moveToX(int x) {
         this.posX = x  * SCALE;
+        //this.newPosX = x  * SCALE;
+        //setDX();
 
     }
 
@@ -35,7 +43,9 @@ public class OutsideHitter implements Players {
     // EFFECTS: sends Player to position y
     @Override
     public void moveToY(int y) {
-        this.posY = y * SCALE + Y_TRANS;
+        //this.posY = y * SCALE + Y_TRANS;
+        this.newPosY = y * SCALE + Y_TRANS;
+        setDY();
     }
 
     //
@@ -182,6 +192,55 @@ public class OutsideHitter implements Players {
     @Override
     public int getSide() {
         return side;
+    }
+
+    @Override
+    public void setMoveState() {
+
+        moveState = !moveState;
+
+    }
+
+    @Override
+    public boolean getMoveState() {
+        return moveState;
+    }
+
+    @Override
+    public int getNewPosX() {
+        return newPosX;
+    }
+
+    @Override
+    public int getNewPosY() {
+        return newPosY;
+    }
+
+    @Override
+    public void setDY() {
+        dy = Math.abs(posY - newPosY) / 48;
+    }
+
+    @Override
+    public void setDX() {
+        dx = Math.abs(posX - newPosX) / 48;
+    }
+
+    @Override
+    public void moveBySpeed() {
+        if (posY > newPosY) {
+            this.posY -= dy;
+        } else {
+            this.posY += dy;
+        }
+
+        if (posX > newPosX) {
+            this.posX -= dx;
+        } else {
+            this.posX += dx;
+        }
+
+
     }
 
 }
