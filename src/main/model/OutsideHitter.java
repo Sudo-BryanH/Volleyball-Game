@@ -244,7 +244,7 @@ public class OutsideHitter implements Players {
 
     @Override
     public void moveBySpeed() {
-        if (Math.abs(posY - newPosY) < dy) {
+        if (Math.abs(posY - newPosY) > dy) {
             if (posY > newPosY) {
                 this.posY -= dy;
             } else {
@@ -255,7 +255,7 @@ public class OutsideHitter implements Players {
             this.moveState = false;
         }
 
-        if (Math.abs(posX - newPosX) < dx) {
+        if (Math.abs(posX - newPosX) > dx) {
             if (posX > newPosX) {
                 this.posX -= dx;
             } else {

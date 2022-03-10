@@ -63,26 +63,30 @@ public class Ball {
     public void move() {
 
         if (moveState) {
-            if (Math.abs(currentYPos - currentYPos) < dy) {
+            if (Math.abs(currentYPos - moveToYPos) > dy) { // swap ineq sign to fix
                 if (currentYPos > moveToYPos) {
                     this.currentYPos -= dy;
                 } else {
                     this.currentYPos += dy;
                 }
-            } else {
+            } else if (Math.abs(currentYPos - moveToYPos) <= dy) {
                 this.currentYPos = moveToYPos;
-                this.moveState = false;
+
             }
 
-            if (Math.abs(currentXPos - currentXPos) < dy) {
+            if (Math.abs(currentXPos - moveToXPos) > dx) {
                 if (currentXPos > moveToXPos) {
                     this.currentXPos -= dx;
                 } else {
                     this.currentXPos += dx;
                 }
-            } else {
+            } else if (Math.abs(currentXPos - moveToXPos) <= dx) {
                 this.currentXPos = moveToXPos;
-                this.moveState = false;
+
+            }
+
+            if (currentXPos == moveToXPos && currentYPos == moveToYPos) {
+                moveState = true;
             }
         }
 
@@ -91,17 +95,17 @@ public class Ball {
 
 
     public void setDY() {
-        dy = Math.abs(currentYPos - moveToYPos) / 24;
+        dy = Math.abs(currentYPos - moveToYPos) / 240;
     }
 
     public void setDX() {
-        dx = Math.abs(currentXPos - moveToXPos) / 24;
+        dx = Math.abs(currentXPos - moveToXPos) / 240;
     }
 
     public boolean getMoveState() {
         return moveState;
     }
-    // TODO turn number is likely off
+
 
 
 }

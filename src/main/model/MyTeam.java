@@ -95,7 +95,7 @@ public class MyTeam implements Team {
 
 
 
-
+    // TODO subtract 1 from every x value unless 0
     // MODIFIES: player positions
     // EFFECTS: moves the players into formation for serving
 
@@ -103,7 +103,7 @@ public class MyTeam implements Team {
     public void startPosServe() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
-                p.directMoveX(12);
+                p.directMoveX(11);
                 p.directMoveY(24);
 
             } else if (p.getRotation() == 2) {
@@ -231,6 +231,7 @@ public class MyTeam implements Team {
         }
     }
 
+
     // MODIFIES: player positions
     // EFFECTS: moves the players into formation for attack when the setter
     // is in the front row and opposite is in backrow
@@ -284,7 +285,7 @@ public class MyTeam implements Team {
                     p.moveToX(9);
                 }
             } else if (p.equals(opposite)) {
-                p.moveToX(12);
+                p.moveToX(11);
             } else if (p.equals(outside1) || p.equals(outside2)) {
                 p.moveToX(0);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {

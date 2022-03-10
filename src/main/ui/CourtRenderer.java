@@ -126,6 +126,7 @@ public class CourtRenderer extends JPanel {
 
     public void scoreBoard(Graphics2D g) {
         g.drawString(game.getScore(), 0, 0);
+        g.setColor(Color.black);
 
 
 

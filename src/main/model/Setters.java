@@ -170,7 +170,7 @@ public class Setters implements Players {
     public void set(int dir, Ball ball) {
         if (side == 0) {
             if (dir == 0) {
-                ball.moveToX(12);
+                ball.moveToX(11);
                 ball.moveToY(11);
             } else if (dir == 1) {
                 ball.moveToX(6);
@@ -187,7 +187,7 @@ public class Setters implements Players {
                 ball.moveToX(6);
                 ball.moveToY(13);
             } else if (dir == 2) {
-                ball.moveToX(12);
+                ball.moveToX(11);
                 ball.moveToY(13);
             }
         }
@@ -243,7 +243,7 @@ public class Setters implements Players {
 
     @Override
     public void moveBySpeed() {
-        if (Math.abs(posY - newPosY) < dy) {
+        if (Math.abs(posY - newPosY) > dy) { // swap ineq sign to fix
             if (posY > newPosY) {
                 this.posY -= dy;
             } else {
@@ -254,7 +254,7 @@ public class Setters implements Players {
             this.moveState = false;
         }
 
-        if (Math.abs(posX - newPosX) < dx) {
+        if (Math.abs(posX - newPosX) > dx) {
             if (posX > newPosX) {
                 this.posX -= dx;
             } else {

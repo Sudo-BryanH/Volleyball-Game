@@ -53,7 +53,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     Players myOH2;
     Game game;
     EnemyTeam enemyTeam;
-    Ball ball = new Ball();
+    Ball ball;
     int turn;
     CourtRenderer court;
     Timer timer;
@@ -116,9 +116,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
         this.myTeam = gameData.getMyTeam();
         game.setEnemyTeam(enemyTeam);
         game.setMyTeam(myTeam);
-        this.ball = new Ball();
         game.getMyTeam().startPosNoServe();
         game.getEnemyTeam().startPosServe();
+
     }
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
@@ -170,6 +170,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     public void beginGame() {
         boolean gameOver = false;
         turn = game.getTurnNum();
+        ball = new Ball();
         game.decBall(ball);
         court = new CourtRenderer(game);
         add(court);
@@ -192,7 +193,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             } else {
                 enemyTeam.startPosNoServe();
                 myTeam.startPosServe();
-                ball.directX(12);
+                ball.directX(11);
                 ball.directY(24);
             }
             System.out.println(game.getScore());
@@ -234,8 +235,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
             receive(turn);
             setNum = chooseSet(turn);
             attackNum = chooseAttack(setNum, turn);
-            chooseDefend(turn, setNum, attackNum);
             set(turn, setNum);
+            chooseDefend(turn, setNum, attackNum);
             attack(turn, setNum, attackNum);
             ballPos();
             isOver = !checkReceive(turn);
@@ -272,11 +273,13 @@ public class GameAppGUI extends JFrame implements ActionListener {
     }
 
     private void set(int turn, int setNum) {
-        addTimer();
+
         if (turn == 0) {
+            addTimer();
             enemyTeam.set(setNum, ball);
 
         } else if (turn == 1) {
+            addTimer();
             myTeam.set(setNum, ball);
         }
     }
@@ -518,7 +521,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: We choose how to defend before an attack
     private void myDefence() {
-
+        addTimer();
         if (myTeam.isSetterBack()) {
             myTeam.defendBSetter();
         } else {
@@ -836,7 +839,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        game.update();
+        game.getMyTeam().movePlayers();
+        game.getEnemyTeam().movePlayers();
+        ball.move();
         court.repaint();
     }
 }

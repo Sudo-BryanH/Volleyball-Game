@@ -244,7 +244,7 @@ public class EnemyTeam implements Team {
             } else if (p.equals(opposite)) {
                 p.moveToX(3);
             } else if (p.equals(outside1) || p.equals(outside2)) {
-                p.moveToX(12);
+                p.moveToX(11);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     p.moveToX(10);
                 }
@@ -276,7 +276,7 @@ public class EnemyTeam implements Team {
             } else if (p.equals(opposite)) {
                 p.moveToX(0);
             } else if (p.equals(outside1) || p.equals(outside2)) {
-                p.moveToX(12);
+                p.moveToX(11);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     p.moveToX(9);
                 }
