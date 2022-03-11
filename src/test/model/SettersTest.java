@@ -45,13 +45,13 @@ public class SettersTest {
     @Test
     public void testSpike() {
         testPlayer.spike(1, mikasa);
-        assertEquals(6,mikasa.getXPos());
-        assertEquals(6,mikasa.getYPos());
+        assertEquals(6,mikasa.getMoveToXPos());
+        assertEquals(6,mikasa.getMoveToYPos());
         assertEquals(1, testPlayer.numDump());
 
         testEPlayer.spike(1, mikasa);
-        assertEquals(6,mikasa.getXPos());
-        assertEquals(18,mikasa.getYPos());
+        assertEquals(6,mikasa.getMoveToXPos());
+        assertEquals(18,mikasa.getMoveToYPos());
         assertEquals(1, testPlayer.numDump());
 
     }
@@ -60,18 +60,18 @@ public class SettersTest {
     @Test
     public void testServe() {
         testPlayer.serve(0, mikasa);
-        assertEquals(3,mikasa.getXPos());
-        assertEquals(3,mikasa.getYPos());
+        assertEquals(3,mikasa.getMoveToXPos());
+        assertEquals(3,mikasa.getMoveToYPos());
         testPlayer.serve(1, mikasa);
-        assertEquals(9,mikasa.getXPos());
-        assertEquals(3,mikasa.getYPos());
+        assertEquals(9,mikasa.getMoveToXPos());
+        assertEquals(3,mikasa.getMoveToYPos());
 
         testEPlayer.serve(0, mikasa);
-        assertEquals(3,mikasa.getXPos());
-        assertEquals(21,mikasa.getYPos());
+        assertEquals(3,mikasa.getMoveToXPos());
+        assertEquals(21,mikasa.getMoveToYPos());
         testEPlayer.serve(1, mikasa);
-        assertEquals(9,mikasa.getXPos());
-        assertEquals(21,mikasa.getYPos());
+        assertEquals(9,mikasa.getMoveToXPos());
+        assertEquals(21,mikasa.getMoveToYPos());
 
     }
 
@@ -94,28 +94,28 @@ public class SettersTest {
     @Test
     public void testSet() {
         testPlayer.set(2, mikasa);
-        assertEquals(12,mikasa.getXPos());
-        assertEquals(13,mikasa.getYPos());
+        assertEquals(12,mikasa.getMoveToXPos());
+        assertEquals(13,mikasa.getMoveToYPos());
 
         testPlayer.set(0, mikasa);
-        assertEquals(0,mikasa.getXPos());
-        assertEquals(13,mikasa.getYPos());
+        assertEquals(0,mikasa.getMoveToXPos());
+        assertEquals(13,mikasa.getMoveToYPos());
 
         testPlayer.set(1, mikasa);
-        assertEquals(6,mikasa.getXPos());
-        assertEquals(13,mikasa.getYPos());
+        assertEquals(6,mikasa.getMoveToXPos());
+        assertEquals(13,mikasa.getMoveToYPos());
 
         testEPlayer.set(2, mikasa);
-        assertEquals(0,mikasa.getXPos());
-        assertEquals(11,mikasa.getYPos());
+        assertEquals(0,mikasa.getMoveToXPos());
+        assertEquals(11,mikasa.getMoveToYPos());
 
         testEPlayer.set(0, mikasa);
-        assertEquals(12,mikasa.getXPos());
-        assertEquals(11,mikasa.getYPos());
+        assertEquals(12,mikasa.getMoveToXPos());
+        assertEquals(11,mikasa.getMoveToYPos());
 
         testEPlayer.set(1, mikasa);
-        assertEquals(6,mikasa.getXPos());
-        assertEquals(11,mikasa.getYPos());
+        assertEquals(6,mikasa.getMoveToXPos());
+        assertEquals(11,mikasa.getMoveToYPos());
     }
 
     @Test
@@ -145,12 +145,12 @@ public class SettersTest {
     @Test
     public void testReceive() {
         testPlayer.receive(mikasa);
-        assertEquals(8, mikasa.getXPos());
-        assertEquals(14, mikasa.getYPos());
+        assertEquals(8, mikasa.getMoveToXPos());
+        assertEquals(14, mikasa.getMoveToYPos());
 
         testEPlayer.receive(mikasa);
-        assertEquals(4, mikasa.getXPos());
-        assertEquals(8, mikasa.getYPos());
+        assertEquals(4, mikasa.getMoveToXPos());
+        assertEquals(8, mikasa.getMoveToYPos());
     }
 
     @Test

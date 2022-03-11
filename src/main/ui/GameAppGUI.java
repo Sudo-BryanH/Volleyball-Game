@@ -4,7 +4,6 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -12,13 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -215,12 +207,13 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
             enemyTeam.startPosServe();
             myTeam.startPosNoServe();
+
         } else if (turn == 1) {
             enemyTeam.startPosNoServe();
             myTeam.startPosServe();
         }
         stringInput("Ready? Press any key to start");
-
+            // TODO Design state chooser method
         serve(turn);
 
         while (!isOver) {
@@ -254,18 +247,19 @@ public class GameAppGUI extends JFrame implements ActionListener {
                     backrow.add(p);
                 }
             }
-            check = game.checkReceive(ball.getXPos(), ball.getYPos(), backrow);
+            check = game.checkReceive(ball.getMoveToXPos(), ball.getMoveToYPos(), backrow);
         } else if (turn == 0) {
             for (Players p : myTeam.getStarters()) {
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     backrow.add(p);
                 }
             }
-            check = game.checkReceive(ball.getXPos(), ball.getYPos(), backrow);
+            check = game.checkReceive(ball.getMoveToXPos(), ball.getMoveToYPos(), backrow);
         }
         if (check) {
             System.out.println("Ball has been received");
         }
+        positionsAfterServe(turn);
         return check;
     }
 
@@ -377,9 +371,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
             }
 
             if (myTeam.isSetterBack()) {
-                myTeam.defendBSetter();
+                myTeam.attackBSetter();
             } else {
-                myTeam.defendFSetter();
+                myTeam.attackFSetter();
             }
 
         } else {
@@ -390,9 +384,9 @@ public class GameAppGUI extends JFrame implements ActionListener {
             }
 
             if (enemyTeam.isSetterBack()) {
-                enemyTeam.defendBSetter();
+                enemyTeam.attackBSetter();
             } else {
-                enemyTeam.defendFSetter();
+                enemyTeam.attackFSetter();
             }
 
 
@@ -408,14 +402,16 @@ public class GameAppGUI extends JFrame implements ActionListener {
         //addTimer();
         if (turn == 0) {
             for (Players p : enemyTeam.getStarters()) {
-                if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
+                if ((p.getPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
+                        (p.getPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
                     p.receive(ball);
                 }
             }
             System.out.println("Ball has been received by the enemy");
         } else if (turn == 1) {
             for (Players p : myTeam.getStarters()) {
-                if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
+                if ((p.getPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
+                        (p.getPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
                     p.receive(ball);
                 }
             }
@@ -734,7 +730,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
     // EFFECTS: displays the ball's position
     private void ballPos() {
-        System.out.println("Ball Position is at [" + ball.getXPos() + " , " + ball.getYPos() + "]");
+        System.out.println("Ball Position is at [" + ball.getMoveToXPos() + " , " + ball.getMoveToYPos() + "]");
     }
 
     // EFFECTS: displays score and other information after a rally has ended
@@ -746,17 +742,17 @@ public class GameAppGUI extends JFrame implements ActionListener {
             game.enemyScore();
             enemyTeam.changeRotation();
             System.out.println("Enemy team rotated");
-            stringInput("Type next to play");
-            ball.directX(0);
-            ball.directY(0);
+            stringInput("Press any key to continue");
+            ball.moveToX(0);
+            ball.moveToY(0);
         } else {
             System.out.println("Rally is over, our team scored");
             game.myScore();
             myTeam.changeRotation();
             System.out.println("Our team rotated");
-            stringInput("Type next to play");
-            ball.directX(12);
-            ball.directY(24);
+            stringInput("Press any key to continue");
+            ball.moveToX(12);
+            ball.moveToY(24);
         }
 
     }

@@ -98,7 +98,7 @@ public class OppositeHitter implements Players {
         }
         if (side == 0) {
             ball.moveToX(4);
-            ball.moveToY(8);
+            ball.moveToY(10);
         }
 
     }

@@ -392,51 +392,51 @@ public class EnemyTeamTest {
     @Test
     public void testSet() {
         testTeam.set(0, mikasa);
-        assertEquals(12, mikasa.getXPos());
-        assertEquals(11, mikasa.getYPos());
+        assertEquals(12, mikasa.getMoveToXPos());
+        assertEquals(11, mikasa.getMoveToYPos());
 
         testTeam.set(1, mikasa);
-        assertEquals(6, mikasa.getXPos());
-        assertEquals(11, mikasa.getYPos());
+        assertEquals(6, mikasa.getMoveToXPos());
+        assertEquals(11, mikasa.getMoveToYPos());
 
         testTeam.set(2, mikasa);
-        assertEquals(0, mikasa.getXPos());
-        assertEquals(11, mikasa.getYPos());
+        assertEquals(0, mikasa.getMoveToXPos());
+        assertEquals(11, mikasa.getMoveToYPos());
     }
 
     @Test
     public void testAttack() {
         testTeam.attack(0, 0, mikasa);
-        assertEquals(12, mikasa.getXPos());
-        assertEquals(21, mikasa.getYPos());
+        assertEquals(12, mikasa.getMoveToXPos());
+        assertEquals(21, mikasa.getMoveToYPos());
 
         testTeam.attack(0, 1, mikasa);
-        assertEquals(6, mikasa.getXPos());
-        assertEquals(22, mikasa.getYPos());
+        assertEquals(6, mikasa.getMoveToXPos());
+        assertEquals(22, mikasa.getMoveToYPos());
 
         testTeam.attack(1, 0, mikasa);
-        assertEquals(6, mikasa.getXPos());
-        assertEquals(18, mikasa.getYPos());
+        assertEquals(6, mikasa.getMoveToXPos());
+        assertEquals(18, mikasa.getMoveToYPos());
 
         testTeam.attack(1, 1, mikasa);
-        assertEquals(2, mikasa.getXPos());
-        assertEquals(19, mikasa.getYPos());
+        assertEquals(2, mikasa.getMoveToXPos());
+        assertEquals(19, mikasa.getMoveToYPos());
 
         testTeam.attack(1, 2, mikasa);
-        assertEquals(10, mikasa.getXPos());
-        assertEquals(19, mikasa.getYPos());
+        assertEquals(10, mikasa.getMoveToXPos());
+        assertEquals(19, mikasa.getMoveToYPos());
 
         testTeam.attack(2, 0, mikasa);
-        assertEquals(0, mikasa.getXPos());
-        assertEquals(20, mikasa.getYPos());
+        assertEquals(0, mikasa.getMoveToXPos());
+        assertEquals(20, mikasa.getMoveToYPos());
 
         testTeam.attack(2, 1, mikasa);
-        assertEquals(6, mikasa.getXPos());
-        assertEquals(21, mikasa.getYPos());
+        assertEquals(6, mikasa.getMoveToXPos());
+        assertEquals(21, mikasa.getMoveToYPos());
 
         testTeam.attack(3, 1, mikasa);
-        assertEquals(6, mikasa.getXPos());
-        assertEquals(18, mikasa.getYPos());
+        assertEquals(6, mikasa.getMoveToXPos());
+        assertEquals(18, mikasa.getMoveToYPos());
 
     }
 

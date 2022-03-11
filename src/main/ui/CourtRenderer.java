@@ -39,8 +39,8 @@ public class CourtRenderer extends JPanel {
         JLabel label;
         Ball ball = game.getBall();
 
-        int x = ball.getXPos();
-        int y = ball.getYPos();
+        int x = ball.getMoveToXPos();
+        int y = ball.getMoveToYPos();
 
 
         g.setColor(Color.yellow);

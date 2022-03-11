@@ -209,14 +209,14 @@ public class GameApp extends JFrame {
                     backrow.add(p);
                 }
             }
-            check = game.checkReceive(ball.getXPos(), ball.getYPos(), backrow);
+            check = game.checkReceive(ball.getMoveToXPos(), ball.getMoveToYPos(), backrow);
         } else if (turn == 0) {
             for (Players p : myTeam.getStarters()) {
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     backrow.add(p);
                 }
             }
-            check = game.checkReceive(ball.getXPos(), ball.getYPos(), backrow);
+            check = game.checkReceive(ball.getMoveToXPos(), ball.getMoveToYPos(), backrow);
         }
         if (check) {
             System.out.println("Ball has been received");
@@ -306,14 +306,14 @@ public class GameApp extends JFrame {
     private void receive(int turn) {
         if (turn == 0) {
             for (Players p : enemyTeam.getStarters()) {
-                if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
+                if ((p.getPosX() - ball.getMoveToXPos()) <= 1 && (p.getPosY() - ball.getMoveToYPos()) <= 1) {
                     p.receive(ball);
                 }
             }
             System.out.println("Ball has been received by the enemy");
         } else if (turn == 1) {
             for (Players p : myTeam.getStarters()) {
-                if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
+                if ((p.getPosX() - ball.getMoveToXPos()) <= 1 && (p.getPosY() - ball.getMoveToYPos()) <= 1) {
                     p.receive(ball);
                 }
             }
@@ -628,7 +628,7 @@ public class GameApp extends JFrame {
 
     // EFFECTS: displays the ball's position
     private void ballPos() {
-        System.out.println("Ball Position is at [" + ball.getXPos() + " , " + ball.getYPos() + "]");
+        System.out.println("Ball Position is at [" + ball.getMoveToXPos() + " , " + ball.getMoveToYPos() + "]");
     }
 
     // EFFECTS: displays score and other information after a rally has ended

@@ -201,8 +201,8 @@ public class EnemyTeam implements Team {
                 p.moveToY(11);
             }
             if (p.equals(setter)) {
-                p.moveToX(8);
-                p.moveToY(8);
+                p.moveToX(4);
+                p.moveToY(10);
             } else if (p.equals(middle1) || p.equals(middle2)) {
                 p.moveToX(6);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
@@ -234,7 +234,7 @@ public class EnemyTeam implements Team {
             }
 
             if (p.equals(setter)) {
-                p.moveToX(8);
+                p.moveToX(4);
                 p.moveToY(10);
             } else if (p.equals(middle1) || p.equals(middle2)) {
                 p.moveToX(6);

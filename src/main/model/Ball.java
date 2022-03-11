@@ -9,7 +9,7 @@ public class Ball {
     private int moveToXPos;
     private static int SCALE = 30;
     private static int Y_TRANS = 100;
-    private int dy = 10;
+    private int dy = 4;
     private int dx;
     private boolean moveState;
 
@@ -31,13 +31,13 @@ public class Ball {
     }
 
     // EFFECTS: returns the ball's X position
-    public int getXPos() {
-        return currentXPos;
+    public int getMoveToXPos() {
+        return moveToXPos;
     }
 
     // EFFECTS: returns the ball's Y position
-    public int getYPos() {
-        return currentYPos;
+    public int getMoveToYPos() {
+        return moveToYPos;
     }
 
     // REQUIRES: a position X [0, 12]
@@ -55,7 +55,7 @@ public class Ball {
     // EFFECTS: move's this ball to position Y
     public void moveToY(int y) {
         this.moveToYPos = y * SCALE + Y_TRANS;
-        //setDY();
+        //setDX();
         moveState = true;
     }
 
