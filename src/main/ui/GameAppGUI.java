@@ -211,7 +211,16 @@ public class GameAppGUI extends JFrame implements ActionListener {
         int attackNum;
         System.out.println("Turn number is " + turn);
 
-        stringInput("Ready? Type 'Ready'");
+        if (turn == 0) {
+
+            enemyTeam.startPosServe();
+            myTeam.startPosNoServe();
+        } else if (turn == 1) {
+            enemyTeam.startPosNoServe();
+            myTeam.startPosServe();
+        }
+        stringInput("Ready? Press any key to start");
+
         serve(turn);
 
         while (!isOver) {
@@ -737,8 +746,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             game.enemyScore();
             enemyTeam.changeRotation();
             System.out.println("Enemy team rotated");
-            enemyTeam.startPosServe();
-            myTeam.startPosNoServe();
+            stringInput("Type next to play");
             ball.directX(0);
             ball.directY(0);
         } else {
@@ -746,8 +754,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             game.myScore();
             myTeam.changeRotation();
             System.out.println("Our team rotated");
-            enemyTeam.startPosNoServe();
-            myTeam.startPosServe();
+            stringInput("Type next to play");
             ball.directX(12);
             ball.directY(24);
         }

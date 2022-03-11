@@ -6,8 +6,6 @@ import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CourtRenderer extends JPanel {
 
@@ -22,6 +20,9 @@ public class CourtRenderer extends JPanel {
     Game game;
     JLabel scoreBoard;
     JPanel net;
+
+    static int P_TRANS = -15;
+    static int B_TRANS = -10;
 
     public CourtRenderer(Game game) {
 
@@ -40,19 +41,13 @@ public class CourtRenderer extends JPanel {
 
         int x = ball.getXPos();
         int y = ball.getYPos();
-    /*
-        label = new JLabel();
-        Icon icon = new ImageIcon("tobs.jpg");
-        label.setBounds(x, y, 20, 20);
-        label.setBackground(Color.yellow);
-        label.setIcon(icon);
-        label.setOpaque(true);
-        frame.add(label);
-    */
+
 
         g.setColor(Color.yellow);
-        g.fillOval(x, y, 20, 20);
-
+        g.fillOval(x + B_TRANS, y + B_TRANS, 20, 20);
+        g.setColor(Color.black);
+        g.drawString("(" + x + ", " + y + ")", x, y);
+        g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 20));
 
     }
 
@@ -65,9 +60,17 @@ public class CourtRenderer extends JPanel {
             int y = p.getPosY();
             int num = p.getNum();
             String pos = p.getPlayingPosition();
+
+            if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(new Color(255, 200, 100));
+                g.fillRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 5, 5);
+            }
+
             g.setColor(new Color(46, 196,182));
-            g.fillOval(x, y, 30, 30);
-            g.drawString(pos + ": " + num, x, y);
+            g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+            g.drawString(pos + ": " + num, x, (y + P_TRANS));
+            g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+
 
         }
 
@@ -78,9 +81,15 @@ public class CourtRenderer extends JPanel {
             int num = p.getNum();
             String pos = p.getPlayingPosition();
 
+            if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(new Color(255, 200, 100));
+                g.fillRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 5, 5);
+            }
+
             g.setColor(new Color(184, 15, 10));
-            g.fillOval(x, y, 30, 30);
-            g.drawString(pos + ": " + num, x, y);
+            g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+            g.drawString(pos + ": " + num, x, (y + P_TRANS));
+            g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
         }
 
 
@@ -90,19 +99,17 @@ public class CourtRenderer extends JPanel {
 
 
         g.setColor(new Color(255, 174, 73));
-        g.fillRect(10, 110, 340, 250);
+        g.fillRect(10, 110, 340, 260);
 
         g.setColor(new Color(255, 174, 73));
-        g.fillRect(10, 365, 340, 80);
+        g.fillRect(10, 375, 340, 170);
 
-        g.setColor(Color.darkGray);
-        g.fillRect(0, 448, 360, 5);
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 458, 360, 5);
 
-        g.setColor(new Color(255, 174, 73));
-        g.fillRect(10, 455, 340, 80);
 
         g.setColor(new Color(255, 174, 73));
-        g.fillRect(10, 540, 340, 250);
+        g.fillRect(10, 550, 340, 260);
 
 
     }
@@ -120,14 +127,28 @@ public class CourtRenderer extends JPanel {
         g.setColor(new Color(0, 181, 226));
         g.fillRect(0, 0, 360, 100);
         g.setColor(new Color(0, 181, 226));
-        g.fillRect(0, 800, 360, 100);
+        g.fillRect(0, 820, 360, 100);
 
     }
 
-    public void scoreBoard(Graphics2D g) {
-        g.drawString(game.getScore(), 0, 0);
+    public void scoreBoardAndGrid(Graphics g) {
         g.setColor(Color.black);
 
+        g.drawString(game.getScore(), 10, 30);
+
+        for (int i = 0; i <= 24; i++) {
+            g.setColor(Color.lightGray);
+            g.fillRect(0, (i * 30) + 100, 360, 1);
+            g.drawString("" + i, 0, (i * 30) + 100);
+
+        }
+
+        for (int i = 0; i <= 12; i++) {
+            g.setColor(Color.lightGray);
+            g.fillRect((i * 30), 100, 1, 720);
+            g.drawString("" + i, (i * 30),  100);
+
+        }
 
 
 
@@ -139,9 +160,10 @@ public class CourtRenderer extends JPanel {
         super.paintComponent(g);
 
         courtSetup(g);
+        scoreBoardAndGrid(g);
         playersSetup(g);
         ballSetup(g);
-        scoreBoard((Graphics2D) g);
+
 
 
     }

@@ -103,7 +103,7 @@ public class Ball {
         if ((Math.abs(currentYPos - moveToYPos)) != 0) {
             dx = (int) dy * Math.abs((currentXPos - moveToXPos) / (currentYPos - moveToYPos));
         } else {
-            dx = dy;
+            dx = dy / 2;
         }
     }
 

@@ -103,28 +103,28 @@ public class MyTeam implements Team {
     public void startPosServe() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
-                p.directMoveX(12);
-                p.directMoveY(24);
+                p.moveToX(12);
+                p.moveToY(24);
 
             } else if (p.getRotation() == 2) {
-                p.directMoveX(6);
-                p.directMoveY(20);
+                p.moveToX(6);
+                p.moveToY(20);
 
             } else if (p.getRotation() == 3) {
-                p.directMoveX(2);
-                p.directMoveY(19);
+                p.moveToX(2);
+                p.moveToY(19);
 
             } else if (p.getRotation() == 4) {
-                p.directMoveX(2);
-                p.directMoveY(14);
+                p.moveToX(2);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 5) {
-                p.directMoveX(6);
-                p.directMoveY(14);
+                p.moveToX(6);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 6) {
-                p.directMoveX(10);
-                p.directMoveY(14);
+                p.moveToX(10);
+                p.moveToY(14);
             }
 
         }
@@ -137,28 +137,28 @@ public class MyTeam implements Team {
     public void startPosNoServe() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
-                p.directMoveX(10);
-                p.directMoveY(19);
+                p.moveToX(10);
+                p.moveToY(19);
 
             } else if (p.getRotation() == 2) {
-                p.directMoveX(6);
-                p.directMoveY(20);
+                p.moveToX(6);
+                p.moveToY(20);
 
             } else if (p.getRotation() == 3) {
-                p.directMoveX(2);
-                p.directMoveY(19);
+                p.moveToX(2);
+                p.moveToY(19);
 
             } else if (p.getRotation() == 4) {
-                p.directMoveX(2);
-                p.directMoveY(14);
+                p.moveToX(2);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 5) {
-                p.directMoveX(6);
-                p.directMoveY(14);
+                p.moveToX(6);
+                p.moveToY(14);
 
             } else if (p.getRotation() == 6) {
-                p.directMoveX(10);
-                p.directMoveY(14);
+                p.moveToX(10);
+                p.moveToY(14);
             }
 
         }
