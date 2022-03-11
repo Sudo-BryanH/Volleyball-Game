@@ -6,23 +6,17 @@ import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 
 public class CourtRenderer extends JPanel {
 
-    //JFrame frame;
-    JPanel blueTop;
-    JPanel blueBottom;
-    JPanel orange1;
-    JPanel orange2;
-    JPanel orange3;
-    JPanel orange4;
-    String score;
+
     Game game;
-    JLabel scoreBoard;
-    JPanel net;
+
 
     static int P_TRANS = -15;
-    static int B_TRANS = -10;
+    static int B_TRANS = -25;
 
     public CourtRenderer(Game game) {
 
@@ -39,15 +33,19 @@ public class CourtRenderer extends JPanel {
         JLabel label;
         Ball ball = game.getBall();
 
-        int x = ball.getMoveToXPos();
-        int y = ball.getMoveToYPos();
+        int x = ball.getCurrentXPos();
+        int y = ball.getCurrentYPos();
 
+        Graphics2D g2d = (Graphics2D) g;
 
-        g.setColor(Color.yellow);
-        g.fillOval(x + B_TRANS, y + B_TRANS, 20, 20);
+        Image molten = new ImageIcon("./data/image1.png").getImage();
+
+        g2d.drawImage(molten, x + B_TRANS, y + B_TRANS, 50, 50, null);
+
         g.setColor(Color.black);
         g.drawString("(" + x + ", " + y + ")", x, y);
         g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 20));
+
 
     }
 

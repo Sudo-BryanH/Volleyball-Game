@@ -9,8 +9,8 @@ public class Ball {
     private int moveToXPos;
     private static int SCALE = 30;
     private static int Y_TRANS = 100;
-    private int dy = 4;
-    private int dx;
+    private int dy = 12;
+    private int dx = 6;
     private boolean moveState;
 
 
@@ -30,14 +30,24 @@ public class Ball {
         this.currentYPos = y * SCALE + Y_TRANS;
     }
 
-    // EFFECTS: returns the ball's X position
+    // EFFECTS: returns the ball's moveToX position
     public int getMoveToXPos() {
         return moveToXPos;
     }
 
-    // EFFECTS: returns the ball's Y position
+    // EFFECTS: returns the ball's moveToY position
     public int getMoveToYPos() {
         return moveToYPos;
+    }
+
+    // EFFECTS: returns the ball's X position
+    public int getCurrentXPos() {
+        return currentXPos;
+    }
+
+    // EFFECTS: returns the ball's Y position
+    public int getCurrentYPos() {
+        return currentYPos;
     }
 
     // REQUIRES: a position X [0, 12]
@@ -45,7 +55,7 @@ public class Ball {
     // EFFECTS: move's this ball to position X
     public void moveToX(int x) {
         this.moveToXPos = x  * SCALE;
-        setDX();
+        //setDX();
         moveState = true;
 
     }
@@ -63,7 +73,7 @@ public class Ball {
     public void move() {
 
         if (moveState) {
-            if (Math.abs(currentYPos - moveToYPos) > dy) { // swap ineq sign to fix
+            if (Math.abs(currentYPos - moveToYPos) > dy) {
                 if (currentYPos > moveToYPos) {
                     this.currentYPos -= dy;
                 } else {

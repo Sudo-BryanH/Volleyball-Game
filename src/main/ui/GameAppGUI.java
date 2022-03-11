@@ -203,18 +203,11 @@ public class GameAppGUI extends JFrame implements ActionListener {
         int attackNum;
         System.out.println("Turn number is " + turn);
 
-        if (turn == 0) {
-
-            enemyTeam.startPosServe();
-            myTeam.startPosNoServe();
-
-        } else if (turn == 1) {
-            enemyTeam.startPosNoServe();
-            myTeam.startPosServe();
-        }
+        chooseTeamState(turn, "start");
         stringInput("Ready? Press any key to start");
             // TODO Design state chooser method
         serve(turn);
+
 
         while (!isOver) {
             addTimer();
@@ -235,6 +228,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         endRally(turn);
         return turn;
     }
+
+
 
 
     // EFFECTS: returns true if a ball has been received, false otherwise
@@ -263,6 +258,22 @@ public class GameAppGUI extends JFrame implements ActionListener {
         return check;
     }
 
+    private void chooseTeamState(int turn, String state) {
+
+        if (state.equals("start")) {
+            if (turn == 0) {
+                enemyTeam.startPosServe();
+                myTeam.startPosNoServe();
+            } else if (turn == 1) {
+                enemyTeam.startPosNoServe();
+                myTeam.startPosServe();
+            }
+        }
+
+
+
+    }
+
     private void set(int turn, int setNum) {
 
         if (turn == 0) {
@@ -273,6 +284,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             //addTimer();
             myTeam.set(setNum, ball);
         }
+
     }
 
     // REQUIRES: turn[0, 1], setNum[0, 2], attackNum[0,2]
@@ -282,7 +294,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         //addTimer();
         attackPositions(turn);
         if (turn == 0) {
-            enemyTeam.set(setNum, ball);
+            stringInput("Ball has been set. Press any key to finish the attack");
             if (setNum == 0) {
                 System.out.println("Ball has been set to the left and is attack towards" + attackNum);
             } else if (setNum == 1) {
@@ -293,7 +305,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             enemyTeam.attack(setNum, attackNum, ball);
 
         } else if (turn == 1) {
-            myTeam.set(setNum, ball);
+            stringInput("Ball has been set. Press any key to finish the attack");
             if (setNum == 0) {
                 System.out.println("Ball has been set to the left and is attack towards" + attackNum);
             } else if (setNum == 1) {
@@ -392,31 +404,36 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
         }
 
-        court.repaint();
     }
 
     // REQUIRES: turn[0, 1]
     // MODIFIES: ball
     // EFFECTS: moves the ball to setter's position
     private void receive(int turn) {
+        Players receiver = null;
         //addTimer();
+
         if (turn == 0) {
             for (Players p : enemyTeam.getStarters()) {
-                if ((p.getPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
-                        (p.getPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
-                    p.receive(ball);
+                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
+                        (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                    receiver = p;
                 }
             }
-            System.out.println("Ball has been received by the enemy");
+
         } else if (turn == 1) {
             for (Players p : myTeam.getStarters()) {
-                if ((p.getPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
-                        (p.getPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
-                    p.receive(ball);
+                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
+                        (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                    receiver = p;
                 }
             }
-            System.out.println("Ball has been received by us");
+
         }
+
+        stringInput("Ball has been received. Press any button to continue");
+        receiver.receive(ball);
+
         ballPos();
     }
 
@@ -823,7 +840,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     }
 
     private void addTimer() {
-        Timer timer = new Timer(INTERVAL, new ActionListener() {
+        timer = new Timer(INTERVAL, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 game.update();
@@ -840,7 +857,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         game.getMyTeam().movePlayers();
         game.getEnemyTeam().movePlayers();
-        ball.move();
+
         court.repaint();
     }
 }
