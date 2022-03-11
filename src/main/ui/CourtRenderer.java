@@ -60,8 +60,8 @@ public class CourtRenderer extends JPanel {
             String pos = p.getPlayingPosition();
 
             if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
-                g.setColor(new Color(255, 200, 100));
-                g.fillRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 5, 5);
+                g.setColor(Color.WHITE);
+                g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
             }
 
             g.setColor(new Color(46, 196,182));
@@ -80,8 +80,8 @@ public class CourtRenderer extends JPanel {
             String pos = p.getPlayingPosition();
 
             if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
-                g.setColor(new Color(255, 200, 100));
-                g.fillRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 5, 5);
+                g.setColor(Color.WHITE);
+                g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
             }
 
             g.setColor(new Color(184, 15, 10));
