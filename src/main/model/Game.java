@@ -158,12 +158,10 @@ public class Game {
     }
 
     public void update() {
-        if (myTeam.getPlayerMovementState() || enemyTeam.getPlayerMovementState()) {
-            myTeam.movePlayers();
-            enemyTeam.movePlayers();
-        }
-        if (ball.getMoveState()) {
-            ball.move();
-        }
+
+        myTeam.movePlayers();
+        enemyTeam.movePlayers();
+
+        ball.move();
     }
 }

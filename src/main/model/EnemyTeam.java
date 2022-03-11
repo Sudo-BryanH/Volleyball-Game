@@ -446,24 +446,15 @@ public class EnemyTeam implements Team {
         this.chance = c;
     }
 
-
     // MODIFIES: players
     // EFFECTS: moves each player by their speeds
     @Override
     public void movePlayers() {
-        while (getPlayerMovementState()) {
-            for (Players p : starters) {
-                if (p.getMoveState()) {
-                    p.moveBySpeed();
-                }
-            }
+        for (Players p : starters) {
+            p.moveBySpeed();
         }
+
     }
 
-    // EFFECTS: returns whether true (at least one player not moving), false if all are done moving
-    @Override
-    public boolean getPlayerMovementState() {
-        return !setter.getMoveState() && !middle1.getMoveState() && !middle2.getMoveState() && !outside1.getMoveState()
-                && !outside2.getMoveState() && !opposite.getMoveState();
-    }
+
 }

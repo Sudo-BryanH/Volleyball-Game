@@ -7,6 +7,8 @@ public interface Players {
     static final int SCALE = 30;
     static final int Y_TRANS = 100;
     static final int SPEED = 24;
+    static final int DY = 10;
+    static final int DX = 10;
 
     // REQUIRES: x[0, 12],
     // MODIFIES: this

@@ -185,17 +185,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
 
         while (gameOver == false) {
-            if (turn == 0) {
-                enemyTeam.startPosServe();
-                myTeam.startPosNoServe();
-                ball.directX(0);
-                ball.directY(0);
-            } else {
-                enemyTeam.startPosNoServe();
-                myTeam.startPosServe();
-                ball.directX(11);
-                ball.directY(24);
-            }
+
             System.out.println(game.getScore());
             beginRally(turn);
 
@@ -224,8 +214,6 @@ public class GameAppGUI extends JFrame implements ActionListener {
         stringInput("Ready? Type 'Ready'");
         serve(turn);
 
-
-
         while (!isOver) {
             addTimer();
             ballPos();
@@ -235,8 +223,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
             receive(turn);
             setNum = chooseSet(turn);
             attackNum = chooseAttack(setNum, turn);
-            set(turn, setNum);
             chooseDefend(turn, setNum, attackNum);
+            set(turn, setNum);
             attack(turn, setNum, attackNum);
             ballPos();
             isOver = !checkReceive(turn);
@@ -275,11 +263,11 @@ public class GameAppGUI extends JFrame implements ActionListener {
     private void set(int turn, int setNum) {
 
         if (turn == 0) {
-            addTimer();
+            //addTimer();
             enemyTeam.set(setNum, ball);
 
         } else if (turn == 1) {
-            addTimer();
+            //addTimer();
             myTeam.set(setNum, ball);
         }
     }
@@ -288,7 +276,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: ball, MyTeam, EnemyTeam, Players, ball
     // EFFECT: Ball goes to player then goes to opponent court
     private void attack(int turn, int setNum, int attackNum) {
-        addTimer();
+        //addTimer();
         attackPositions(turn);
         if (turn == 0) {
             enemyTeam.set(setNum, ball);
@@ -318,7 +306,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: MyTeam EnemyTeam Players
     // EFFECTS: moves the players into position to attack
     private void attackPositions(int turn) {
-        addTimer();
+        //addTimer();
         if (turn == 0) {
             if (enemyTeam.isSetterBack()) {
                 enemyTeam.attackBSetter();
@@ -338,14 +326,14 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: ball
     // EFFECT: Ball goes to opponent court
     private void serve(int turn) {
-        addTimer();
+        //addTimer();
         int chance = (int) (Math.random() * 2);
         int input;
         if (turn == 0) {
-            ball.moveToX(0);
-            ball.moveToY(0);
-            enemyTeam.startPosServe();
-            myTeam.startPosNoServe();
+/*            ball.directX(0);
+            ball.directY(0);
+*//*            enemyTeam.startPosServe();
+            myTeam.startPosNoServe();*/
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
                     p.serve(chance, ball);
@@ -354,10 +342,10 @@ public class GameAppGUI extends JFrame implements ActionListener {
             }
             System.out.println("Serve has been made");
         } else if (turn == 1) {
-            ball.moveToX(12);
-            ball.moveToY(24);
-            enemyTeam.startPosNoServe();
-            myTeam.startPosServe();
+/*            ball.directX(12);
+            ball.directY(24);*/
+/*            enemyTeam.startPosNoServe();
+            myTeam.startPosServe();*/
             input = intInput("Do you want to serve left[0] or right [1]");
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
@@ -408,7 +396,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: ball
     // EFFECTS: moves the ball to setter's position
     private void receive(int turn) {
-        addTimer();
+        //addTimer();
         if (turn == 0) {
             for (Players p : enemyTeam.getStarters()) {
                 if ((p.getPosX() - ball.getXPos()) <= 1 && (p.getPosY() - ball.getYPos()) <= 1) {
@@ -486,7 +474,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             enemyDefend(setNum, attackNum);
         } else {
             System.out.println("Let's choose our defence formation");
-            myDefence();
+            myDefense();
         }
 
     }
@@ -520,8 +508,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: We choose how to defend before an attack
-    private void myDefence() {
-        addTimer();
+    private void myDefense() {
+        //addTimer();
         if (myTeam.isSetterBack()) {
             myTeam.defendBSetter();
         } else {
@@ -533,7 +521,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             if (p.getRotation() >= 4) {
                 int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s block position");
 
-                p.directMoveX(x);
+                p.moveToX(x);
                 System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");
 
@@ -541,8 +529,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
                 int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s x receive position");
 
                 int y = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s y receive position");
-                p.directMoveX(x);
-                p.directMoveY(y);
+                p.moveToX(x);
+                p.moveToY(y);
                 System.out.println(p.getRotation() + p.getPlayingPosition()
                         + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");
 
@@ -553,7 +541,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum ==1
     private void enemyMoveDefence1() {
-        addTimer();
+        //addTimer();
         for (Players p : enemyTeam.getStarters()) {
             if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(2);
@@ -571,7 +559,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum == 0
     private void enemyMoveDefence0() {
-        addTimer();
+        //addTimer();
         for (Players p : enemyTeam.getStarters()) {
             if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(6);
@@ -588,7 +576,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum == 2
     private void enemyMoveDefence2() {
-        addTimer();
+        //addTimer();
         for (Players p : enemyTeam.getStarters()) {
             if (p.getRotation() == 4 || p.getRotation() == 5 || p.getRotation() == 6) {
                 p.moveToX(10);
@@ -742,18 +730,28 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
     // EFFECTS: displays score and other information after a rally has ended
     private void endRally(int turn) {
+        //addTimer();
         System.out.println("Turn number is " + turn);
         if (turn == 0) {
             System.out.println("Rally is over, enemy team scored");
             game.enemyScore();
             enemyTeam.changeRotation();
             System.out.println("Enemy team rotated");
+            enemyTeam.startPosServe();
+            myTeam.startPosNoServe();
+            ball.directX(0);
+            ball.directY(0);
         } else {
             System.out.println("Rally is over, our team scored");
             game.myScore();
             myTeam.changeRotation();
             System.out.println("Our team rotated");
+            enemyTeam.startPosNoServe();
+            myTeam.startPosServe();
+            ball.directX(12);
+            ball.directY(24);
         }
+
     }
 
     // EFFECTS: asks the user for input, then accepts input. If input == 'quit', then end game.
@@ -825,9 +823,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         Timer timer = new Timer(INTERVAL, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                game.getMyTeam().movePlayers();
-                game.getEnemyTeam().movePlayers();
-                ball.move();
+                game.update();
                 court.repaint();
 
             }

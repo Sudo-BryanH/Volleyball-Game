@@ -241,29 +241,33 @@ public class OppositeHitter implements Players {
 
     @Override
     public void moveBySpeed() {
-        if (Math.abs(posY - newPosY) > dy) {
-            if (posY > newPosY) {
-                this.posY -= dy;
-            } else {
-                this.posY += dy;
+        if (moveState) {
+            if (Math.abs(posY - newPosY) > DY) { // swap ineq sign to fix
+                if (posY > newPosY) {
+                    this.posY -= DY;
+                } else {
+                    this.posY += DY;
+                }
+            } else if (Math.abs(posY - newPosY) <= DY) {
+                this.posY = newPosY;
+
             }
-        } else {
-            this.posY = newPosX;
-            this.moveState = false;
-        }
 
-        if (Math.abs(posX - newPosX) > dx) {
-            if (posX > newPosX) {
-                this.posX -= dx;
-            } else {
-                this.posX += dx;
+            if (Math.abs(posX - newPosX) > DX) {
+                if (posX > newPosX) {
+                    this.posX -= DX;
+                } else {
+                    this.posX += DX;
+                }
+            } else if (Math.abs(posX - newPosX) <= DX) {
+                this.posX = newPosX;
+
             }
-        } else {
-            this.posX = newPosX;
-            this.moveState = false;
+
+            if (posX == newPosX && posY == newPosY) {
+                moveState = true;
+            }
         }
-
-
     }
 
 }

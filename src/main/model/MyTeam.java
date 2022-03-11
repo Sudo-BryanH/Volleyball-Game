@@ -103,7 +103,7 @@ public class MyTeam implements Team {
     public void startPosServe() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
-                p.directMoveX(11);
+                p.directMoveX(12);
                 p.directMoveY(24);
 
             } else if (p.getRotation() == 2) {
@@ -417,21 +417,13 @@ public class MyTeam implements Team {
     // EFFECTS: moves each player by their speeds
     @Override
     public void movePlayers() {
-        while (getPlayerMovementState()) {
-            for (Players p : starters) {
-                if (p.getMoveState()) {
-                    p.moveBySpeed();
-                }
-            }
+        for (Players p : starters) {
+            p.moveBySpeed();
         }
+
     }
 
-    // EFFECTS: returns whether true (at least one player not moving), false if all are done moving
-    @Override
-    public boolean getPlayerMovementState() {
-        return !setter.getMoveState() && !middle1.getMoveState() && !middle2.getMoveState() && !outside1.getMoveState()
-                && !outside2.getMoveState() && !opposite.getMoveState();
-    }
+
 
 
     // REQUIRES: a player number of a player already in the starters list

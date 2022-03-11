@@ -80,7 +80,6 @@ public interface Team {
 
     public void movePlayers();
 
-    public boolean getPlayerMovementState();
 
 
 
