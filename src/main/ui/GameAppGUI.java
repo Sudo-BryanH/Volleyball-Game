@@ -49,6 +49,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
     int turn;
     CourtRenderer court;
     Timer timer;
+    AddPlayerRenderer addPlayer;
 
 
     JsonWriter jsonWriter;
@@ -144,8 +145,10 @@ public class GameAppGUI extends JFrame implements ActionListener {
     }
 
     public void checkAddPlayer() {
+
         boolean status = false;
         String input;
+
         while (!status) {
             input = stringInput("Would you like to add another player to the roster? Type y or n");
             if (input.equals("y")) {
@@ -155,6 +158,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
                 status = true;
             }
         }
+
     }
 
     // MODIFIES: game
@@ -362,7 +366,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
 /*            enemyTeam.startPosNoServe();
             myTeam.startPosServe();*/
             input = intInput("Do you want to serve left[0] or right [1]");
-            for (Players p : enemyTeam.getStarters()) {
+            for (Players p : myTeam.getStarters()) {
                 if (p.getRotation() == 1) {
                     p.serve(input, ball);
                 }
@@ -691,6 +695,10 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
     // EFFECTS: creates and adds a player to our team roster
     public void addPlayerToTeam() {
+        addPlayer = new AddPlayerRenderer(game);
+        add(addPlayer);
+        pack();
+        setVisible(true);
 
         int num;
         String pos;
@@ -719,6 +727,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         myTeam.addPlayer(p);
         System.out.println(p.getPlayingPosition() + " num " + num + " has been added to the roster");
         System.out.println("there are now " + myTeam.getRoster().size() + " Players in your team's roster");
+
     }
 
     // EFFECTS: picks an enemy team to play against

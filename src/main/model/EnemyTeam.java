@@ -279,6 +279,7 @@ public class EnemyTeam implements Team {
                 p.moveToX(11);
                 if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
                     p.moveToX(9);
+
                 }
             }
 
