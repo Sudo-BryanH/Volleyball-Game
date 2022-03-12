@@ -212,7 +212,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             // TODO Design state chooser method
         serve(turn);
 
-
+        game.setGameState("S", "S");
         while (!isOver) {
             addTimer();
             ballPos();
@@ -225,6 +225,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             chooseDefend(turn, setNum, attackNum);
             set(turn, setNum);
             attack(turn, setNum, attackNum);
+            game.setGameState("S", "S");
             ballPos();
             isOver = !checkReceive(turn);
 
@@ -447,8 +448,10 @@ public class GameAppGUI extends JFrame implements ActionListener {
     private int chooseSet(int turn) {
         int choice;
         if (turn == 0) {
+            game.setGameState("A", "D");
             choice = chooseEnemySet(turn);
         } else {
+            game.setGameState("D", "A");
             choice = chooseMySet(turn);
         }
 
@@ -625,6 +628,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
         int chance2 = (int) (Math.random() * 2);
         int chance3 = (int) (Math.random() * 3);
         if (turn == 1) {
+
             if (setNum == 0 || setNum == 2) {
                 choice = intInput("Choose whether you want to spike straight[0] or to the middle of the court[1]");
             } else if (setNum == 1) {
@@ -634,6 +638,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
             return choice;
         } else if (turn == 0) {
+
             if (setNum == 0 || setNum == 2) {
                 return chance2;
             } else if (setNum == 1) {

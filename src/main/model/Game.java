@@ -14,6 +14,9 @@ public class Game {
     protected static final int SCALE = 30;
     protected static final int Y_TRANS = 100;
     private Ball ball;
+    private String gameState1; // D for defence, SN for startNoServe, A for attack
+    private String gameState0;
+
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
     public Game(Team myTeam, Team enemyTeam) {
@@ -22,10 +25,14 @@ public class Game {
         this.turn = 0;
         this.myTeam = myTeam;
         this.enemyTeam = enemyTeam;
+        this.gameState1 = null;
+        this.gameState0 = null;
     }
 
     public Game() {
         this.turn = 0;
+        this.gameState1 = "F";
+        this.gameState0 = "F";
     }
 
 
@@ -157,11 +164,26 @@ public class Game {
         this.enemyScore = enemyScore;
     }
 
+    // MODIFIES: ball, players, teams
+    // EFFECTS: moves players and ball
     public void update() {
 
         myTeam.movePlayers();
         enemyTeam.movePlayers();
 
         ball.move();
+    }
+
+    public String getGameState0() {
+        return gameState0;
+    }
+
+    public String getGameState1() {
+        return gameState1;
+    }
+
+    public void setGameState(String state0, String state1) {
+        this.gameState1 = state1;
+        this.gameState0 = state0;
     }
 }

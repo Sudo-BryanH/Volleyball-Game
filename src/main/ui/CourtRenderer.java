@@ -59,16 +59,29 @@ public class CourtRenderer extends JPanel {
             int num = p.getNum();
             String pos = p.getPlayingPosition();
 
-            if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
-                g.setColor(Color.WHITE);
-                g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
+            if (game.getGameState1().equals("D")) {
+                if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
+                    g.setColor(Color.WHITE);
+                    g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
+                }
+            } else if (game.getGameState1().equals("A")) {
+                if (p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
+                    g.setColor(Color.GREEN);
+                    g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
+                }
             }
 
-            g.setColor(new Color(46, 196,182));
-            g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-            g.drawString(pos + ": " + num, x, (y + P_TRANS));
-            g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
-
+            if (game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(Color.GREEN);
+                g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+                g.drawString(pos + ": " + num, x, (y + P_TRANS));
+                g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+            } else {
+                g.setColor(new Color(46, 196, 182));
+                g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+                g.drawString(pos + ": " + num, x, (y + P_TRANS));
+                g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+            }
 
         }
 
@@ -78,16 +91,28 @@ public class CourtRenderer extends JPanel {
             int y = p.getPosY();
             int num = p.getNum();
             String pos = p.getPlayingPosition();
-
-            if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
-                g.setColor(Color.WHITE);
-                g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
+            if (game.getGameState0().equals("D")) {
+                if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
+                    g.setColor(Color.WHITE);
+                    g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
+                }
+            } else if (game.getGameState0().equals("A")) {
+                if (p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
+                    g.setColor(Color.RED);
+                    g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
+                }
             }
-
-            g.setColor(new Color(184, 15, 10));
-            g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-            g.drawString(pos + ": " + num, x, (y + P_TRANS));
-            g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+            if (game.getGameState0().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(Color.RED);
+                g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+                g.drawString(pos + ": " + num, x, (y + P_TRANS));
+                g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+            } else {
+                g.setColor(Color.darkGray);
+                g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+                g.drawString(pos + ": " + num, x, (y + P_TRANS));
+                g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+            }
         }
 
 

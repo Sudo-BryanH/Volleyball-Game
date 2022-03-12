@@ -111,7 +111,7 @@ public class Ball {
 
     public void setDX() {
         if ((Math.abs(currentYPos - moveToYPos)) != 0) {
-            dx = (int) dy * Math.abs((currentXPos - moveToXPos) / (currentYPos - moveToYPos));
+            dx = (int) (dy * Math.abs((currentXPos - moveToXPos) / (currentYPos - moveToYPos)));
         } else {
             dx = dy / 2;
         }
