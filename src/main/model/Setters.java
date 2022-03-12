@@ -7,7 +7,8 @@ public class Setters implements Players {
 
     private int side;
     private int playerNum;
-    private static String PLAYINGPOSITION = "Setter";
+    private static final String PLAYINGPOSITION = "Setter";
+    private static final String SHORTPOS = "S";
     private int rotationNum;
     private int dumps;
     private int posX;
@@ -39,6 +40,11 @@ public class Setters implements Players {
     @Override
     public void directMoveY(int y) {
         this.posY = y * SCALE + Y_TRANS;
+    }
+
+    @Override
+    public String getShortPos() {
+        return SHORTPOS;
     }
 
     // TODO program must know when to stop moving each player

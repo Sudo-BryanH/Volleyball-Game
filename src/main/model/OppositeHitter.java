@@ -7,6 +7,7 @@ public class OppositeHitter implements Players {
     private int side;
     private int playerNum;
     private static String PLAYINGPOSITION = "Opposite Hitter";
+    private static String SHORTPOS = "OP";
     private int rotationNum;
     private int posX;
     private int posY;
@@ -34,6 +35,11 @@ public class OppositeHitter implements Players {
     @Override
     public void directMoveY(int y) {
         this.posY = y * SCALE + Y_TRANS;
+    }
+
+    @Override
+    public String getShortPos() {
+        return SHORTPOS;
     }
 
     // TODO program must know when to stop moving each player

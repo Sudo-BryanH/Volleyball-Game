@@ -8,6 +8,7 @@ public class MiddleBlockers implements Players {
     private int side;
     private int playerNum;
     private static String PLAYINGPOSITION = "Middle Blocker";
+    private static String SHORTPOS = "MB";
     private int rotationNum;
     private int posX;
     private int posY;
@@ -35,6 +36,11 @@ public class MiddleBlockers implements Players {
     @Override
     public void directMoveY(int y) {
         this.posY = y * SCALE + Y_TRANS;
+    }
+
+    @Override
+    public String getShortPos() {
+        return SHORTPOS;
     }
 
     // TODO program must know when to stop moving each player

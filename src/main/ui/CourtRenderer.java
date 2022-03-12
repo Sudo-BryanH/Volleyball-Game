@@ -51,68 +51,91 @@ public class CourtRenderer extends JPanel {
 
     private void playersSetup(Graphics g) {
 
+        paintMyTeam(g);
+        paintEnemyTeam(g);
+    }
+
+    public void paintMyTeam(Graphics g) {
 
         for (Players p : game.getMyTeam().getStarters()) {
-
             int x = p.getPosX();
             int y = p.getPosY();
             int num = p.getNum();
-            String pos = p.getPlayingPosition();
+            String pos = p.getShortPos();
 
-            if (game.getGameState1().equals("D")) {
-                if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
-                    g.setColor(Color.WHITE);
-                    g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
-                }
-            } else if (game.getGameState1().equals("A")) {
-                if (p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
-                    g.setColor(Color.GREEN);
-                    g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
-                }
-            }
+            paintHalos(g, 1, p);
 
             if (game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
-                g.setColor(Color.GREEN);
+                g.setColor(Color.green);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                g.drawString(pos + ": " + num, x, (y + P_TRANS));
-                g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
             } else {
                 g.setColor(new Color(46, 196, 182));
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                g.drawString(pos + ": " + num, x, (y + P_TRANS));
-                g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
             }
-
+            g.setColor(new Color(50, 140, 220));
+            g.drawString(pos, x, (y + P_TRANS));
+            g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Monospaced Bold", 20, 20));
+            g.drawString("" + num, x - 10, y + 10);
+            g.setFont(new Font("Quicksand", 20, 12));
         }
+    }
 
+    private void paintHalos(Graphics g, int side, Players p) {
+        int x = p.getPosX();
+        int y = p.getPosY();
+
+        if (side == 1) {
+            if (game.getGameState1().equals("D") && p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(Color.WHITE);
+                g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
+            } else if (game.getGameState1().equals("A") && p.getRotation() >= 4
+                    && !p.getPlayingPosition().equals("Setter")) {
+                if (p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
+                    g.setColor(Color.GREEN);
+                    g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
+
+                }
+            }
+        } else if (side == 0) {
+            if (game.getGameState0().equals("D") && p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(Color.WHITE);
+                g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
+            } else if (game.getGameState0().equals("A") && p.getRotation() >= 4
+                    && !p.getPlayingPosition().equals("Setter")) {
+                g.setColor(Color.RED);
+                g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
+            }
+        }
+    }
+
+    public void paintEnemyTeam(Graphics g) {
         for (Players p: game.getEnemyTeam().getStarters()) {
 
             int x = p.getPosX();
             int y = p.getPosY();
             int num = p.getNum();
-            String pos = p.getPlayingPosition();
-            if (game.getGameState0().equals("D")) {
-                if (p.getRotation() < 4 && !p.getPlayingPosition().equals("Setter")) {
-                    g.setColor(Color.WHITE);
-                    g.drawRoundRect(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60, 15, 15);
-                }
-            } else if (game.getGameState0().equals("A")) {
-                if (p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
-                    g.setColor(Color.RED);
-                    g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
-                }
-            }
+            String pos = p.getShortPos();
+
+            paintHalos(g, 0, p);
+
             if (game.getGameState0().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
                 g.setColor(Color.RED);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                g.drawString(pos + ": " + num, x, (y + P_TRANS));
+                g.drawString(pos, x, (y + P_TRANS));
                 g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
             } else {
                 g.setColor(Color.darkGray);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                g.drawString(pos + ": " + num, x, (y + P_TRANS));
+                g.drawString(pos, x, (y + P_TRANS));
                 g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+
             }
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Monospaced Bold", 20, 20));
+            g.drawString("" + num, x - 10, y + 10);
+            g.setFont(new Font("Quicksand", 20, 12));
         }
 
 
@@ -155,9 +178,7 @@ public class CourtRenderer extends JPanel {
     }
 
     public void scoreBoardAndGrid(Graphics g) {
-        g.setColor(Color.black);
 
-        g.drawString(game.getScore(), 10, 30);
 
         for (int i = 0; i <= 24; i++) {
             g.setColor(Color.lightGray);
@@ -173,6 +194,11 @@ public class CourtRenderer extends JPanel {
 
         }
 
+        g.setColor(Color.black);
+        g.setFont(new Font("Monospaced Bold", 20, 20));
+        FontMetrics fm = g.getFontMetrics();
+        g.drawString(game.getScore(), 10, 30);
+
 
 
     }
@@ -184,6 +210,7 @@ public class CourtRenderer extends JPanel {
 
         courtSetup(g);
         scoreBoardAndGrid(g);
+        g.setFont(new Font("Quicksand", 20, 12));
         playersSetup(g);
         ballSetup(g);
 

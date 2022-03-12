@@ -350,6 +350,7 @@ public class MyTeam implements Team {
     public void changeStarters(int ogNum, int newNum) {
         Players sub = getPlayer(newNum);
         Players og = getStartingPlayer(ogNum);
+
         int rotation = og.getRotation();
         sub.setRotation(rotation);
         starters.remove(og);

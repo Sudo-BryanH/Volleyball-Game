@@ -40,7 +40,8 @@ public class Game {
     public String getScore() {
         String us = Integer.toString(myScore);
         String them = Integer.toString(enemyScore);
-        return us + " : " + them;
+        String score = myTeam.getName() + "| " + us + "| |"  + them + " |" +  enemyTeam.getName();
+        return score;
     }
 
     public void decBall(Ball ball) {

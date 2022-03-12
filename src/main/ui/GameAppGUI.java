@@ -206,13 +206,12 @@ public class GameAppGUI extends JFrame implements ActionListener {
         int setNum;
         int attackNum;
         System.out.println("Turn number is " + turn);
-
+        game.setGameState("S", "S");
         chooseTeamState(turn, "start");
         stringInput("Ready? Press any key to start");
             // TODO Design state chooser method
         serve(turn);
 
-        game.setGameState("S", "S");
         while (!isOver) {
             addTimer();
             ballPos();
@@ -225,7 +224,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             chooseDefend(turn, setNum, attackNum);
             set(turn, setNum);
             attack(turn, setNum, attackNum);
-            game.setGameState("S", "S");
+            game.setGameState("F", "F");
             ballPos();
             isOver = !checkReceive(turn);
 
@@ -797,6 +796,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         scan.nextLine();
         if (input.equals("quit")) {
             quit(); // may cause problems if no return statments
+        } else if (input.equals("switch")) {
+            switchPlayers();
         }
         return input;
 
@@ -873,5 +874,20 @@ public class GameAppGUI extends JFrame implements ActionListener {
         game.getEnemyTeam().movePlayers();
 
         court.repaint();
+    }
+
+    public void switchPlayers() {
+        int ogNum = -1;
+        int newNum = -1;
+        boolean status = false;
+        while (!status) {
+            ogNum = intInput("Enter the player number you want to swap out");
+            newNum = intInput("Enter the player number you want to swap in");
+            status = (myTeam.getPlayer(ogNum).getPlayingPosition() == myTeam.getPlayer(newNum).getPlayingPosition());
+        }
+
+
+        myTeam.changeStarters(ogNum, newNum);
+
     }
 }

@@ -83,6 +83,8 @@ public interface Players {
 
     public void directMoveY(int y);
 
+    public String getShortPos();
+
 }
 
 

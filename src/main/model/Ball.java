@@ -55,7 +55,7 @@ public class Ball {
     // EFFECTS: move's this ball to position X
     public void moveToX(int x) {
         this.moveToXPos = x  * SCALE;
-        //setDX();
+        setDX();
         moveState = true;
 
     }
@@ -65,7 +65,7 @@ public class Ball {
     // EFFECTS: move's this ball to position Y
     public void moveToY(int y) {
         this.moveToYPos = y * SCALE + Y_TRANS;
-        //setDX();
+        setDX();
         moveState = true;
     }
 
@@ -110,8 +110,8 @@ public class Ball {
     */
 
     public void setDX() {
-        if ((Math.abs(currentYPos - moveToYPos)) != 0) {
-            dx = (int) (dy * Math.abs((currentXPos - moveToXPos) / (currentYPos - moveToYPos)));
+        if ((Math.abs(currentXPos - moveToXPos)) != 0) {
+            dx = dy * (Math.abs((currentYPos - moveToYPos) / (currentXPos - moveToXPos)));
         } else {
             dx = dy / 2;
         }

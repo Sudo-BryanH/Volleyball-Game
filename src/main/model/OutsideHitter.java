@@ -8,6 +8,7 @@ public class OutsideHitter implements Players {
     private int side;
     private int playerNum;
     private static String PLAYINGPOSITION = "Outside Hitter";
+    private static String SHORTPOS = "OH";
     private int rotationNum;
     private int posX;
     private int posY;
@@ -35,6 +36,11 @@ public class OutsideHitter implements Players {
     @Override
     public void directMoveY(int y) {
         this.posY = y * SCALE + Y_TRANS;
+    }
+
+    @Override
+    public String getShortPos() {
+        return SHORTPOS;
     }
 
 
