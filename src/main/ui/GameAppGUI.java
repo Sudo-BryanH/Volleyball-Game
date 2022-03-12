@@ -219,12 +219,12 @@ public class GameAppGUI extends JFrame implements ActionListener {
             turn = game.getTurnNum();
             System.out.println("Turn number changed to " + turn);
             receive(turn);
+            positionsAfterServe(turn);
             setNum = chooseSet(turn);
             attackNum = chooseAttack(setNum, turn);
             chooseDefend(turn, setNum, attackNum);
             set(turn, setNum);
             attack(turn, setNum, attackNum);
-            game.setGameState("F", "F");
             ballPos();
             isOver = !checkReceive(turn);
 
@@ -257,8 +257,10 @@ public class GameAppGUI extends JFrame implements ActionListener {
         }
         if (check) {
             System.out.println("Ball has been received");
+        } else {
+            positionsAfterServe(turn);
         }
-        positionsAfterServe(turn);
+
         return check;
     }
 
@@ -319,6 +321,7 @@ public class GameAppGUI extends JFrame implements ActionListener {
             }
             myTeam.attack(setNum, attackNum, ball);
         }
+        game.setGameState("F", "F");
     }
 
     // REQUIRES: turn [0, 1]

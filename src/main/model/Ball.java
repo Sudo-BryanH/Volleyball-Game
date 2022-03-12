@@ -55,7 +55,7 @@ public class Ball {
     // EFFECTS: move's this ball to position X
     public void moveToX(int x) {
         this.moveToXPos = x  * SCALE;
-        setDX();
+        //setDX();
         moveState = true;
 
     }
@@ -65,7 +65,7 @@ public class Ball {
     // EFFECTS: move's this ball to position Y
     public void moveToY(int y) {
         this.moveToYPos = y * SCALE + Y_TRANS;
-        setDX();
+        //setDX();
         moveState = true;
     }
 

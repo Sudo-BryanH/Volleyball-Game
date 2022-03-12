@@ -196,7 +196,6 @@ public class CourtRenderer extends JPanel {
 
         g.setColor(Color.black);
         g.setFont(new Font("Monospaced Bold", 20, 20));
-        FontMetrics fm = g.getFontMetrics();
         g.drawString(game.getScore(), 10, 30);
 
 
