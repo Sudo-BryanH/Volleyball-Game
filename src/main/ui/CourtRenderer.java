@@ -106,12 +106,15 @@ public class CourtRenderer extends JPanel {
                     && !p.getPlayingPosition().equals("Setter")) {
                 g.setColor(Color.RED);
                 g.drawOval(x + 2 * P_TRANS, y + 2 * P_TRANS, 60, 60);
+
             }
         }
     }
 
     public void paintEnemyTeam(Graphics g) {
         for (Players p: game.getEnemyTeam().getStarters()) {
+
+            JButton button; // if all else fails, use this
 
             int x = p.getPosX();
             int y = p.getPosY();

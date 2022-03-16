@@ -6,20 +6,21 @@ import persistence.JsonWriter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.Timer;
+import javax.swing.*;
 
 // This is the GameApp class where most of the user interface happens. Players can see
 // information about the score, their players' positions, ball's positions and turns.
 // Players can also control their players from here.
 
-public class GameAppGUI extends JFrame implements ActionListener {
+public class GameAppGUI extends JFrame implements ActionListener, MouseListener {
 
     Team myTeam;
     EnemyTeam weakTeam;
@@ -74,6 +75,8 @@ public class GameAppGUI extends JFrame implements ActionListener {
         }
         beginGame();
     }
+
+
 
     // EFFECTS: loads prev game from file name. If no file is found by that name, will try to dig up most recent game.
     // else will get player to setUp new game.
@@ -569,6 +572,45 @@ public class GameAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: players, team
+    // EFFECTS: When a player's location is clicked, player is selected and another click to a different location
+    // will move player to that location. When bottom right corner is clicked, end.
+    private void myDefenceUI() {
+        this.addMouseListener(this);
+        boolean selectState = false; // if false, can only select players. If true, can click anywhere
+
+        boolean status = false;
+
+        if (myTeam.isSetterBack()) {
+            myTeam.defendBSetter();
+        } else {
+            myTeam.defendFSetter();
+        }
+
+        while (!status) {
+
+
+            if (this.getX() >= 10 && this.getY() >= 23) {
+                status = true;
+            }
+        }
+
+
+
+
+/*        for (Players p : myTeam.getStarters()) {
+            JButton b = new JButton();
+
+            b.setBounds(p.getPosX(), p.getPosY(), 30, 30);
+            b.setOpaque(true);
+            this.add(b);
+        }*/
+
+
+
+    }
+
+
     // MODIFIES: EnemyTeam, this, players
     // EFFECTS: Enemy choose how to defend before an attack if setNum ==1
     private void enemyMoveDefence1() {
@@ -852,10 +894,6 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
     }
 
-    // TODO implement player button maker
-    public void makePlayerButton(int x, int y, String pos, int num) {
-        //court.add();
-    }
 
     private void addTimer() {
         timer = new Timer(INTERVAL, new ActionListener() {
@@ -892,5 +930,32 @@ public class GameAppGUI extends JFrame implements ActionListener {
 
         myTeam.changeStarters(ogNum, newNum);
 
+    }
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // Invoked when the mouse button has been clicked (pressed and released on a compnent
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // Invoked when a mouse button has been pressed on a component
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Invoked when a mouse button has been released on a component
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Invoked when the mouse enters a component
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Invoked when the mouse exits a component
     }
 }
