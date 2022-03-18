@@ -16,6 +16,8 @@ public class Game {
     private Ball ball;
     private String gameState1; // D for defence, SN for startNoServe, A for attack
     private String gameState0;
+    Players selected;
+
 
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
@@ -187,4 +189,20 @@ public class Game {
         this.gameState1 = state1;
         this.gameState0 = state0;
     }
+
+    public void setSelected(Players p) {
+        this.selected = p;
+    }
+
+    public Players getSelected() {
+        return this.selected;
+    }
+
+    public void removeSelected() {
+        this.selected = null;
+    }
+
+
+
+
 }

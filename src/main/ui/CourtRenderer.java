@@ -65,7 +65,8 @@ public class CourtRenderer extends JPanel {
 
             paintHalos(g, 1, p);
 
-            if (game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
+            if ((game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter"))
+                    || p == game.getSelected()) {
                 g.setColor(Color.green);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
             } else {
