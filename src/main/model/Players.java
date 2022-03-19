@@ -3,12 +3,16 @@ package model;
 // Players is an interface for the classes Setters OutsideHitters OppositeHitters
 // and MiddleBlockers.
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public interface Players {
     static final int SCALE = 30;
     static final int Y_TRANS = 100;
     static final int SPEED = 24;
     static final int DY = 15;
     static final int DX = 15;
+
 
     // REQUIRES: x[0, 12],
     // MODIFIES: this
@@ -84,6 +88,8 @@ public interface Players {
     public void directMoveY(int y);
 
     public String getShortPos();
+
+    public ArrayList<Point> getAttackPoints(int side);
 
 }
 

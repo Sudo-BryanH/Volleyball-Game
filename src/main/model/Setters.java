@@ -3,6 +3,9 @@ package model;
 // Setters is a type of player. Unlike other player types, they should not receive but can set
 // Note: they can receive but the program dictates that they won't
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Setters implements Players {
 
     private int side;
@@ -276,5 +279,10 @@ public class Setters implements Players {
                 moveState = true;
             }
         }
+    }
+
+    @Override
+    public ArrayList<Point> getAttackPoints(int side) {
+        return null;
     }
 }

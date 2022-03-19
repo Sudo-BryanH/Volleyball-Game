@@ -6,8 +6,7 @@ import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 
 public class CourtRenderer extends JPanel {
 
@@ -69,6 +68,7 @@ public class CourtRenderer extends JPanel {
                     || p == game.getSelected()) {
                 g.setColor(Color.green);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
+                drawPossibleAttacks(g, p);
             } else {
                 g.setColor(new Color(46, 196, 182));
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
@@ -129,6 +129,7 @@ public class CourtRenderer extends JPanel {
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
                 g.drawString(pos, x, (y + P_TRANS));
                 g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
+                drawPossibleAttacks(g, p);
             } else {
                 g.setColor(Color.darkGray);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
@@ -141,6 +142,21 @@ public class CourtRenderer extends JPanel {
             g.drawString("" + num, x - 10, y + 10);
             g.setFont(new Font("Quicksand", 20, 12));
         }
+
+
+    }
+
+    private void drawPossibleAttacks(Graphics g, Players p) {
+
+        for (Point point : p.getAttackPoints(p.getSide())) {
+            int x = (int) point.getX() * 30;
+            int y = (int) point.getY() * 30 + 100;
+            g.fillOval((int) x + P_TRANS, (int) (y + P_TRANS), 30, 30);
+
+
+
+        }
+
 
 
     }
@@ -208,6 +224,8 @@ public class CourtRenderer extends JPanel {
 
 
 
+
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -222,4 +240,13 @@ public class CourtRenderer extends JPanel {
     }
 
 
+    public JButton makeNextButton() {
+        JButton nextButton = new JButton("Next");
+        nextButton.setBounds(260, 860, 90, 45);
+        nextButton.setBackground(Color.WHITE);
+        nextButton.setOpaque(true);
+        this.add(nextButton);
+
+        return nextButton;
+    }
 }

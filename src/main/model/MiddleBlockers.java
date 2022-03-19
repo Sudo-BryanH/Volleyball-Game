@@ -2,6 +2,9 @@ package model;
 
 // MiddleBlocker is a player class with an x, y position and their own type of hitting
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class MiddleBlockers implements Players {
 
 
@@ -17,6 +20,12 @@ public class MiddleBlockers implements Players {
     private boolean moveState = false;
     private int dy;
     private int dx;
+    private static final Point SPIKELEFT1 = new Point(10, 5);
+    private static final Point SPIKERIGHT1 = new Point(2, 5);
+    private static final Point SPIKEMID1 = new Point(6, 6);
+    private static final Point SPIKELEFT0 = new Point(2, 19);
+    private static final Point SPIKERIGHT0 = new Point(10, 19);
+    private static final Point SPIKEMID0 = new Point(6, 18);
 
     // EFFECTS: constructs an Middle Blocker object with player number and starting rotation of 0 (TBD)
     public MiddleBlockers(int playerNum, int side) {
@@ -41,6 +50,24 @@ public class MiddleBlockers implements Players {
     @Override
     public String getShortPos() {
         return SHORTPOS;
+    }
+
+    @Override
+    public ArrayList<Point> getAttackPoints(int side) {
+        ArrayList<Point> spikes = new ArrayList<Point>();
+
+        if (side == 0) {
+            spikes.add(SPIKELEFT0);
+            spikes.add(SPIKERIGHT0);
+            spikes.add(SPIKEMID0);
+        } else {
+            spikes.add(SPIKELEFT1);
+            spikes.add(SPIKERIGHT1);
+            spikes.add(SPIKEMID1);
+        }
+
+
+        return spikes;
     }
 
     // TODO program must know when to stop moving each player

@@ -4,10 +4,12 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +19,7 @@ import javax.swing.*;
 // information about the score, their players' positions, ball's positions and turns.
 // Players can also control their players from here.
 
-public class GameAppGUI extends JFrame implements ActionListener, MouseListener {
+public class GameAppGUI extends JFrame implements EventListener, ActionListener, MouseListener {
 
     Team myTeam;
     EnemyTeam weakTeam;
@@ -48,7 +50,9 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
     CourtRenderer court;
     Timer timer;
     AddPlayerRenderer addPlayer;
-    Boolean clicked;
+    int setNum;
+    int attackNum;
+    boolean state;
 
 
     JsonWriter jsonWriter;
@@ -56,8 +60,12 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
     GameData gameData;
     private static final String JSON_STORE = "./data/mostRecentGameData.json";
     private static final int INTERVAL = 42;
-    private int clickX;
-    private int clickY;
+    private int pressX;
+    private int pressY;
+    private JButton nextButton;
+    private JButton leftButton;
+    private JButton rightButton;
+    private JButton midButton;
 
 
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
@@ -75,7 +83,6 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         }
         beginGame();
     }
-
 
 
     // EFFECTS: loads prev game from file name. If no file is found by that name, will try to dig up most recent game.
@@ -182,7 +189,6 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         addTimer();
 
 
-
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
 
 
@@ -209,13 +215,11 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
     // EFFECTS: Runs each rally. Shows the turn and ball position after every major event. Shows scores when finished.
     public int beginRally(int turn) {
         boolean isOver = false;
-        int setNum;
-        int attackNum;
         System.out.println("Turn number is " + turn);
         game.setGameState("S", "S");
         chooseTeamState(turn, "start");
         stringInput("Ready? Press any key to start");
-            // TODO Design state chooser method
+        // TODO Design state chooser method
         serve(turn);
 
         while (!isOver) {
@@ -226,7 +230,7 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
             System.out.println("Turn number changed to " + turn);
             receive(turn);
             positionsAfterServe(turn);
-            setNum = chooseSet(turn);
+            chooseSet(turn);
             attackNum = chooseAttack(setNum, turn);
             chooseDefend(turn, setNum, attackNum);
             set(turn, setNum);
@@ -238,8 +242,6 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         endRally(turn);
         return turn;
     }
-
-
 
 
     // EFFECTS: returns true if a ball has been received, false otherwise
@@ -281,7 +283,6 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
                 myTeam.startPosServe();
             }
         }
-
 
 
     }
@@ -453,37 +454,37 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
     // REQUIRES: turn[0,1]
     // MODIFIES: this
     // EFFECTS: choose who to set
-    private int chooseSet(int turn) {
-        int choice;
+    private void chooseSet(int turn) {
+
         if (turn == 0) {
             game.setGameState("A", "D");
-            choice = chooseEnemySet(turn);
+            chooseEnemySet(turn);
         } else {
             game.setGameState("D", "A");
-            choice = chooseMySet(turn);
+            chooseMySet(turn);
         }
 
-        return choice;
+
     }
 
 
-    private int chooseEnemySet(int turn) {
+    private void chooseEnemySet(int turn) {
         int chance2 = (int) (Math.random() * 2);
         int chance3 = (int) (Math.random() * 3);
 
 
         if (enemyTeam.isSetterBack()) {
             System.out.println("Enemy can attack from the left, middle, or right");
-            return chance3;
+            setNum = chance3;
         } else {
             System.out.println("Enemy can only attack form the left or middle");
-            return chance2;
+            setNum = chance2;
         }
 
     }
 
-    private int chooseMySet(int turn) {
-        String choice = null;
+    private void chooseMySet(int turn) {
+/*        String choice = null;
 
         if (myTeam.isSetterBack()) {
 
@@ -498,8 +499,39 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
             return 1;
         } else {
             return 2;
-        }
+        }*/
 
+        sleepThread(2);
+
+        nextButton = new JButton("Next");
+        nextButton.setBounds(260, 860, 90, 45);
+        nextButton.setBackground(Color.WHITE);
+        nextButton.setOpaque(true);
+        this.add(nextButton);
+        nextButton.addActionListener(new Selector());
+
+        nextButton.addActionListener(new Selector());
+        leftButton = new JButton("left");
+        leftButton.setBounds(0, 12 * 30 + 100, 60, 60);
+        leftButton.setBackground(Color.WHITE);
+        leftButton.setOpaque(true);
+        this.add(leftButton);
+        leftButton.addActionListener(new Selector());
+
+        midButton = new JButton("middle");
+        midButton.setBounds(5 * 30, 12 * 30 + 100, 60, 60);
+        midButton.setBackground(Color.WHITE);
+        midButton.setOpaque(true);
+        this.add(midButton);
+        midButton.addActionListener(new Selector());
+
+        rightButton = new JButton("right");
+        rightButton.setBounds(10 * 30, 12 * 30 + 100, 60, 60);
+        rightButton.setBackground(Color.WHITE);
+        rightButton.setOpaque(true);
+        this.add(rightButton);
+        rightButton.addActionListener(new Selector());
+        sleepThread(4);
 
     }
 
@@ -554,70 +586,36 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         }
 
         for (Players p : myTeam.getStarters()) {
-            clicked = false;
-            boolean c = clicked;
+
+            setPressX(p.getPosX());
+            setPressY(p.getPosY());
+
 
             if (p.getRotation() >= 4) {
-/*                int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s block position");
 
-                p.moveToX(x);
-                System.out.println(p.getRotation() + p.getPlayingPosition()
-                        + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");*/
                 game.setSelected(p);
-/*                while (!c) {
-                    System.out.println("Looping");
-                    c = clicked;
 
-                }*/
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                clicked = false;
+                sleepThread(5);
 
-                int x = getClickX();
-                int y = getClickY();
+                int x = getPressX();
                 System.out.println("Reached here2");
 
 
                 System.out.println("Reached here1");
                 p.moveToX(x / 30);
-                p.moveToY(((y - 100) / 30));
 
 
             } else if (!p.getPlayingPosition().equals("Setter")) {
-/*                int x = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s x receive position");
-
-                int y = intInput("Choose this " + p.getRotation() + p.getPlayingPosition() + "'s y receive position");
-
-                System.out.println(p.getRotation() + p.getPlayingPosition()
-                        + "has been moved to (" + p.getPosX() + "," + p.getPosY() + ")");*/
-
 
                 game.setSelected(p);
 
 
-/*                while (!c) {
-                    System.out.println("Looping");
-                    c = clicked;
+                sleepThread(5);
 
-                }*/
-
-                int x = getClickX();
-                int y = getClickY();
-
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                x = getClickX();
-                y = getClickY();
+                int x = getPressX();
+                int y = getPressY();
                 System.out.println("Reached here2");
 
-                clicked = false;
 
                 System.out.println("Reached here1");
                 p.moveToX(x / 30);
@@ -631,17 +629,16 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         game.removeSelected();
     }
 
-    // MODIFIES: players, team
-    // EFFECTS: Each player will be moved to wherever mouse click during their turn
-    private void myDefenceUI(int x, int y) {
-        this.addMouseListener(this);
+    private void sleepThread(int s) {
 
-        Players p = game.getSelected();
-
-        p.moveToX(x);
-        p.moveToY(y);
-
-
+        for (int i = 0; i < s; i++) {
+            try {
+                System.out.println(s - i);
+                Thread.sleep(i * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -975,20 +972,20 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         }*/
     }
 
-    public void setClickX(int x) {
-        clickX = x;
+    public void setPressX(int x) {
+        pressX = x;
     }
 
-    public int getClickX() {
-        return clickX;
+    public int getPressX() {
+        return pressX;
     }
 
-    public void setClickY(int y) {
-        clickY = y;
+    public void setPressY(int y) {
+        pressY = y;
     }
 
-    public int getClickY() {
-        return clickY;
+    public int getPressY() {
+        return pressY;
     }
 
 
@@ -996,21 +993,19 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
     public void mousePressed(MouseEvent e) {
         // Invoked when a mouse button has been pressed on a component
         int turn = game.getTurnNum();
-        String state1 = game.getGameState1();
-        String state0 = game.getGameState0();
+
+
+
 
         /*if (state1.equals("A")) {
 
         }*/
 
-        if (state1.equals("D")) {
 
-            setClickX(e.getX()); // Always somehow loops back here
-            setClickY(e.getY());
-            clicked = true;
-            System.out.println("You clicked the mouse at " + e.getX() + " , " + e.getY());
+        setPressX(e.getX());
+        setPressY(e.getY());
 
-        }
+        System.out.println("You are pressing the mouse at " + e.getX() + " , " + e.getY());
     }
 
     @Override
@@ -1028,7 +1023,26 @@ public class GameAppGUI extends JFrame implements ActionListener, MouseListener 
         // Invoked when the mouse exits a component
     }
 
+    public class Selector implements ActionListener {
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(leftButton)) {
+                setNum = 0;
+                System.out.println("You've chosen to set to the left");
+            } else if (e.getSource().equals(rightButton)) {
+                setNum = 2;
+                System.out.println("You've chosen to set to the middle");
+            } else if (e.getSource().equals(midButton)) {
+                setNum = 1;
+                System.out.println("You've chosen to set to the right");
+            }
+
+            if (e.getSource().equals(nextButton)) {
+                state = true;
+            }
+        }
+    }
 
 
 }
