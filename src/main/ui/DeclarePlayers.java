@@ -18,11 +18,17 @@ public class DeclarePlayers implements ActionListener {
 
     JFrame frame;
     Game game;
-    JButton add = new JButton("Add");
     JButton done = new JButton("Continue");
     JTextArea textArea;
     JButton weakTeam;
     JButton strongTeam;
+
+    Players setter = new Setters(-1, 1);
+    Players middle1 = new MiddleBlockers(-1, 1);
+    Players opposite = new OppositeHitter(-1, 1);
+    Players outside1 = new OutsideHitter(-1, 1);
+    Players middle2 = new MiddleBlockers(-1, 1);
+    Players outside2 = new OutsideHitter(-1, 1);
 
 
 
@@ -41,31 +47,35 @@ public class DeclarePlayers implements ActionListener {
     public DeclarePlayers(Game game) {
         this.game = game;
         frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createPlayers();
         designLayout();
 
     }
 
     public void createPlayers() {
-        players.add(new Setters(-1, 1));
-        players.add(new MiddleBlockers(-1, 1));
-        players.add(new OutsideHitter(-1, 1));
-        players.add(new OppositeHitter(-1, 1));
-        players.add(new MiddleBlockers(-1, 1));
-        players.add(new OppositeHitter(-1, 1));
+        players.add(setter);
+        players.add(middle1);
+        players.add(outside1);
+        players.add(opposite);
+        players.add(middle2);
+        players.add(outside2);
     }
 
     public DeclarePlayers() {
         frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        createPlayers();
         designLayout();
+
     }
 
     private void designLayout() {
 
+        frame.setSize(400, 550);
+        createTextArea();
 
-        frame.setSize(400, 450);
-
-        done.setBounds(10, 380, 360, 40);
+        done.setBounds(10, 480, 360, 40);
         done.setSize(380, 40);
         done.setForeground(Color.red);
         done.addActionListener(this);
@@ -77,11 +87,12 @@ public class DeclarePlayers implements ActionListener {
         set.addActionListener(this);
         frame.add(set);
 
-        textArea = new JTextArea("Choose the Setter's Number");
+
         mid1.setBounds(20, 70, 360, 40);
         mid1.setBackground(Color.lightGray);
         mid1.addActionListener(this);
         frame.add(mid1);
+
 
         //mid2.setBackground(Color.gray);
         mid2.setBounds(20, 120, 360, 40);
@@ -106,9 +117,6 @@ public class DeclarePlayers implements ActionListener {
         oh2.addActionListener(this);
         frame.add(oh2);
 
-
-
-
         weakTeam = new JButton("Weak Team");
         weakTeam.setBounds(10, 320, 190, 40);
         weakTeam.addActionListener(this);
@@ -125,7 +133,22 @@ public class DeclarePlayers implements ActionListener {
         blank.setBounds(10, 320, 160, 40);
         frame.add(blank);
 
+
         frame.setVisible(true);
+
+
+    }
+
+    public void createTextArea() {
+
+        textArea = new JTextArea();
+        textArea.setForeground(Color.BLACK);
+        textArea.append("Give each player a non-negative number and choose an enemy. \n Starting player is size is: "
+                + players.size());
+
+        textArea.setBounds(10, 370, 380, 100);
+        textArea.setBackground(Color.lightGray);
+        frame.add(textArea);
 
 
     }
@@ -156,34 +179,43 @@ public class DeclarePlayers implements ActionListener {
 
         if (e.getSource() == done) {
             if (allInput()) {
+                frame.setVisible(false);
                 new AddPlayers(players, enemyTeam);
             }
         }
 
         if (e.getSource() == set) {
             int num = parseInt(set.getText().substring("Choose the Setter's Number: ".length(), set.getText().length()));
-            players.get(0).declareNum(num);
+            setter.declareNum(num);
+            textArea.append("\n Your setter's number is: " + setter.getNum());
         } else if (e.getSource() == mid1) {
             int num = parseInt(mid1.getText().substring("Choose the first Middle Blocker's Number: ".length(), mid1.getText().length()));
-            players.get(1).declareNum(num);
+            middle1.declareNum(num);
+            textArea.append("\n Your first middle's number is: " + middle1.getNum());
         } else if (e.getSource() == mid2) {
             int num = parseInt(mid2.getText().substring("Choose the second Middle Blocker's Number: ".length(), mid2.getText().length()));
-            players.get(4).declareNum(num);
+            middle2.declareNum(num);
+            textArea.append("\n Your second middle's number is: " + middle2.getNum());
         } else if (e.getSource() == oh1) {
             int num = parseInt(oh1.getText().substring("Choose the first Outside Hitter's Number: ".length(), oh1.getText().length()));
-            players.get(2).declareNum(num);
+            outside1.declareNum(num);
+            textArea.append("\n Your first outside's number is: " + outside1.getNum());
         } else if (e.getSource() == oh2) {
             int num = parseInt(oh2.getText().substring("Choose the second Outside Hitter's Number: ".length(), oh2.getText().length()));
-            players.get(5).declareNum(num);
+            outside2.declareNum(num);
+            textArea.append("\n Your second outside's number is: " + outside2.getNum());
         } else if (e.getSource() == op) {
             int num = parseInt(op.getText().substring("Choose the Opposite Hitter's Number: ".length(), op.getText().length()));
-            players.get(3).declareNum(num);
+            opposite.declareNum(num);
+            textArea.append("\n Your opposite's number is: " + opposite.getNum());
         }
 
         if (e.getSource() == strongTeam) {
             this.enemyTeam = "Strong Team";
-        } else {
+            textArea.append("\n You have chosen to play the strong team");
+        } else if (e.getSource() == weakTeam) {
             this.enemyTeam = "Weak Team";
+            textArea.append("\n You have chosen to play the weak team");
         }
     }
 
