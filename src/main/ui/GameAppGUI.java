@@ -69,15 +69,14 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
 
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
-    public GameAppGUI() {
+    public GameAppGUI(Boolean load) {
         // make new to start from saved game
 
         super("Volleyball Game");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        String input = stringInput("Would you like to load an old game? type yes or no");
 
-        if (input.equals("yes")) {
-            loadOldGame();
+
+        if (load) {
+            instantiateGame();
         } else {
             setUp();
         }
@@ -85,7 +84,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     }
 
 
-    // EFFECTS: loads prev game from file name. If no file is found by that name, will try to dig up most recent game.
+/*    // EFFECTS: loads prev game from file name. If no file is found by that name, will try to dig up most recent game.
     // else will get player to setUp new game.
     private void loadOldGame() {
         game = new Game();
@@ -109,9 +108,17 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
         }
         instantiateGame();
-    }
+    }*/
 
     private void instantiateGame() {
+        game = new Game();
+        try {
+            jsonReader = new JsonReader(JSON_STORE, game);
+            gameData = jsonReader.read();
+        } catch (IOException f) {
+            System.out.println("Well, guess that didn't work. Let's start a new game then.");
+            setUp();
+        }
         game.setEnemyScore(gameData.getEnemyScore());
         game.setMyScore(gameData.getMyScore());
 
@@ -178,15 +185,16 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         turn = game.getTurnNum();
         ball = new Ball();
         game.decBall(ball);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         court = new CourtRenderer(game);
         this.addMouseListener(this);
 
-
-        add(court);
+        this.add(court);
 
         pack();
-        setVisible(true);
-        addTimer();
+        court.setVisible(true);
+        this.setVisible(true);
+        addTimer(); // TODO find out if this is redundant
 
 
         System.out.println("Let us begin this game. Whenever prompted, follow the onscreen instructions");
@@ -775,10 +783,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
     // EFFECTS: creates and adds a player to our team roster
     public void addPlayerToTeam() {
-        addPlayer = new AddPlayerRenderer(game);
-        add(addPlayer);
-        pack();
-        setVisible(true);
+        new AddPlayerRenderer(game);
 
         int num;
         String pos;
