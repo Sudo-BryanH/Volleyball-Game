@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SplashScreen implements ActionListener {
+public class SplashScreen extends JFrame implements ActionListener {
 
     JFrame frame = new JFrame();
     JButton loadSaved = new JButton("Load the previous saved game");
     JButton loadNew = new JButton("Start a new game");
+    Boolean load;
 
     public SplashScreen() {
         renderFrame();

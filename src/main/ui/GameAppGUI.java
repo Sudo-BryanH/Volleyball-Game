@@ -71,7 +71,6 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
     public GameAppGUI(Boolean load) {
         // make new to start from saved game
-
         super("Volleyball Game");
 
 

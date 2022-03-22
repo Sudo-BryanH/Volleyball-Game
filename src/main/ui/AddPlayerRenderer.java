@@ -67,6 +67,8 @@ public class AddPlayerRenderer implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == comboBox) {
             playerType = comboBox.getSelectedIndex();
+        } else if (e.getSource() == add) {
+            addPlayer();
         }
 
     }
