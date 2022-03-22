@@ -302,6 +302,11 @@ public class OppositeHitter implements Players {
         }
     }
 
+    @Override
+    public void declareNum(int num) {
+        playerNum = num;
+    }
+
 }
 
 

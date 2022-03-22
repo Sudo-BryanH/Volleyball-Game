@@ -1,6 +1,5 @@
 package ui;
 
-import jdk.nashorn.internal.objects.annotations.Setter;
 import model.Game;
 import model.Players;
 import model.Setters;
@@ -9,14 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AddPlayerRenderer implements ActionListener {
+public class AddPlayers implements ActionListener {
 
     JFrame frame;
     Game game;
     JButton add = new JButton("Add");
     JButton done = new JButton("Continue");
     JTextArea textArea;
+    JTextField num;
 
     int playerType;
     int playerNum;
@@ -24,15 +26,21 @@ public class AddPlayerRenderer implements ActionListener {
 
     String[] playerTypes = {"Setter", "Middle Blocker", "Outside Hitter", "Opposite Hitter"};
     JComboBox comboBox = new JComboBox(playerTypes);
+    List<Players> startingPlayers;
 
 
-
-    public AddPlayerRenderer(Game game) {
+    public AddPlayers(Game game) {
         this.game = game;
         frame = new JFrame();
         designLayout();
 
 
+    }
+
+    public AddPlayers(List<Players> players, String enemyTeam) {
+        frame = new JFrame();
+        designLayout();
+        startingPlayers = players;
     }
 
     private void designLayout() {
@@ -69,6 +77,8 @@ public class AddPlayerRenderer implements ActionListener {
             playerType = comboBox.getSelectedIndex();
         } else if (e.getSource() == add) {
             addPlayer();
+        } else if (e.getSource() == done) {
+            new GameAppGUI(startingPlayers);
         }
 
     }

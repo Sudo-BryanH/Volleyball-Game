@@ -91,6 +91,7 @@ public interface Players {
 
     public ArrayList<Point> getAttackPoints(int side);
 
+    public void declareNum(int num);
 }
 
 

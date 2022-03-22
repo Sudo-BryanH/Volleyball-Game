@@ -303,4 +303,8 @@ public class OutsideHitter implements Players {
         return spikes;
     }
 
+    @Override
+    public void declareNum(int num) {
+        playerNum = num;
+    }
 }

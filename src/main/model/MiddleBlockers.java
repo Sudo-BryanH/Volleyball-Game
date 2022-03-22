@@ -312,4 +312,9 @@ public class MiddleBlockers implements Players {
         }
     }
 
+    @Override
+    public void declareNum(int num) {
+        playerNum = num;
+    }
+
 }

@@ -13,11 +13,11 @@ public class SplashScreen extends JFrame implements ActionListener {
 
     public SplashScreen() {
         renderFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
     private void renderFrame() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 130);
 
         frame.setVisible(true);
@@ -36,10 +36,10 @@ public class SplashScreen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loadNew) {
             frame.setVisible(false);
-            new GameAppGUI(false);
+            new DeclarePlayers();
         } else if (e.getSource() == loadSaved) {
             frame.setVisible(false);
-            new GameAppGUI(true);
+            new GameAppGUI();
         }
 
 

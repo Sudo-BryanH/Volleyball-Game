@@ -285,4 +285,9 @@ public class Setters implements Players {
     public ArrayList<Point> getAttackPoints(int side) {
         return null;
     }
+
+    @Override
+    public void declareNum(int num) {
+        playerNum = num;
+    }
 }
