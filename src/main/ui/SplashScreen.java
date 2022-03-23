@@ -44,7 +44,7 @@ public class SplashScreen extends JFrame implements ActionListener {
             new DeclarePlayers();
         } else if (e.getSource() == loadSaved) {
             frame.setVisible(false);
-            new GameAppGUI();
+            new GameAppGraphics();
         }
 
 

@@ -232,7 +232,8 @@ public class CourtRenderer extends JPanel {
         playersSetup(g);
         ballSetup(g);
 
-
+        revalidate();
+        repaint();
 
     }
 

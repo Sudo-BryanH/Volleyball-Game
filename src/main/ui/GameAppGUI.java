@@ -77,8 +77,6 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         // make new to start from saved game
         super("Volleyball Game");
         instantiateGame();
-        this.ball = new Ball();
-        game.decBall(this.ball);
         newGUI();
 
         beginGame();
@@ -91,9 +89,12 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         frame.setBounds(0, 0, 360, 920);
         court = new CourtRenderer(game);
         frame.add(court);
+        frame.pack();
         frame.addMouseListener(this);
         //court.repaint();
-        //court.setVisible(true);
+        // court.setVisible(true);
+        frame.setVisible(true);
+        // frame.setUndecorated(false);
 
     }
 
@@ -101,8 +102,6 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     public GameAppGUI(List<Players> starters, List<Players> roster, String enemyTeam) {
         super("Volleyball Game");
         setUp(starters, roster, enemyTeam);
-        ball = new Ball();
-        game.decBall(ball);
         newGUI();
         beginGame();
     }
@@ -186,8 +185,10 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     // MODIFIES: game
     // EFFECTS: Runs the gameGameApp
     public void beginGame() {
-        frame.setVisible(true);
+        //frame.setVisible(true);
         boolean gameOver = false;
+        this.ball = new Ball();
+        game.decBall(this.ball);
         turn = game.getTurnNum();
         addTimer(); // TODO find out if this is redundant
 
