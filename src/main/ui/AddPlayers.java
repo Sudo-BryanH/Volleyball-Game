@@ -31,7 +31,7 @@ public class AddPlayers implements ActionListener {
     List<Players> startingPlayers;
     List<Players> rosterPlayers;
 
-
+    // EFFECTS: constructs AddPlayers ui
     public AddPlayers(List<Players> players, String enemyTeam) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -45,6 +45,8 @@ public class AddPlayers implements ActionListener {
 
     }
 
+    // MDOIFIES: this
+    // EFFECTS: creates the frame and adds all necessary panels to it
     private void designLayout() {
         frame.setSize(400, 600);
         createTextArea();
@@ -78,6 +80,7 @@ public class AddPlayers implements ActionListener {
 
     }
 
+    // EFFECTS: creates the text area
     public void createTextArea() {
 
         textArea = new JTextArea();
@@ -92,6 +95,8 @@ public class AddPlayers implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds player as specified by user
     private void addPlayer() {
         Players p = null;
 
@@ -113,6 +118,8 @@ public class AddPlayers implements ActionListener {
 
 
 
+    // MODIFIES this
+    // EFFECTS: reacts to user input, moves to set up a new game if done is selected
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == comboBox) {
@@ -132,6 +139,7 @@ public class AddPlayers implements ActionListener {
 
     }
 
+    // EFFEECTS: returns whether or not a player is specified enough to be added
     private boolean inputAll() {
         return playerType != -1 && playerNum != -1;
     }

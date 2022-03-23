@@ -66,48 +66,47 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     private JButton leftButton;
     private JButton rightButton;
     private JButton midButton;
+    JFrame frame;
 
 
 
 
-    // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
+
+    // EFFECTS: constructor for a saved game
     public GameAppGUI() {
         // make new to start from saved game
         super("Volleyball Game");
         instantiateGame();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.ball = new Ball();
         game.decBall(this.ball);
-        //this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(360, 920));
-        this.addMouseListener(this);
-        setUndecorated(false);
-        court = new CourtRenderer(game);
-        getContentPane().add(court);
-        court.setOpaque(true);
-        this.setVisible(true);
-        pack();
+        newGUI();
 
         beginGame();
     }
 
+    // EFFECTS: adds CourtRenderer to JFrame frame
+    private void newGUI() {
+        frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(0, 0, 360, 920);
+        court = new CourtRenderer(game);
+        frame.add(court);
+        frame.addMouseListener(this);
+        //court.repaint();
+        //court.setVisible(true);
+
+    }
+
+    // EFFECTS: constructor for a new game
     public GameAppGUI(List<Players> starters, List<Players> roster, String enemyTeam) {
         super("Volleyball Game");
         setUp(starters, roster, enemyTeam);
         ball = new Ball();
         game.decBall(ball);
-        this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(360, 920));
-        this.addMouseListener(this);
-        setUndecorated(false);
-        court = new CourtRenderer(game);
-        getContentPane().add(court);
-        court.setOpaque(true);
-        this.setVisible(true);
-        pack();
-
+        newGUI();
         beginGame();
     }
+
 
 
     private void instantiateGame() {
@@ -187,6 +186,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     // MODIFIES: game
     // EFFECTS: Runs the gameGameApp
     public void beginGame() {
+        frame.setVisible(true);
         boolean gameOver = false;
         turn = game.getTurnNum();
         addTimer(); // TODO find out if this is redundant

@@ -43,7 +43,7 @@ public class DeclarePlayers implements ActionListener {
 
     List<Players> players = new ArrayList<>();
 
-
+    // EFFECTS: constructs a declare players object
     public DeclarePlayers(Game game) {
         this.game = game;
         frame = new JFrame();
@@ -53,6 +53,7 @@ public class DeclarePlayers implements ActionListener {
 
     }
 
+    // EFFECTS: adds players to players list
     public void createPlayers() {
         players.add(setter);
         players.add(middle1);
@@ -62,6 +63,7 @@ public class DeclarePlayers implements ActionListener {
         players.add(outside2);
     }
 
+    // EFFECTS: constructs a declareplayer object
     public DeclarePlayers() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -70,6 +72,9 @@ public class DeclarePlayers implements ActionListener {
 
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: puts panels and panels in place in frame
     private void designLayout() {
 
         frame.setSize(400, 550);
@@ -141,6 +146,8 @@ public class DeclarePlayers implements ActionListener {
 
     }
 
+    // MODIFIES this
+    // EFFECTS: creates a text area to write down instructions
     public void createTextArea() {
 
         textArea = new JTextArea();
@@ -155,7 +162,7 @@ public class DeclarePlayers implements ActionListener {
     }
 
 
-
+    // EFFEECTS: returns if enough information is given to move to the next ui
     public boolean allInput() {
         boolean playersDeclared = true;
         boolean enemyDeclared = false;
@@ -174,7 +181,9 @@ public class DeclarePlayers implements ActionListener {
 
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: reacts to user input. records player numbers inputted, enemy team requested, and if done is selected
+            // moves on to addplayers
     @Override
     public void actionPerformed(ActionEvent e) {
 

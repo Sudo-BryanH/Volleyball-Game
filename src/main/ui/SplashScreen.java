@@ -11,12 +11,15 @@ public class SplashScreen extends JFrame implements ActionListener {
     JButton loadNew = new JButton("Start a new game");
     Boolean load;
 
+    // EFFECTS: constructs a splash screen
     public SplashScreen() {
         renderFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the frame and adds panels
     private void renderFrame() {
         frame.setSize(300, 130);
 
@@ -32,6 +35,8 @@ public class SplashScreen extends JFrame implements ActionListener {
     }
 
 
+    // MODIFIES this
+    // EFFECTS: detects user input, if loadNew, move to declare players ui, else load old game
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loadNew) {
