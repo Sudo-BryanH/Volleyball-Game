@@ -223,9 +223,6 @@ public class CourtRenderer extends JPanel {
     }
 
 
-
-
-
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -240,13 +237,5 @@ public class CourtRenderer extends JPanel {
     }
 
 
-    public JButton makeNextButton() {
-        JButton nextButton = new JButton("Next");
-        nextButton.setBounds(260, 860, 90, 45);
-        nextButton.setBackground(Color.WHITE);
-        nextButton.setOpaque(true);
-        this.add(nextButton);
 
-        return nextButton;
-    }
 }

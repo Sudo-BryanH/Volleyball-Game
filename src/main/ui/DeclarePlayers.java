@@ -145,8 +145,7 @@ public class DeclarePlayers implements ActionListener {
 
         textArea = new JTextArea();
         textArea.setForeground(Color.BLACK);
-        textArea.append("Give each player a non-negative number and choose an enemy. \n Starting player is size is: "
-                + players.size());
+        textArea.append("Give each player a non-negative number and choose an enemy");
 
         textArea.setBounds(10, 370, 380, 100);
         textArea.setBackground(Color.lightGray);

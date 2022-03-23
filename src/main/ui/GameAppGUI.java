@@ -68,6 +68,8 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     private JButton midButton;
 
 
+
+
     // EFFECTS: constructor for a game. If the player would like to load an old game, will go to load game
     public GameAppGUI() {
         // make new to start from saved game
@@ -78,9 +80,9 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         beginGame();
     }
 
-    public GameAppGUI(List starters, List roster, String enemyTeam) {
+    public GameAppGUI(List<Players> starters, List<Players> roster, String enemyTeam) {
         super("Volleyball Game");
-        setUp();
+        setUp(starters, roster, enemyTeam);
         beginGame();
     }
 
@@ -92,7 +94,8 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
             gameData = jsonReader.read();
         } catch (IOException f) {
             System.out.println("Well, guess that didn't work. Let's start a new game then.");
-            setUp();
+            new SplashScreen();
+            System.exit(0);
         }
         game.setEnemyScore(gameData.getEnemyScore());
         game.setMyScore(gameData.getMyScore());
@@ -108,26 +111,22 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
     // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
-    public void setUp() {
-        String input;
-        boolean status = false;
-        // Make enemy teams
-        weakTeam = (EnemyTeam) enemyTeamConstructor("weak team", weakMB1, weakMB2, weakSet,
-                weakOP, weakOH1, weakOH2, 5);
-        strongTeam = (EnemyTeam) enemyTeamConstructor("strong team", strongMB1, strongMB2, strongSet,
-                strongOP, strongOH1, strongOH2, 2);
+    public void setUp(List<Players> starters, List<Players> roster, String enemyTeam) {
 
-        System.out.println("Welcome to this volleyball game. If you would like to quit, please type 'quit' if the "
-                + "system is asking for a string or '999' if the system is asking for a number");
-        input = stringInput("Let's create your team. What would you like to call your team?");
-        myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
+        if (enemyTeam.equals("Strong Team")) {
+            strongTeam = (EnemyTeam) enemyTeamConstructor("Strong team", strongMB1, strongMB2, strongSet,
+                    strongOP, strongOH1, strongOH2, 2);
+        } else {
+            weakTeam = (EnemyTeam) enemyTeamConstructor("Weak team", weakMB1, weakMB2, weakSet,
+                    weakOP, weakOH1, weakOH2, 5);
+        }
 
-
-        checkAddPlayer();
+        //myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
+        myTeam = myTeamConstructor(starters, roster);
 
 
-        chooseEnemyTeam();
-        game = new Game(myTeam, enemyTeam);
+
+        game = new Game(myTeam, this.enemyTeam);
         game.getMyTeam().startPosNoServe();
         gameData = new GameData(game);
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -136,22 +135,31 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
     }
 
-    public void checkAddPlayer() {
+    private Team myTeamConstructor(List<Players> starters, List<Players> roster) {
+        String name = "My Team";
 
-        boolean status = false;
-        String input;
+/*        players.add(setter);
+        players.add(middle1);
+        players.add(outside1);
+        players.add(opposite);
+        players.add(middle2);
+        players.add(outside2);*/
 
-        while (!status) {
-            input = stringInput("Would you like to add another player to the roster? Type y or n");
-            if (input.equals("y")) {
-                addPlayerToTeam();
-            } else {
-                System.out.println("no more added. There are " + myTeam.getRoster().size() + "Players in roster");
-                status = true;
-            }
-        }
+        roster.get(0).setRotation(1);
+        roster.get(1).setRotation(2);
+        roster.get(2).setRotation(3);
+        roster.get(3).setRotation(4);
+        roster.get(4).setRotation(5);
+        roster.get(5).setRotation(6);
+
+        MyTeam m;
+        m = new MyTeam(roster, name);
+        m.startPosNoServe();
+
+        return m; // May cause errors with subtypes
 
     }
+
 
     // MODIFIES: game
     // EFFECTS: Runs the gameGameApp
@@ -160,14 +168,15 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         turn = game.getTurnNum();
         ball = new Ball();
         game.decBall(ball);
-        court = new CourtRenderer(game);
+        this.setBackground(Color.WHITE);
+        this.setPreferredSize(new Dimension(360, 920));
         this.addMouseListener(this);
-
+        setUndecorated(false);
+        court = new CourtRenderer(game); // TODO Try to put everything in constructor rather than in this method
         this.add(court);
-
-        pack();
-        court.setVisible(true);
+        court.setOpaque(true);
         this.setVisible(true);
+        pack();
         addTimer(); // TODO find out if this is redundant
 
 
@@ -728,32 +737,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
     }
 
-    // EFFECTS: constructs our team
-    public Team myTeamConstructor(String name, Players mb1, Players mb2,
-                                  Players set, Players op, Players oh1,
-                                  Players oh2) {
 
-        int n;
-
-        n = intInput("Alright, let's give your players numbers. Let's start with the setter, type in a number:");
-        set = new Setters(n, 1);
-        n = intInput("Next up, your first middle blocker");
-        mb1 = new MiddleBlockers(n, 1);
-        n = intInput("Next up, your first outside hitter");
-        oh1 = new OutsideHitter(n, 1);
-        n = intInput("Next up, your first opposite hitter");
-        op = new OppositeHitter(n, 1);
-        n = intInput("Next up, your second middle blocker");
-        mb2 = new MiddleBlockers(n, 1);
-        n = intInput("Next up, your second outside hitter");
-        oh2 = new OutsideHitter(n, 1);
-
-        MyTeam m;
-        m = new MyTeam(name, set, mb1, mb2, oh1, oh2, op);
-        m.startPosNoServe();
-
-        return m; // May cause errors with subtypes
-    }
 
     // EFFECTS: creates and adds a player to our team roster
     public void addPlayerToTeam() {
