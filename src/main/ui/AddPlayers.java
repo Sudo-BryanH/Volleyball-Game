@@ -34,6 +34,7 @@ public class AddPlayers implements ActionListener {
 
     public AddPlayers(List<Players> players, String enemyTeam) {
         frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         startingPlayers = players;
         this.enemyTeam = enemyTeam;
         this.rosterPlayers = new ArrayList<>();
@@ -123,6 +124,7 @@ public class AddPlayers implements ActionListener {
                 playerNum = -1;
             }
         } else if (e.getSource() == done) {
+            //frame.setVisible(false);
             new GameAppGUI(startingPlayers, rosterPlayers, enemyTeam);
         } else if (e.getSource() == num) {
             playerNum = parseInt(num.getText().substring("Player Number: ".length(), num.getText().length()));

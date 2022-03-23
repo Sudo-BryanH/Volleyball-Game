@@ -74,15 +74,38 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     public GameAppGUI() {
         // make new to start from saved game
         super("Volleyball Game");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         instantiateGame();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.ball = new Ball();
+        game.decBall(this.ball);
+        //this.setBackground(Color.WHITE);
+        this.setPreferredSize(new Dimension(360, 920));
+        this.addMouseListener(this);
+        setUndecorated(false);
+        court = new CourtRenderer(game);
+        getContentPane().add(court);
+        court.setOpaque(true);
+        this.setVisible(true);
+        pack();
+
         beginGame();
     }
 
     public GameAppGUI(List<Players> starters, List<Players> roster, String enemyTeam) {
         super("Volleyball Game");
         setUp(starters, roster, enemyTeam);
+        ball = new Ball();
+        game.decBall(ball);
+        this.setBackground(Color.WHITE);
+        this.setPreferredSize(new Dimension(360, 920));
+        this.addMouseListener(this);
+        setUndecorated(false);
+        court = new CourtRenderer(game);
+        getContentPane().add(court);
+        court.setOpaque(true);
+        this.setVisible(true);
+        pack();
+
         beginGame();
     }
 
@@ -166,17 +189,6 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     public void beginGame() {
         boolean gameOver = false;
         turn = game.getTurnNum();
-        ball = new Ball();
-        game.decBall(ball);
-        this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(360, 920));
-        this.addMouseListener(this);
-        setUndecorated(false);
-        court = new CourtRenderer(game); // TODO Try to put everything in constructor rather than in this method
-        this.add(court);
-        court.setOpaque(true);
-        this.setVisible(true);
-        pack();
         addTimer(); // TODO find out if this is redundant
 
 
@@ -732,6 +744,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         EnemyTeam e;
         e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
         e.setChance(chance);
+        enemyTeam = e;
 
         return e; // May cause errors with subtypes
 

@@ -25,11 +25,12 @@ public class CourtRenderer extends JPanel {
 
         setPreferredSize(new Dimension(360, 920));
         setBackground(Color.WHITE);
+        //setOpaque(true);
 
     }
 
     private void ballSetup(Graphics g) {
-        JLabel label;
+
         Ball ball = game.getBall();
 
         int x = ball.getCurrentXPos();
