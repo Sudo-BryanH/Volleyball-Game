@@ -50,7 +50,9 @@ public class AddPlayers implements ActionListener {
 
         done.setBounds(10, 530, 360, 40);
         done.setSize(380, 40);
-        done.setForeground(Color.GREEN);
+        done.setBackground(new Color(30, 144, 255));
+        done.setForeground(Color.WHITE);
+        done.setOpaque(true);
         done.addActionListener(this);
         frame.add(done);
         comboBox.addActionListener(this);

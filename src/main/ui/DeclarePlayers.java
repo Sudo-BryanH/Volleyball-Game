@@ -77,7 +77,9 @@ public class DeclarePlayers implements ActionListener {
 
         done.setBounds(10, 480, 360, 40);
         done.setSize(380, 40);
-        done.setForeground(Color.red);
+        done.setBackground(new Color(30, 144, 255));
+        done.setForeground(Color.WHITE);
+        done.setOpaque(true);
         done.addActionListener(this);
         frame.add(done);
 
