@@ -101,9 +101,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
     // EFFECTS: constructor for a new game
     public GameAppGUI(List<Players> starters, List<Players> roster, String enemyTeam) {
         super("Volleyball Game");
-        setUp(starters, roster, enemyTeam);
-        newGUI();
-        beginGame();
+
     }
 
 

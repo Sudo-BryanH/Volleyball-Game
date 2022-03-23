@@ -132,7 +132,7 @@ public class AddPlayers implements ActionListener {
             }
         } else if (e.getSource() == done) {
             //frame.setVisible(false);
-            new GameAppGUI(startingPlayers, rosterPlayers, enemyTeam);
+            new GameAppGraphics(startingPlayers, rosterPlayers, enemyTeam);
         } else if (e.getSource() == num) {
             playerNum = parseInt(num.getText().substring("Player Number: ".length(), num.getText().length()));
         }

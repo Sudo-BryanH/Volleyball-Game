@@ -5,11 +5,16 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GameAppGraphics extends JFrame {
+public class GameAppGraphics extends JFrame implements MouseListener, ActionListener {
 
     JFrame frame;
     CourtRenderer court;
@@ -55,8 +60,8 @@ public class GameAppGraphics extends JFrame {
     private static final int INTERVAL = 42;
     private int pressX;
     private int pressY;
-
-
+    JButton nextButton;
+    private JButton blankButton;
 
 
     public GameAppGraphics() {
@@ -64,14 +69,29 @@ public class GameAppGraphics extends JFrame {
         instantiateGame();
         ball = new Ball();
         game.decBall(ball);
+        myGuI();
+        addTimer();
+
+    }
+
+    private void myGuI() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         court = new CourtRenderer(game);
         frame.add(court);
         frame.pack();
+        frame.addMouseListener(this);
+        game.setGameState("F", "F");
+        nextButton = new JButton("Next");
+        nextButton.setBounds(300, 870, 50, 20);
+        nextButton.setBackground(Color.white);
+        nextButton.setOpaque(true);
+        nextButton.addActionListener(this);
+        blankButton = new JButton("Next");
+        blankButton.setOpaque(false);
+        frame.add(nextButton);
+        frame.add(blankButton);
         frame.setVisible(true);
-
-
     }
 
 
@@ -97,5 +117,119 @@ public class GameAppGraphics extends JFrame {
 
     }
 
+    public GameAppGraphics(List<Players> starters, List<Players> roster, String enemyTeam) {
+        setUp(starters, roster, enemyTeam);
+        ball = new Ball();
+        game.decBall(ball);
+        game.setGameState("F", "F");
+        myGuI();
+        addTimer();
+    }
+
+    // MODIFIES: this, MyTeam, EnemyTeam, game
+    // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
+    public void setUp(List<Players> starters, List<Players> roster, String enemyTeam) {
+
+        if (enemyTeam.equals("Strong Team")) {
+            strongTeam = (EnemyTeam) enemyTeamConstructor("Strong team", strongMB1, strongMB2, strongSet,
+                    strongOP, strongOH1, strongOH2, 2);
+        } else {
+            weakTeam = (EnemyTeam) enemyTeamConstructor("Weak team", weakMB1, weakMB2, weakSet,
+                    weakOP, weakOH1, weakOH2, 5);
+        }
+
+        //myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
+        myTeam = myTeamConstructor(starters, roster);
+
+
+        game = new Game(myTeam, this.enemyTeam);
+        game.getMyTeam().startPosNoServe();
+        gameData = new GameData(game);
+        jsonWriter = new JsonWriter(JSON_STORE);
+
+
+    }
+
+    public Team enemyTeamConstructor(String name, Players mb1, Players mb2,
+                                     Players set, Players op, Players oh1,
+                                     Players oh2, int chance) {
+        set = new Setters(1, 0);
+        mb1 = new MiddleBlockers(2, 0);
+        oh1 = new OutsideHitter(3, 0);
+        op = new OppositeHitter(4, 0);
+        mb2 = new MiddleBlockers(5, 0);
+        oh2 = new OutsideHitter(6, 0);
+
+        EnemyTeam e;
+        e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
+        e.setChance(chance);
+        enemyTeam = e;
+
+        return e; // May cause errors with subtypes
+
+    }
+
+    private Team myTeamConstructor(List<Players> starters, List<Players> roster) {
+        String name = "My Team";
+
+        roster.get(0).setRotation(1);
+        roster.get(1).setRotation(2);
+        roster.get(2).setRotation(3);
+        roster.get(3).setRotation(4);
+        roster.get(4).setRotation(5);
+        roster.get(5).setRotation(6);
+
+        MyTeam m;
+        m = new MyTeam(roster, name);
+        m.startPosNoServe();
+
+        return m; // May cause errors with subtypes
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+
+    private void addTimer() {
+        timer = new Timer(INTERVAL, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                game.update();
+                court.repaint();
+
+            }
+        });
+
+        timer.start();
+    }
 
 }
