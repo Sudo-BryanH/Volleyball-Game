@@ -219,16 +219,18 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     public void changeState() {
         if (game.getGameState1().equals("N") && game.getGameState0().equals("N")) { // ONLY at the start of a game
             game.setGameState("S", "SN");
-            printer("Let's being the game", Color.BLACK);
-        } else if (game.getGameState1().equals("S") && game.getGameState0().equals("SN")) {
-            printer("Our serving", Color.BLACK);
+            printer("Let's begin the game", Color.BLACK);
             game.makeServe();
+            printer("Ball passed to Setter", Color.BLACK);
+        } else if (game.getGameState1().equals("S") && game.getGameState0().equals("SN")) {
+            printer("Our serve", Color.BLACK);
+            game.receive();
             game.setGameState("A", "D");
+            printer("Ball passed to Setter", Color.BLACK);
         } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
             printer("Opponent serving", Color.BLACK);
-            game.makeServe();
-            game.setGameState("D", "A");
             game.receive();
+            game.setGameState("D", "A");
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
             endMyAttack();
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
@@ -239,6 +241,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         game.adjustPos0();
 
     }
+
+
 
     // MODIFIES: this, game
     // EFFECTS: determines if enemy scored. If not, continue match
@@ -252,6 +256,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         } else {
             printer("You have received your opponent's attack.", new Color(40, 71, 82));
             game.endRally(1);
+            game.receive();
             game.setGameState("D", "A");
         }
     }
@@ -267,6 +272,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.setGameState("SN", "S");
         } else {
             printer("Your opponent has received your attack.", new Color(40, 71, 82));
+            game.receive();
             game.setGameState("A", "D");
         }
 
@@ -294,6 +300,18 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         }
 
+    }
+
+    private void sleepThread(int s) {
+
+        for (int i = 0; i < s; i++) {
+            try {
+                System.out.println(s - i);
+                Thread.sleep(i * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void addTimer() {

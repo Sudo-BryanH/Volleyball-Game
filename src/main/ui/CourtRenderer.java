@@ -228,13 +228,13 @@ public class CourtRenderer extends JPanel implements ActionListener {
     public void makeServeButtons() {
         if (game.getGameState1().equals("S")) {
             one = new JButton("1");
-            one.setBounds(9 * 30, (3 * 30) + 100, 100, 100);
+            one.setBounds(9 * 30, (3 * 30) + 100, 20, 20);
             one.setBackground(Color.GREEN);
             one.addActionListener(this);
             one.setOpaque(true);
             add(one);
             zero = new JButton("0");
-            zero.setBounds(3 * 30, (3 * 30) + 100, 100, 100);
+            zero.setBounds(3 * 30, (3 * 30) + 100, 20, 20);
             zero.setBackground(Color.GREEN);
             zero.setOpaque(true);
             zero.addActionListener(this);
@@ -252,7 +252,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
         g.setFont(new Font("Quicksand", 20, 12));
         playersSetup(g);
         ballSetup(g);
-        makeServeButtons();
+        //makeServeButtons();
 
 
     }

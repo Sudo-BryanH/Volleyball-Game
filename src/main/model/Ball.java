@@ -117,12 +117,12 @@ public class Ball {
         }
     }
 
-    /*
+
     public boolean getMoveState() {
         return moveState;
     }
 
-     */
+
 
 
 
