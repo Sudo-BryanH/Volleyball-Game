@@ -152,7 +152,7 @@ public class DeclarePlayers implements ActionListener {
 
         textArea = new JTextArea();
         textArea.setForeground(Color.BLACK);
-        textArea.append("Give each player a non-negative number and choose an enemy");
+        textArea.setText("Give each player a non-negative number and choose an enemy");
 
         textArea.setBounds(10, 370, 380, 100);
         textArea.setBackground(Color.lightGray);
@@ -197,35 +197,35 @@ public class DeclarePlayers implements ActionListener {
         if (e.getSource() == set) {
             int num = parseInt(set.getText().substring("Choose the Setter's Number: ".length(), set.getText().length()));
             setter.declareNum(num);
-            textArea.append("\n Your setter's number is: " + setter.getNum());
+            textArea.setText("\n Your setter's number is: " + setter.getNum());
         } else if (e.getSource() == mid1) {
             int num = parseInt(mid1.getText().substring("Choose the first Middle Blocker's Number: ".length(), mid1.getText().length()));
             middle1.declareNum(num);
-            textArea.append("\n Your first middle's number is: " + middle1.getNum());
+            textArea.setText("\n Your first middle's number is: " + middle1.getNum());
         } else if (e.getSource() == mid2) {
             int num = parseInt(mid2.getText().substring("Choose the second Middle Blocker's Number: ".length(), mid2.getText().length()));
             middle2.declareNum(num);
-            textArea.append("\n Your second middle's number is: " + middle2.getNum());
+            textArea.setText("\n Your second middle's number is: " + middle2.getNum());
         } else if (e.getSource() == oh1) {
             int num = parseInt(oh1.getText().substring("Choose the first Outside Hitter's Number: ".length(), oh1.getText().length()));
             outside1.declareNum(num);
-            textArea.append("\n Your first outside's number is: " + outside1.getNum());
+            textArea.setText("\n Your first outside's number is: " + outside1.getNum());
         } else if (e.getSource() == oh2) {
             int num = parseInt(oh2.getText().substring("Choose the second Outside Hitter's Number: ".length(), oh2.getText().length()));
             outside2.declareNum(num);
-            textArea.append("\n Your second outside's number is: " + outside2.getNum());
+            textArea.setText("\n Your second outside's number is: " + outside2.getNum());
         } else if (e.getSource() == op) {
             int num = parseInt(op.getText().substring("Choose the Opposite Hitter's Number: ".length(), op.getText().length()));
             opposite.declareNum(num);
-            textArea.append("\n Your opposite's number is: " + opposite.getNum());
+            textArea.setText("\n Your opposite's number is: " + opposite.getNum());
         }
 
         if (e.getSource() == strongTeam) {
             this.enemyTeam = "Strong Team";
-            textArea.append("\n You have chosen to play the strong team");
+            textArea.setText("\n You have chosen to play the strong team");
         } else if (e.getSource() == weakTeam) {
             this.enemyTeam = "Weak Team";
-            textArea.append("\n You have chosen to play the weak team");
+            textArea.setText("\n You have chosen to play the weak team");
         }
     }
 

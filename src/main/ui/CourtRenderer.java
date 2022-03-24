@@ -22,7 +22,7 @@ public class CourtRenderer extends JPanel {
         this.game = game;
 
 
-        setPreferredSize(new Dimension(360, 920));
+        setPreferredSize(new Dimension(360, 820));
         setBackground(Color.WHITE);
         setOpaque(true);
 
@@ -192,13 +192,12 @@ public class CourtRenderer extends JPanel {
 
         g.setColor(new Color(0, 181, 226));
         g.fillRect(0, 0, 360, 100);
-        g.setColor(new Color(0, 181, 226));
-        g.fillRect(0, 820, 360, 100);
+/*        g.setColor(new Color(0, 181, 226));
+        g.fillRect(0, 820, 360, 100);*/
 
     }
 
     public void scoreBoardAndGrid(Graphics g) {
-
 
         for (int i = 0; i <= 24; i++) {
             g.setColor(Color.lightGray);
@@ -218,8 +217,6 @@ public class CourtRenderer extends JPanel {
         g.setFont(new Font("Monospaced Bold", 20, 20));
         g.drawString(game.getScore(), 10, 30);
 
-
-
     }
 
 
@@ -232,8 +229,6 @@ public class CourtRenderer extends JPanel {
         playersSetup(g);
         ballSetup(g);
 
-        revalidate();
-        repaint();
 
     }
 

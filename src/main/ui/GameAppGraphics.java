@@ -5,11 +5,13 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -36,12 +38,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     Players strongOH1;
     Players strongOH2;
     Players strongOP;
-    Players myMB1;
-    Players myMB2;
-    Players mySet;
-    Players myOP;
-    Players myOH1;
-    Players myOH2;
     EnemyTeam enemyTeam;
     Ball ball;
     int turn;
@@ -58,10 +54,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     GameData gameData;
     private static final String JSON_STORE = "./data/mostRecentGameData.json";
     private static final int INTERVAL = 42;
-    private int pressX;
-    private int pressY;
-    JButton nextButton;
-    private JButton blankButton;
+    private JButton nextButton;
+    private JTextArea instructions;
+    private JButton quitButton;
+    private JButton changePlayerButton;
 
 
     public GameAppGraphics() {
@@ -74,24 +70,52 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    public GameAppGraphics(List<Players> starters, List<Players> roster, String enemyTeam) {
+        setUp(starters, roster, enemyTeam);
+        ball = new Ball();
+        game.decBall(ball);
+        game.setGameState("F", "F");
+        myGuI();
+        addTimer();
+    }
+
     private void myGuI() {
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setSize(360 * 2, 920);
+        setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         court = new CourtRenderer(game);
-        frame.add(court);
-        frame.pack();
-        frame.addMouseListener(this);
+        addMouseListener(this);
         game.setGameState("F", "F");
         nextButton = new JButton("Next");
-        nextButton.setBounds(300, 870, 50, 20);
-        nextButton.setBackground(Color.white);
+        nextButton.setPreferredSize(new Dimension(360, 100));
+        nextButton.setBackground(new Color(30, 144, 255));
         nextButton.setOpaque(true);
         nextButton.addActionListener(this);
-        blankButton = new JButton("Next");
-        blankButton.setOpaque(false);
-        frame.add(nextButton);
-        frame.add(blankButton);
-        frame.setVisible(true);
+        instructions = new JTextArea();
+        instructions.setPreferredSize(new Dimension(350, 810));
+        instructions.setBackground(Color.lightGray);
+        instructions.setOpaque(true);
+        instructions.setText("Welcome to the Volleyball Game. \nFollow the instructions onscreen.");
+        quitButton = new JButton("Quit & Save");
+        quitButton.setPreferredSize(new Dimension(180, 100));
+        quitButton.setBackground(Color.RED);
+        quitButton.setOpaque(true);
+        quitButton.addActionListener(this);
+        changePlayerButton = new JButton("Switch Players");
+        changePlayerButton.setPreferredSize(new Dimension(180, 100));
+        changePlayerButton.setBackground(Color.WHITE);
+        changePlayerButton.setOpaque(true);
+        changePlayerButton.addActionListener(this);
+        add(court);
+        add(instructions);
+        add(nextButton);
+        add(changePlayerButton);
+        add(quitButton);
+
+        //pack();
+        setVisible(true);
     }
 
 
@@ -117,14 +141,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    public GameAppGraphics(List<Players> starters, List<Players> roster, String enemyTeam) {
-        setUp(starters, roster, enemyTeam);
-        ball = new Ball();
-        game.decBall(ball);
-        game.setGameState("F", "F");
-        myGuI();
-        addTimer();
-    }
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
     // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
@@ -187,9 +203,57 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes instruction text to message in color
+    public void printer(String message, Color color) {
+        instructions.setForeground(color);
+        instructions.setText(message);
+    }
+
+    public void changeState() {
+
+    }
+
+
+    // EFFECTS: end game and saves data
+    private void quit() {
+        save();
+        System.exit(0);
+    }
+
+    // EFFECTS: determines if the player wants to save. If yes, save game data
+    private void save() {
+
+        try {
+
+            jsonWriter = new JsonWriter(JSON_STORE);
+            jsonWriter.open();
+            jsonWriter.write(gameData);
+            jsonWriter.close();
+            printer("Saved data to " + JSON_STORE, Color.RED);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+
+        }
+
+    }
+
+    private void addTimer() {
+        timer = new Timer(INTERVAL, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                game.update();
+                court.repaint();
+
+            }
+        });
+
+        timer.start();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        printer("You've clicked at (" + e.getX() + " ," + e.getY() + ")", new Color(21, 71, 52));
 
     }
 
@@ -215,21 +279,12 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == quitButton) {
+            quit();
+        } else if (e.getSource() == nextButton) {
+            changeState();
+        }
 
-    }
-
-
-    private void addTimer() {
-        timer = new Timer(INTERVAL, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                game.update();
-                court.repaint();
-
-            }
-        });
-
-        timer.start();
     }
 
 }
