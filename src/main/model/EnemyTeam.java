@@ -124,7 +124,7 @@ public class EnemyTeam implements Team {
     // MODIFIES: player positions
     // EFFECTS: moves the players into formation for receiving opponent serves
     @Override
-    public void startPosNoServe() {
+    public void ServeReceivePos() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
                 p.directMoveX(2);

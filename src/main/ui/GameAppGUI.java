@@ -123,7 +123,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         this.myTeam = gameData.getMyTeam();
         game.setEnemyTeam(enemyTeam);
         game.setMyTeam(myTeam);
-        game.getMyTeam().startPosNoServe();
+        game.getMyTeam().ServeReceivePos();
         game.getEnemyTeam().startPosServe();
 
     }
@@ -146,7 +146,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
 
         game = new Game(myTeam, this.enemyTeam);
-        game.getMyTeam().startPosNoServe();
+        game.getMyTeam().ServeReceivePos();
         gameData = new GameData(game);
         jsonWriter = new JsonWriter(JSON_STORE);
         beginGame();
@@ -173,7 +173,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
         MyTeam m;
         m = new MyTeam(roster, name);
-        m.startPosNoServe();
+        m.ServeReceivePos();
 
         return m; // May cause errors with subtypes
 
@@ -279,9 +279,9 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
         if (state.equals("start")) {
             if (turn == 0) {
                 enemyTeam.startPosServe();
-                myTeam.startPosNoServe();
+                myTeam.ServeReceivePos();
             } else if (turn == 1) {
-                enemyTeam.startPosNoServe();
+                enemyTeam.ServeReceivePos();
                 myTeam.startPosServe();
             }
         }
@@ -801,7 +801,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
             System.out.println("You will now be playing against the weak team");
         }
 
-        enemyTeam.startPosNoServe();
+        enemyTeam.ServeReceivePos();
 
         enemyTeam.changeRotation();
         enemyTeam.changeRotation();

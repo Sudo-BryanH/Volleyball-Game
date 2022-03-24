@@ -2,6 +2,7 @@ package model;
 
 // Game class. Information about the game such as score and turn are stored here.
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -207,7 +208,7 @@ public class Game {
     public void adjustPos1() {
         switch (gameState1) {
             case "SN":
-                myTeam.startPosNoServe();
+                myTeam.ServeReceivePos();
                 break;
             case "S":
                 myTeam.startPosServe();
@@ -227,14 +228,14 @@ public class Game {
                 }
                 break;
             default:
-                myTeam.startPosNoServe();
+                myTeam.ServeReceivePos();
         }
     }
 
     public void adjustPos0() {
         switch (gameState0) {
             case "SN":
-                enemyTeam.startPosNoServe();
+                enemyTeam.ServeReceivePos();
                 break;
             case "S":
                 enemyTeam.startPosServe();
@@ -254,7 +255,7 @@ public class Game {
                 }
                 break;
             default:
-                enemyTeam.startPosNoServe();
+                enemyTeam.ServeReceivePos();
         }
     }
 
@@ -268,7 +269,7 @@ public class Game {
                     p.serve(servePos, ball);
                 }
             }
-        } else if (gameState0.equals("D")) {
+        } else if (gameState0.equals("S")) {
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
                     p.serve(chance, ball);
@@ -283,6 +284,69 @@ public class Game {
 
     public void setServePos(int s) {
         servePos = s;
+    }
+
+    // REQUIRES: checkReceive = true
+    // EFFECTS: finds the player that receives it and has the player receive it
+    public void receive() {
+
+        if (gameState0.equals("D") || gameState0.equals("SN")) {
+            for (Players p : enemyTeam.getStarters()) {
+                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
+                        (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                    p.receive(ball);
+                }
+            }
+
+        } else if (gameState1.equals("D") || gameState1.equals("SN")) {
+            for (Players p : myTeam.getStarters()) {
+                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
+                        (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                    p.receive(ball);
+                }
+            }
+
+        }
+    }
+
+    // EFFECTS: Returns whether team on defence let the ball drop
+    public boolean checkScore() {
+        List<Players> backrow = new ArrayList<>();
+        boolean check = false;
+        if (gameState0.equals("D")) {
+            for (Players p : enemyTeam.getStarters()) {
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    backrow.add(p);
+                }
+            }
+            check = !checkReceive(ball.getMoveToXPos(), ball.getMoveToYPos(), backrow);
+        } else if (gameState1.equals("D")) {
+            for (Players p : myTeam.getStarters()) {
+                if (p.getRotation() == 1 || p.getRotation() == 2 || p.getRotation() == 3) {
+                    backrow.add(p);
+                }
+            }
+            check = !checkReceive(ball.getMoveToXPos(), ball.getMoveToYPos(), backrow);
+        }
+
+        return check;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Ends the rally and resets the ball and players
+    public void endRally(int side) {
+        if (side == 0) {
+
+            enemyScore();
+            enemyTeam.changeRotation();
+            ball.moveToX(0);
+            ball.moveToY(0);
+        } else {
+            myScore();
+            myTeam.changeRotation();
+            ball.moveToX(12);
+            ball.moveToY(24);
+        }
     }
 }
 

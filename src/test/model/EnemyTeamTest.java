@@ -131,7 +131,7 @@ public class EnemyTeamTest {
     @Test
     public void testStartNoServe(){
 
-        testTeam.startPosNoServe();
+        testTeam.ServeReceivePos();
         assertEquals(2, testSet.getPosX());
         assertEquals(5, testSet.getPosY());
         assertEquals(6, testMB1.getPosX());
@@ -146,7 +146,7 @@ public class EnemyTeamTest {
         assertEquals(10, testOH2.getPosY());
 
         testTeam.changeRotation();
-        testTeam.startPosNoServe();
+        testTeam.ServeReceivePos();
         assertEquals(2, testOH2.getPosX());
         assertEquals(5, testOH2.getPosY());
         assertEquals(6, testSet.getPosX());

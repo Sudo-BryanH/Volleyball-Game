@@ -5,7 +5,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,7 +97,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         instructions.setPreferredSize(new Dimension(350, 810));
         instructions.setBackground(Color.lightGray);
         instructions.setOpaque(true);
-        instructions.setText("Welcome to the Volleyball Game. \nFollow the instructions onscreen.");
+        printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
         quitButton = new JButton("Quit & Save");
         quitButton.setPreferredSize(new Dimension(180, 100));
         quitButton.setBackground(Color.RED);
@@ -137,7 +136,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         this.myTeam = gameData.getMyTeam();
         game.setEnemyTeam(enemyTeam);
         game.setMyTeam(myTeam);
-        game.getMyTeam().startPosNoServe();
+        game.getMyTeam().ServeReceivePos();
         game.getEnemyTeam().startPosServe();
 
     }
@@ -160,7 +159,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
 
         game = new Game(myTeam, enemyTeam);
-        game.getMyTeam().startPosNoServe();
+        game.getMyTeam().ServeReceivePos();
         game.getEnemyTeam().startPosServe();
         gameData = new GameData(game);
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -199,7 +198,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         MyTeam m;
         m = new MyTeam(roster, name);
-        m.startPosNoServe();
+        m.ServeReceivePos();
 
         return m; // May cause errors with subtypes
 
@@ -208,27 +207,68 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // MODIFIES: this
     // EFFECTS: changes instruction text to message in color
     public void printer(String message, Color color) {
+        instructions.setForeground(Color.black);
+        instructions.setText("Game State for our team: " + game.getGameState1());
+        instructions.append("\nGame State for opponent team: " + game.getGameState0());
         instructions.setForeground(color);
-        instructions.setText(message);
+        instructions.append("\n" + message);
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, game
     // EFFECTS: changes the state of the game. Also decides whether to continue or end the game.
     public void changeState() {
         if (game.getGameState1().equals("N") && game.getGameState0().equals("N")) { // ONLY at the start of a game
             game.setGameState("S", "SN");
+            printer("Let's being the game", Color.BLACK);
         } else if (game.getGameState1().equals("S") && game.getGameState0().equals("SN")) {
-            game.makeServe();
-            game.setGameState("D", "A");
-        } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
+            printer("Our serving", Color.BLACK);
             game.makeServe();
             game.setGameState("A", "D");
+        } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
+            printer("Opponent serving", Color.BLACK);
+            game.makeServe();
+            game.setGameState("D", "A");
+            game.receive();
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
-            //checkReceive();
+            endMyAttack();
+        } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
+            endMyDefence();
         }
 
         game.adjustPos1();
         game.adjustPos0();
+
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: determines if enemy scored. If not, continue match
+    private void endMyDefence() {
+        Boolean scored = game.checkScore();
+
+        if (scored) {
+            printer("Your Opponent has scored.", Color.RED);
+            game.endRally(0);
+            game.setGameState("S", "SN");
+        } else {
+            printer("You have received your opponent's attack.", new Color(40, 71, 82));
+            game.endRally(1);
+            game.setGameState("D", "A");
+        }
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: determines if we scored. If not, continue match
+    private void endMyAttack() {
+        Boolean scored = game.checkScore();
+
+        if (scored) {
+            printer("Your team has scored.", Color.red);
+            game.endRally(1);
+            game.setGameState("SN", "S");
+        } else {
+            printer("Your opponent has received your attack.", new Color(40, 71, 82));
+            game.setGameState("A", "D");
+        }
 
     }
 
