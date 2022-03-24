@@ -120,6 +120,12 @@ public class OppositeHitter implements Players {
 
     }
 
+    @Override
+    public void spike(Point point, Ball ball) {
+        ball.moveToX((int) point.getX());
+        ball.moveToY((int) point.getY());
+    }
+
     // MODIFIES: ball object
     // EFFECTS: Moves ball to (8, 14) or (4, 8) depending on side
     @Override

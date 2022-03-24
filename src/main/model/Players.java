@@ -28,6 +28,8 @@ public interface Players {
     // EFFECTS: Sends the ball at a given speed to position (x, y) depending on the direction
     public void spike(int dir, Ball ball);
 
+    public void spike(Point point, Ball ball);
+
     // MODIFIES: ball object (list non paramenter?)
     // EFFECTS: Sends the ball at a given speed to setter's position (x, y)
     public void receive(Ball ball);

@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
 
 public class CourtRenderer extends JPanel implements ActionListener {
 
@@ -68,7 +67,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
 
 
             if ((game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter"))
-                    || p == game.getSelected()) {
+                    || p == game.getAttackSelect()) {
                 g.setColor(Color.green);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
             } else {
@@ -82,7 +81,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
             g.setFont(new Font("Monospaced Bold", 20, 20));
             g.drawString("" + num, x - 10, y + 10);
             g.setFont(new Font("Quicksand", 20, 12));
-            if (p == game.getSelected()) {
+            if (p == game.getAttackSelect()) {
                 drawPossibleAttacks(g, p, Color.GREEN);
                 paintHalos(g, 1, p);
             }

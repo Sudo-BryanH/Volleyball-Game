@@ -2,6 +2,7 @@ package model;
 
 // Game class. Information about the game such as score and turn are stored here.
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,9 @@ public class Game {
     private Ball ball;
     private String gameState1; // D for defence, SN for startNoServe, A for set and attack, S for serve
     private String gameState0;
-    Players selected;
+    Players attackSelect;
     private int servePos;
+    private Point attackPoint;
 
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
@@ -191,16 +193,16 @@ public class Game {
         this.gameState0 = state0;
     }
 
-    public void setSelected(Players p) {
-        this.selected = p;
+    public void setAttackSelect(Players p) {
+        this.attackSelect = p;
     }
 
-    public Players getSelected() {
-        return this.selected;
+    public Players getAttackSelect() {
+        return this.attackSelect;
     }
 
     public void removeSelected() {
-        this.selected = null;
+        this.attackSelect = null;
     }
 
     // MODIFIES: this
@@ -349,29 +351,65 @@ public class Game {
         }
     }
 
-    public void chooseAttack(int x, int y) {
-        if (y >= 460 && y <= 520) {
-            if (x <= 90) {
-                for (Players p : myTeam.getStarters()) {
-                    if (p.getShortPos().equals("OH") && p.getRotation() >= 4) {
-                        setSelected(p);
-                    }
-                }
-            } else if (x >= 150 && x <= 210) {
-                for (Players p : myTeam.getStarters()) {
-                    if (p.getShortPos().equals("MB") && p.getRotation() >= 4) {
-                        setSelected(p);
-                    }
-                }
-            } else if (x >= 300) {
-                for (Players p : myTeam.getStarters()) {
-                    if (p.getShortPos().equals("OP") && p.getRotation() >= 4) {
-                        setSelected(p);
-                    }
-                }
-
+    public String chooseAttack(int x, int y) {
+        if (y > 460 && y <= 520) {
+            if (chooseSet(x) != null) {
+                attackPoint = null;
+                return "You've chosen to set to the " + chooseSet(x) + ". \nClick a green target to attack.";
+            } else {
+                return "Click a hitter in green.";
             }
+        } else if (y < 460) {
+            if (attackSelect != null) {
+                if (chooseAttackPos(x, y, attackSelect) != null) {
+                    return "Player #" + attackSelect.getNum() + " will spike to the "
+                            + chooseAttackPos(x, y, attackSelect) + ". \n Press next to continue. ";
+                } else {
+                    return "Click a proper target to choose an attack then press next.";
+                }
+            }
+
         }
+        return "Please click a hitter in green and click a displayed target";
+
+    }
+
+    private String chooseAttackPos(int x, int y, Players attackSelect) {
+        for (Point p : attackSelect.getAttackPoints(1)) {
+            if (Math.abs(p.getX() * 30 - x) < 40 && Math.abs((p.getY() * 30) + 100 - y) < 40) {
+                attackPoint = p;
+                return "(" + p.getX() + " , " + p.getY() + ")";
+            }
+
+        }
+        return null;
+    }
+
+    private String chooseSet(int x) {
+        String message = null;
+        if (x <= 90) {
+            for (Players p : myTeam.getStarters()) {
+                message = declareSelected("left", p, "OH");
+            }
+        } else if (x >= 150 && x <= 210) {
+            for (Players p : myTeam.getStarters()) {
+                message = declareSelected("middle", p, "MB");
+            }
+        } else if (x >= 300) {
+            for (Players p : myTeam.getStarters()) {
+                message = declareSelected("right", p, "OP");
+            }
+
+        }
+
+        return message;
+    }
+
+    private String declareSelected(String dir, Players p, String match) {
+        if (p.getShortPos().equals(match) && p.getRotation() >= 4) {
+            setAttackSelect(p);
+        }
+        return dir;
     }
 }
 

@@ -321,7 +321,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     public void mouseClicked(MouseEvent e) {
         printer("You've clicked at (" + e.getX() + " ," + e.getY() + ")", new Color(21, 71, 52));
         if (game.getGameState1().equals("A")) {
-            game.chooseAttack(e.getX(), e.getY());
+            printer(game.chooseAttack(e.getX(), e.getY()), Color.BLACK);
         }
     }
 

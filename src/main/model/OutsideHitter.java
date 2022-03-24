@@ -105,6 +105,12 @@ public class OutsideHitter implements Players {
 
     }
 
+    @Override
+    public void spike(Point point, Ball ball) {
+        ball.moveToX((int) point.getX());
+        ball.moveToY((int) point.getY());
+    }
+
     // EFFECTS: moves the ball to location [8, 14] or [4, 8] for enemy
     @Override
     public void receive(Ball ball) {

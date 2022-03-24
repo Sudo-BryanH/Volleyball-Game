@@ -595,7 +595,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
             if (p.getRotation() >= 4) {
 
-                game.setSelected(p);
+                game.setAttackSelect(p);
 
                 sleepThread(5);
 
@@ -609,7 +609,7 @@ public class GameAppGUI extends JFrame implements EventListener, ActionListener,
 
             } else if (!p.getPlayingPosition().equals("Setter")) {
 
-                game.setSelected(p);
+                game.setAttackSelect(p);
 
 
                 sleepThread(5);
