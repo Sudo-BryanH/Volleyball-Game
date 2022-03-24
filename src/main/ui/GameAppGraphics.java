@@ -233,7 +233,11 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.setGameState("D", "A");
             printer("Ball passed to Setter", Color.BLACK);
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
-            endMyAttack();
+            if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
+                game.mySet();
+                game.myAttack();
+                endMyAttack();
+            }
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
             endMyDefence();
         }
