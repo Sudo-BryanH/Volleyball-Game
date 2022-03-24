@@ -6,9 +6,11 @@ import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 
-public class CourtRenderer extends JPanel {
+public class CourtRenderer extends JPanel implements ActionListener {
 
 
     Game game;
@@ -16,6 +18,8 @@ public class CourtRenderer extends JPanel {
 
     static int P_TRANS = -15;
     static int B_TRANS = -25;
+    JButton one;
+    JButton zero;
 
     public CourtRenderer(Game game) {
 
@@ -219,6 +223,26 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: places buttons to allow users to choose where to serve
+    public void makeServeButtons() {
+        if (game.getGameState1().equals("S")) {
+            one = new JButton("1");
+            one.setBounds(9 * 30, (3 * 30) + 100, 100, 100);
+            one.setBackground(Color.GREEN);
+            one.addActionListener(this);
+            one.setOpaque(true);
+            add(one);
+            zero = new JButton("0");
+            zero.setBounds(3 * 30, (3 * 30) + 100, 100, 100);
+            zero.setBackground(Color.GREEN);
+            zero.setOpaque(true);
+            zero.addActionListener(this);
+            add(zero);
+        }
+
+    }
+
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -228,10 +252,19 @@ public class CourtRenderer extends JPanel {
         g.setFont(new Font("Quicksand", 20, 12));
         playersSetup(g);
         ballSetup(g);
+        makeServeButtons();
 
 
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == one) {
+            game.setServePos(1);
+        } else if (e.getSource() == zero) {
+            game.setServePos(0);
+        }
 
+    }
 }

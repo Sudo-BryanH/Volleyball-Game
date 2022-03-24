@@ -1,52 +1,52 @@
 {
-    "enemyTeamChance": 5,
+    "enemyTeamChance": 2,
     "enemyTeam": [
         {
             "side": 0,
-            "rotation": 5,
+            "rotation": 1,
             "playingPosition": "Setter",
             "playerNum": 1
         },
         {
             "side": 0,
-            "rotation": 6,
+            "rotation": 2,
             "playingPosition": "Middle Blocker",
             "playerNum": 2
         },
         {
             "side": 0,
-            "rotation": 1,
+            "rotation": 3,
             "playingPosition": "Outside Hitter",
             "playerNum": 3
         },
         {
             "side": 0,
-            "rotation": 2,
+            "rotation": 4,
             "playingPosition": "Opposite Hitter",
             "playerNum": 4
         },
         {
             "side": 0,
-            "rotation": 3,
+            "rotation": 5,
             "playingPosition": "Middle Blocker",
             "playerNum": 5
         },
         {
             "side": 0,
-            "rotation": 4,
+            "rotation": 6,
             "playingPosition": "Outside Hitter",
             "playerNum": 6
         }
     ],
-    "enemyScore": 1,
-    "myScore": 6,
-    "enemyName": "weak team",
+    "enemyScore": 0,
+    "myScore": 0,
+    "enemyName": "Strong team",
     "myTeam": [
         {
             "side": 1,
             "rotation": 1,
             "playingPosition": "Setter",
-            "playerNum": 1
+            "playerNum": 7
         },
         {
             "side": 1,
@@ -58,32 +58,26 @@
             "side": 1,
             "rotation": 3,
             "playingPosition": "Outside Hitter",
-            "playerNum": 3
+            "playerNum": 4
         },
         {
             "side": 1,
             "rotation": 4,
             "playingPosition": "Opposite Hitter",
-            "playerNum": 4
+            "playerNum": 11
         },
         {
             "side": 1,
             "rotation": 5,
             "playingPosition": "Middle Blocker",
-            "playerNum": 5
+            "playerNum": 10
         },
         {
             "side": 1,
             "rotation": 6,
             "playingPosition": "Outside Hitter",
-            "playerNum": 6
-        },
-        {
-            "side": 1,
-            "rotation": 0,
-            "playingPosition": "Opposite Hitter",
-            "playerNum": 16
+            "playerNum": 5
         }
     ],
-    "myName": "Some"
+    "myName": "My Team"
 }

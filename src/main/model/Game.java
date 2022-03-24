@@ -17,7 +17,7 @@ public class Game {
     private String gameState1; // D for defence, SN for startNoServe, A for attack
     private String gameState0;
     Players selected;
-
+    private int servePos;
 
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
@@ -29,6 +29,7 @@ public class Game {
         this.enemyTeam = enemyTeam;
         this.gameState1 = null;
         this.gameState0 = null;
+        this.servePos = 0;
     }
 
     public Game() {
@@ -42,7 +43,7 @@ public class Game {
     public String getScore() {
         String us = Integer.toString(myScore);
         String them = Integer.toString(enemyScore);
-        String score = myTeam.getName() + "| " + us + "| |"  + them + " |" +  enemyTeam.getName();
+        String score = myTeam.getName() + "| " + us + "| |" + them + " |" + enemyTeam.getName();
         return score;
     }
 
@@ -94,7 +95,6 @@ public class Game {
 
         return false;
     }
-
 
 
     // EFFECTS: returns the turn number
@@ -202,7 +202,88 @@ public class Game {
         this.selected = null;
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves players in myTeam to their positions according to gamestate
+    public void adjustPos1() {
+        switch (gameState1) {
+            case "SN":
+                myTeam.startPosNoServe();
+                break;
+            case "S":
+                myTeam.startPosServe();
+                break;
+            case "A":
+                if (myTeam.isSetterBack()) {
+                    myTeam.attackBSetter();
+                } else {
+                    myTeam.attackFSetter();
+                }
+                break;
+            case "D":
+                if (myTeam.isSetterBack()) {
+                    myTeam.defendBSetter();
+                } else {
+                    myTeam.defendFSetter();
+                }
+                break;
+            default:
+                myTeam.startPosNoServe();
+        }
+    }
 
+    public void adjustPos0() {
+        switch (gameState0) {
+            case "SN":
+                enemyTeam.startPosNoServe();
+                break;
+            case "S":
+                enemyTeam.startPosServe();
+                break;
+            case "A":
+                if (enemyTeam.isSetterBack()) {
+                    enemyTeam.attackBSetter();
+                } else {
+                    enemyTeam.attackFSetter();
+                }
+                break;
+            case "D":
+                if (enemyTeam.isSetterBack()) {
+                    enemyTeam.defendBSetter();
+                } else {
+                    enemyTeam.defendFSetter();
+                }
+                break;
+            default:
+                enemyTeam.startPosNoServe();
+        }
+    }
 
+    // MODIFIES: this
+    // EFFECTS: makes a serve based on the gamestate
+    public void makeServe() {
+        int chance = (int) (Math.random() * 2);
+        if (gameState1.equals("S")) {
+            for (Players p : myTeam.getStarters()) {
+                if (p.getRotation() == 1) {
+                    p.serve(servePos, ball);
+                }
+            }
+        } else if (gameState0.equals("D")) {
+            for (Players p : enemyTeam.getStarters()) {
+                if (p.getRotation() == 1) {
+                    p.serve(chance, ball);
+                }
+            }
+        }
+    }
 
+    public int getServePos() {
+        return servePos;
+    }
+
+    public void setServePos(int s) {
+        servePos = s;
+    }
 }
+
+

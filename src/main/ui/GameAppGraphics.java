@@ -58,6 +58,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     private JTextArea instructions;
     private JButton quitButton;
     private JButton changePlayerButton;
+    private int servePos;
 
 
     public GameAppGraphics() {
@@ -65,6 +66,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         instantiateGame();
         ball = new Ball();
         game.decBall(ball);
+        game.setGameState("N", "N");
         myGuI();
         addTimer();
 
@@ -74,7 +76,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         setUp(starters, roster, enemyTeam);
         ball = new Ball();
         game.decBall(ball);
-        game.setGameState("F", "F");
+        game.setGameState("N", "N");
         myGuI();
         addTimer();
     }
@@ -87,7 +89,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         court = new CourtRenderer(game);
         addMouseListener(this);
-        game.setGameState("F", "F");
         nextButton = new JButton("Next");
         nextButton.setPreferredSize(new Dimension(360, 100));
         nextButton.setBackground(new Color(30, 144, 255));
@@ -144,13 +145,13 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
     // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
-    public void setUp(List<Players> starters, List<Players> roster, String enemyTeam) {
+    public void setUp(List<Players> starters, List<Players> roster, String eTeam) {
 
-        if (enemyTeam.equals("Strong Team")) {
-            strongTeam = (EnemyTeam) enemyTeamConstructor("Strong team", strongMB1, strongMB2, strongSet,
+        if (eTeam.equals("Strong Team")) {
+            enemyTeamConstructor("Strong team", strongMB1, strongMB2, strongSet,
                     strongOP, strongOH1, strongOH2, 2);
         } else {
-            weakTeam = (EnemyTeam) enemyTeamConstructor("Weak team", weakMB1, weakMB2, weakSet,
+            enemyTeamConstructor("Weak team", weakMB1, weakMB2, weakSet,
                     weakOP, weakOH1, weakOH2, 5);
         }
 
@@ -158,15 +159,16 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         myTeam = myTeamConstructor(starters, roster);
 
 
-        game = new Game(myTeam, this.enemyTeam);
+        game = new Game(myTeam, enemyTeam);
         game.getMyTeam().startPosNoServe();
+        game.getEnemyTeam().startPosServe();
         gameData = new GameData(game);
         jsonWriter = new JsonWriter(JSON_STORE);
 
 
     }
 
-    public Team enemyTeamConstructor(String name, Players mb1, Players mb2,
+    public void enemyTeamConstructor(String name, Players mb1, Players mb2,
                                      Players set, Players op, Players oh1,
                                      Players oh2, int chance) {
         set = new Setters(1, 0);
@@ -180,8 +182,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
         e.setChance(chance);
         enemyTeam = e;
-
-        return e; // May cause errors with subtypes
+        //game.setEnemyTeam(e);
+        // May cause errors with subtypes
 
     }
 
@@ -210,7 +212,23 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         instructions.setText(message);
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the state of the game. Also decides whether to continue or end the game.
     public void changeState() {
+        if (game.getGameState1().equals("N") && game.getGameState0().equals("N")) { // ONLY at the start of a game
+            game.setGameState("S", "SN");
+        } else if (game.getGameState1().equals("S") && game.getGameState0().equals("SN")) {
+            game.makeServe();
+            game.setGameState("D", "A");
+        } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
+            game.makeServe();
+            game.setGameState("A", "D");
+        } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
+            //checkReceive();
+        }
+
+        game.adjustPos1();
+        game.adjustPos0();
 
     }
 
