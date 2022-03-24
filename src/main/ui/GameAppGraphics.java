@@ -231,6 +231,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             printer("Opponent serving", Color.BLACK);
             game.receive();
             game.setGameState("D", "A");
+            printer("Ball passed to Setter", Color.BLACK);
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
             endMyAttack();
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
@@ -302,17 +303,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    private void sleepThread(int s) {
-
-        for (int i = 0; i < s; i++) {
-            try {
-                System.out.println(s - i);
-                Thread.sleep(i * 1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private void addTimer() {
         timer = new Timer(INTERVAL, new ActionListener() {
@@ -330,8 +320,11 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     @Override
     public void mouseClicked(MouseEvent e) {
         printer("You've clicked at (" + e.getX() + " ," + e.getY() + ")", new Color(21, 71, 52));
-
+        if (game.getGameState1().equals("A")) {
+            game.chooseAttack(e.getX(), e.getY());
+        }
     }
+
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -362,5 +355,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         }
 
     }
+
 
 }

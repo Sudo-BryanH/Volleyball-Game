@@ -15,7 +15,7 @@ public class Game {
     protected static final int SCALE = 30;
     protected static final int Y_TRANS = 100;
     private Ball ball;
-    private String gameState1; // D for defence, SN for startNoServe, A for attack
+    private String gameState1; // D for defence, SN for startNoServe, A for set and attack, S for serve
     private String gameState0;
     Players selected;
     private int servePos;
@@ -35,8 +35,8 @@ public class Game {
 
     public Game() {
         this.turn = 0;
-        this.gameState1 = "F";
-        this.gameState0 = "F";
+        this.gameState1 = "N";
+        this.gameState0 = "N";
     }
 
 
@@ -346,6 +346,31 @@ public class Game {
             myTeam.changeRotation();
             ball.moveToX(12);
             ball.moveToY(24);
+        }
+    }
+
+    public void chooseAttack(int x, int y) {
+        if (y >= 460 && y <= 520) {
+            if (x <= 90) {
+                for (Players p : myTeam.getStarters()) {
+                    if (p.getShortPos().equals("OH") && p.getRotation() >= 4) {
+                        setSelected(p);
+                    }
+                }
+            } else if (x >= 150 && x <= 210) {
+                for (Players p : myTeam.getStarters()) {
+                    if (p.getShortPos().equals("MB") && p.getRotation() >= 4) {
+                        setSelected(p);
+                    }
+                }
+            } else if (x >= 300) {
+                for (Players p : myTeam.getStarters()) {
+                    if (p.getShortPos().equals("OP") && p.getRotation() >= 4) {
+                        setSelected(p);
+                    }
+                }
+
+            }
         }
     }
 }

@@ -66,13 +66,11 @@ public class CourtRenderer extends JPanel implements ActionListener {
             int num = p.getNum();
             String pos = p.getShortPos();
 
-            paintHalos(g, 1, p);
 
             if ((game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter"))
                     || p == game.getSelected()) {
                 g.setColor(Color.green);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                drawPossibleAttacks(g, p);
             } else {
                 g.setColor(new Color(46, 196, 182));
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
@@ -84,6 +82,10 @@ public class CourtRenderer extends JPanel implements ActionListener {
             g.setFont(new Font("Monospaced Bold", 20, 20));
             g.drawString("" + num, x - 10, y + 10);
             g.setFont(new Font("Quicksand", 20, 12));
+            if (p == game.getSelected()) {
+                drawPossibleAttacks(g, p, Color.GREEN);
+                paintHalos(g, 1, p);
+            }
         }
     }
 
@@ -133,7 +135,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
                 g.drawString(pos, x, (y + P_TRANS));
                 g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
-                drawPossibleAttacks(g, p);
+                drawPossibleAttacks(g, p, Color.RED);
             } else {
                 g.setColor(Color.darkGray);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
@@ -150,12 +152,13 @@ public class CourtRenderer extends JPanel implements ActionListener {
 
     }
 
-    private void drawPossibleAttacks(Graphics g, Players p) {
-
+    private void drawPossibleAttacks(Graphics g, Players p, Color color) {
+        g.setColor(color);
         for (Point point : p.getAttackPoints(p.getSide())) {
             int x = (int) point.getX() * 30;
             int y = (int) point.getY() * 30 + 100;
-            g.fillOval((int) x + P_TRANS, (int) (y + P_TRANS), 30, 30);
+            g.drawOval((int) x - 20, (int) (y - 20), 40, 40);
+            g.fillOval((int) x - 7, (int) (y - 7), 15, 15);
 
 
 
