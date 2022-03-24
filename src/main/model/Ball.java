@@ -18,7 +18,7 @@ public class Ball {
     // EFFECTS: constructs a ball object at x = 0, y = 0
     public Ball() {
         this.currentXPos = 0;
-        this.currentYPos = 0;
+        this.currentYPos = 100;
 
     }
 

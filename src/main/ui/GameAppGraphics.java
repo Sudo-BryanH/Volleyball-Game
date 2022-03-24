@@ -236,6 +236,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
                 game.mySet();
                 game.myAttack();
+                game.enemyDefend();
                 endMyAttack();
             }
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
@@ -280,6 +281,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.receive();
             game.setGameState("A", "D");
         }
+
+        game.setAttackPlayer(null);
+        game.setAttackPoint(null);
 
     }
 

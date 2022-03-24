@@ -12,7 +12,7 @@ public class Game {
     private int enemyScore;
     private int turn;
     private Team myTeam;
-    private Team enemyTeam;
+    private EnemyTeam enemyTeam;
     protected static final int SCALE = 30;
     protected static final int Y_TRANS = 100;
     private Ball ball;
@@ -24,7 +24,7 @@ public class Game {
 
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
-    public Game(Team myTeam, Team enemyTeam) {
+    public Game(Team myTeam, EnemyTeam enemyTeam) {
         this.myScore = 0;
         this.enemyScore = 0;
         this.turn = 0;
@@ -432,6 +432,26 @@ public class Game {
 
     public void myAttack() {
         attackPlayer.spike(attackPoint, ball);
+    }
+
+    public void enemyDefend() {
+        int multiplier = enemyTeam.getChance();
+        int chance = (int) (Math.random() * multiplier);
+        if (enemyTeam.isSetterBack()) {
+            enemyTeam.defendBSetter();
+        } else {
+            enemyTeam.defendFSetter();
+        }
+
+        if (chance == 1) {
+            for (Players p : enemyTeam.getStarters()) {
+                if (p.getRotation() <= 3 && !p.getShortPos().equals("S")) {
+                    p.moveToX((int) attackPoint.getX());
+                    p.moveToY((int) attackPoint.getY());
+                    break;
+                }
+            }
+        }
     }
 }
 
