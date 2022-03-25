@@ -269,7 +269,7 @@ public class Game {
         if (gameState1.equals("S")) {
             for (Players p : myTeam.getStarters()) {
                 if (p.getRotation() == 1) {
-                    p.serve(servePos, ball);
+                    p.serve(chance, ball);
                 }
             }
         } else if (gameState0.equals("S")) {
@@ -354,21 +354,23 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Chooses an attackPlayer or attackPoint based on where the cursor was
     public String chooseAttack(int x, int y) {
         if (y > 460 && y <= 520) {
             attackPlayer = null;
             if (chooseSet(x) != null) {
                 attackPoint = null;
-                mySet();
+                motionSet();
                 return "You've chosen to set to the " + chooseSet(x) + ". \nClick a green target to attack.";
             } else {
                 return "Click a hitter in green.";
             }
         } else if (y < 460) {
             if (attackPlayer != null) {
-                if (chooseAttackPos(x, y, attackPlayer) != null) {
+                if (chooseAttackPos(x, y) != null) {
                     return "Player #" + attackPlayer.getNum() + " will spike to the "
-                            + chooseAttackPos(x, y, attackPlayer) + ". \n Press next to continue. ";
+                            + chooseAttackPos(x, y) + ". \n Press next to continue. ";
                 } else {
                     return "Click a proper target to choose an attack then press next.";
                 }
@@ -379,8 +381,10 @@ public class Game {
 
     }
 
-    private String chooseAttackPos(int x, int y, Players attackSelect) {
-        for (Point p : attackSelect.getAttackPoints(1)) {
+    // MODIFIES: this
+    // EFFECTS: Chooses an attackPoint where attackPlayer should hit
+    private String chooseAttackPos(int x, int y) {
+        for (Point p : attackPlayer.getAttackPoints(1)) {
             if (Math.abs(p.getX() * 30 - x) < 40 && Math.abs((p.getY() * 30) + 100 - y) < 40) {
                 attackPoint = p;
                 return "(" + p.getX() + " , " + p.getY() + ")";
@@ -390,6 +394,8 @@ public class Game {
         return null;
     }
 
+    // MODIFIES: this
+    // EFFECTS: chooses where to set the ball
     private String chooseSet(int x) {
         String message = null;
         if (x <= 90) {
@@ -410,12 +416,15 @@ public class Game {
         return message;
     }
 
+    // MODIFIES: this
+    // EFFECTS: declares the attackPlayer
     private String declareSelected(String dir, Players p, String match) {
         if (p.getShortPos().equals(match) && p.getRotation() >= 4) {
             setAttackPlayer(p);
         }
         return dir;
     }
+
 
     public Point getAttackPoint() {
         return attackPoint;
@@ -425,7 +434,9 @@ public class Game {
         this.attackPoint = point;
     }
 
-    public void mySet() {
+    // MODIFIES: this, ball
+    // EFFECTS: moves the ball to the attackPlayer
+    public void motionSet() {
         if (getAttackPlayer().getShortPos().equals("OH")) {
             myTeam.set(0, ball);
         } else if (getAttackPlayer().getShortPos().equals("MB")) {
@@ -435,10 +446,14 @@ public class Game {
         }
     }
 
-    public void myAttack() {
+    // MODIFIES: this, ball
+    // EFFECTS: moves the ball to the attackPoint
+    public void motionAttack() {
         attackPlayer.spike(attackPoint, ball);
     }
 
+    // MODIFIES: this
+    // EFFECTS: enemy chooses where to move the players to defend
     public void enemyDefend() {
         int multiplier = enemyTeam.getChance();
         int chance = (int) (Math.random() * multiplier);
@@ -459,6 +474,8 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: either choose a defensiveselect or choose where defensive select goes
     public String chooseDefense(int x, int y) {
         if (selectDefensive == null) {
             return selectPlayer(x, y);
@@ -468,6 +485,8 @@ public class Game {
 
     }
 
+    // MODIFIES: this, ball
+    // EFFECTS: Defensiveselect moves to the x, y and becomes null
     private String moveSelected(int x, int y) {
         int num = selectDefensive.getNum();
         selectDefensive.moveToX(x / 30);
@@ -477,6 +496,8 @@ public class Game {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: declares a DefensiveSelect
     private String selectPlayer(int x, int y) {
         for (Players p : myTeam.getRoster()) {
             if (Math.abs(p.getPosX() - x) < 40 && Math.abs(p.getPosY() - y) < 40) {
@@ -488,10 +509,13 @@ public class Game {
         return null;
     }
 
+
     public Players getSelectDefensive() {
         return selectDefensive;
     }
 
+    // MODIFIES; this, enemyTeam
+    // EFFECTS: enemy chooses where to attack and attacks
     public String enemyChooseAttack(String dir) {
 
         if (dir.equals("left") || dir.equals("right")) {
@@ -512,6 +536,10 @@ public class Game {
         return "The ball has been set to the " + dir;
     }
 
+
+
+    // MODIFIES: this, enemyTeam
+    // EFFECTS: chooses where the enemy team should set and sets
     public String enemyChooseSet() {
         String dir = null;
         int set;

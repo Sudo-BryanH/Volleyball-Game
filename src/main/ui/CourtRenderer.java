@@ -83,8 +83,9 @@ public class CourtRenderer extends JPanel implements ActionListener {
             g.setFont(new Font("Quicksand", 20, 12));
             if (p == game.getAttackPlayer()) {
                 drawPossibleAttacks(g, p, Color.GREEN);
-                paintHalos(g, 1, p);
             }
+            paintHalos(g, 1, p);
+
         }
     }
 

@@ -28,7 +28,7 @@ public class Setters implements Players {
     public Setters(int playerNum, int side) {
         this.playerNum = playerNum;
         this.side = side;
-        this.rotationNum = 1;
+        //this.rotationNum = 1;
         this.dumps = 0;
         this.posX = 0;
         this.posY = 0;

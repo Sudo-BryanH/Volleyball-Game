@@ -227,10 +227,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             printer("Our serve", Color.BLACK);
             game.receive();
             game.setGameState("A", "D");
-            printer("Move players to defend the court by"
-                    + " clicking on them\n and then somewhere else."
-                    + "\nTry to match up the players to as many red targets as\npossible. "
-                    + "Note that only backrow players can receive. \nPress next when you're done.", Color.BLACK);
+            printer("\nMove players to defend the court by"
+                    + " clicking on them\n and then where you want them to go.\n"
+                    + "\nHint: Try to match up the players to as many \nred targets as possible. "
+                    + "Note that only back row players can receive.\n \nPress next when you're done.", Color.BLACK);
         } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
             printer("Opponent serving", Color.BLACK);
             game.receive();
@@ -253,12 +253,12 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     private void afterAD(String dir) {
         printer(game.enemyChooseAttack(dir), Color.BLACK);
-        endMyDefence();
+        endMyDefence(dir);
     }
 
     private void afterDA() {
         if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
-            game.myAttack();
+            game.motionAttack();
             game.enemyDefend();
             endMyAttack();
         }
@@ -267,11 +267,11 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     // MODIFIES: this, game
     // EFFECTS: determines if enemy scored. If not, continue match
-    private void endMyDefence() {
+    private void endMyDefence(String dir) {
         Boolean scored = game.checkScore();
 
         if (scored) {
-            printer("Your Opponent has scored.", Color.RED);
+            printer("Your opponent set " + dir + " and scored.", Color.RED);
             game.endRally(0);
             game.setGameState("E", "E");
         } else {
@@ -292,10 +292,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.endRally(1);
             game.setGameState("F", "F");
         } else {
-            printer("You have received your opponent's attack. \nMove players to defend the court by"
-                    + " clicking on them\n and then somewhere else."
-                    + "\nTry to match up the players to as many red targets as\n possible. "
-                    + "Note that only backrow players can receive. \nPress next when you're done.", new Color(40, 71, 82));
+            printer("You have received your opponent's attack.\n \nMove players to defend the court by"
+                    + " clicking on them\n and then where you want them to go.\n"
+                    + "\nHint: Try to match up the players to as many \nred targets as possible. "
+                    + "Note that only back row players can receive.\n \nPress next when you're done.", new Color(40, 71, 82));
             game.receive();
             game.setGameState("A", "D");
         }
