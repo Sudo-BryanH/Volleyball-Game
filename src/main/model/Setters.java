@@ -88,6 +88,12 @@ public class Setters implements Players {
 
     }
 
+    @Override
+    public void spike(Point point, Ball ball) {
+        ball.moveToX((int) point.getX());
+        ball.moveToY((int) point.getY());
+    }
+
     // EFFECTS: moves the ball to location [8, 14] or [4, 8] for enemy
     // NOTE: this is just for implementation sake, setters should never receive
     @Override
@@ -129,11 +135,7 @@ public class Setters implements Players {
     }
 
 
-    @Override
-    public void spike(Point point, Ball ball) {
-        ball.moveToX((int) point.getX());
-        ball.moveToY((int) point.getY());
-    }
+
 
     //@Override
     //public void block() {
