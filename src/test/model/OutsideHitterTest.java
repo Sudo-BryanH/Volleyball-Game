@@ -182,7 +182,7 @@ public class OutsideHitterTest {
     @Test
     public void testGetAttackPoints() {
         assertEquals(2, testPlayer.getAttackPoints(1).size());
-        assertEquals(3, testPlayer.getAttackPoints(0).size());
+        assertEquals(2, testPlayer.getAttackPoints(0).size());
     }
 
     @Test

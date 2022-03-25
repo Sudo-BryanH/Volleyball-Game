@@ -35,28 +35,42 @@ public class GameTest {
 
     @BeforeEach
     public void setUp() {
-        testEMB1 = new MiddleBlockers(10, 1);
-        testEMB2 = new MiddleBlockers(11, 1);
-        testEOH1 = new OutsideHitter(3, 1);
-        testEOH2 = new OutsideHitter(5, 1);
-        testESet = new Setters(9, 1);
-        testEOP = new OppositeHitter(1, 1);
-        testEMB3 = new MiddleBlockers(7, 1);
-        testESet2 = new Setters(2, 1);
+        testEMB1 = new MiddleBlockers(10, 0);
+        testEMB2 = new MiddleBlockers(11, 0);
+        testEOH1 = new OutsideHitter(3, 0);
+        testEOH2 = new OutsideHitter(5, 0);
+        testESet = new Setters(9, 0);
+        testEOP = new OppositeHitter(1, 0);
+        testEMB3 = new MiddleBlockers(7, 0);
+        testESet2 = new Setters(2, 0);
+        testESet.setRotation(1);
+        testEOP.setRotation(4);
+        testEMB1.setRotation(1);
+        testEMB2.setRotation(5);
+        testEOH1.setRotation(3);
+        testEOH2.setRotation(6);
+        testESet.setRotation(1);
+        testEOP.setRotation(4);
 
         testETeam = new EnemyTeam("testETeam", testESet, testEMB1, testEMB2,
                 testEOH1, testEOH2, testEOP);
 
         testETeam.arrangeMbOh();
 
-        testMB1 = new MiddleBlockers(10, 0);
-        testMB2 = new MiddleBlockers(11, 0);
-        testOH1 = new OutsideHitter(3, 0);
-        testOH2 = new OutsideHitter(5, 0);
-        testSet = new Setters(9, 0);
-        testOP = new OppositeHitter(1, 0);
-        testMB3 = new MiddleBlockers(7, 0);
-        testSet2 = new Setters(2, 0);
+        testMB1 = new MiddleBlockers(10, 1);
+        testMB2 = new MiddleBlockers(11, 2);
+        testOH1 = new OutsideHitter(3, 1);
+        testOH2 = new OutsideHitter(5, 1);
+        testSet = new Setters(9, 1);
+        testOP = new OppositeHitter(1, 1);
+        testMB3 = new MiddleBlockers(7, 1);
+        testSet2 = new Setters(2, 1);
+        testMB1.setRotation(1);
+        testMB2.setRotation(5);
+        testOH1.setRotation(3);
+        testOH2.setRotation(6);
+        testSet.setRotation(1);
+        testOP.setRotation(4);
 
         testMyTeam = new MyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
@@ -66,13 +80,13 @@ public class GameTest {
         testGame = new Game(testMyTeam, testETeam);
 
         mikasa = new Ball();
+        testGame.decBall(mikasa);
 
         testGame2 = new Game();
     }
 
     @Test
     public void testConstructor() {
-        assertEquals("0 : 0", testGame.getScore());
         assertEquals(0, testGame.getTurnNum());
         assertEquals(6, testMyTeam.getRoster().size());
         assertEquals(6, testMyTeam.getStarters().size());
@@ -242,13 +256,6 @@ public class GameTest {
 
     }
 
-    @Test
-    public void testBall() {
-
-        assertNull(testGame.getBall());
-        testGame.decBall(mikasa);
-        assertEquals(mikasa, testGame.getBall());
-    }
 
     @Test
     public void testGetSetAttackPlayer() {
@@ -262,17 +269,68 @@ public class GameTest {
 
     }
 
-    @Test
+    /*@Test
     public void testMakeServe() {
         testGame.decBall(mikasa);
         testGame.setGameState("S", "A");
         testGame.makeServe();
         assertEquals(9 * 30, mikasa.getMoveToXPos());
-        assertEquals(21 * 30 + 100, mikasa.getMoveToYPos());
+        assertEquals(730, mikasa.getMoveToYPos());
 
-        assertEquals(3 * 30, mikasa.getMoveToXPos());
-        assertEquals(21 * 30 + 100, mikasa.getMoveToYPos());
 
+    }*/
+
+    @Test
+    public void testReceive() {
+        mikasa.directX(3);
+        mikasa.directY(3);
+
+        testGame.setGameState("D", "A");
+        testGame.receive();
+        assertEquals(120, mikasa.getMoveToXPos());
+        assertEquals(400, mikasa.getMoveToYPos());
+
+        testGame.setGameState("A", "D");
+        testGame.receive();
+        assertEquals(8 * 30 , mikasa.getMoveToXPos());
+        assertEquals(520, mikasa.getMoveToYPos());
+
+
+    }
+
+    @Test
+    public void testEndRally() {
+        testGame.endRally(0);
+        assertEquals(2, testESet.getRotation());
+        assertEquals(1, testGame.getEnemyScore());
+
+        testGame.endRally(1);
+        assertEquals(2, testSet.getRotation());
+        assertEquals(1, testGame.getMyScore());
+
+    }
+
+    @Test
+    public void testChooseAttack() {
+        assertEquals("Please click a hitter in green and click a displayed target",
+                testGame.chooseAttack(1, 2));
+
+        assertEquals(testGame.chooseAttack(92, 500), "Click a hitter in green.");
+
+        assertEquals("You've chosen to set to the left. \nClick a green target to attack."
+                , testGame.chooseAttack(40, 500));
+
+        assertEquals("You've chosen to set to the middle. \nClick a green target to attack."
+                , testGame.chooseAttack(180, 500));
+
+        assertEquals("You've chosen to set to the right. \nClick a green target to attack."
+                , testGame.chooseAttack(320, 500));
+
+
+        assertEquals(testOP, testGame.getAttackPlayer());
+
+        assertEquals("Player #1 will spike to the (6.0 , 3.0). \n Press next to continue. ",
+                testGame.chooseAttack(6 * 30 , 3 * 30 + 100));
     }
 
 

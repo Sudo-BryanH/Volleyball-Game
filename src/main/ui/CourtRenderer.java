@@ -68,7 +68,6 @@ public class CourtRenderer extends JPanel {
         for (Players p : game.getMyTeam().getStarters()) {
             int x = p.getPosX();
             int y = p.getPosY();
-            int num = p.getNum();
 
 
             if ((game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter"))
@@ -83,8 +82,9 @@ public class CourtRenderer extends JPanel {
             g.drawString(p.getShortPos(), x, (y + P_TRANS));
             g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Monospaced Bold", 20, 12));
-            g.drawString("" + num, x - 10, y + 10);
+            g.setFont(new Font("Monospaced Bold", 20, 20));
+            g.drawString("" + p.getNum(), x - 10, y + 10);
+            g.setFont(new Font("Quicksand", 20, 12));
             if (p == game.getAttackPlayer()) {
                 drawPossibleAttacks(g, p, Color.GREEN);
             }
