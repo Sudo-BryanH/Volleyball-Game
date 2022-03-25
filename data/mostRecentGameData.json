@@ -3,42 +3,42 @@
     "enemyTeam": [
         {
             "side": 0,
-            "rotation": 4,
+            "rotation": 5,
             "playingPosition": "Setter",
             "playerNum": 1
         },
         {
             "side": 0,
-            "rotation": 5,
+            "rotation": 6,
             "playingPosition": "Middle Blocker",
             "playerNum": 3
         },
         {
             "side": 0,
-            "rotation": 6,
+            "rotation": 1,
             "playingPosition": "Outside Hitter",
             "playerNum": 5
         },
         {
             "side": 0,
-            "rotation": 1,
+            "rotation": 2,
             "playingPosition": "Opposite Hitter",
             "playerNum": 7
         },
         {
             "side": 0,
-            "rotation": 2,
+            "rotation": 3,
             "playingPosition": "Middle Blocker",
             "playerNum": 9
         },
         {
             "side": 0,
-            "rotation": 3,
+            "rotation": 4,
             "playingPosition": "Outside Hitter",
             "playerNum": 11
         }
     ],
-    "enemyScore": 0,
+    "enemyScore": 1,
     "myScore": 1,
     "enemyName": "Strong team",
     "myTeam": [

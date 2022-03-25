@@ -515,7 +515,7 @@ public class Game {
     public String enemyChooseAttack(String dir) {
 
         if (dir.equals("left") || dir.equals("right")) {
-            int chanceOPH = (int) Math.random() * 2;
+            int chanceOPH = ((int) Math.random() * 2);
             for (Players p : enemyTeam.getStarters()) {
                 if (dir.equals("left")) {
                     enemyTeam.attack(0, chanceOPH, ball);
@@ -525,7 +525,7 @@ public class Game {
             }
 
         } else {
-            int chanceMB = (int) Math.random() * 3;
+            int chanceMB = (int) (Math.random() * 3);
             enemyTeam.attack(1, chanceMB, ball);
         }
 
@@ -540,11 +540,11 @@ public class Game {
         String dir = null;
         int set;
         if (enemyTeam.isSetterBack()) {
-            int chanceB = (int) Math.random() * 3;
+            int chanceB = (int) (Math.random() * 3);
             set = chanceB;
             enemyTeam.set(chanceB, ball);
         } else {
-            int chanceF = (int) Math.random() * 2;
+            int chanceF = (int) (Math.random() * 2);
             set = chanceF;
             enemyTeam.set(chanceF, ball);
         }
