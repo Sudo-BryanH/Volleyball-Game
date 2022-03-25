@@ -168,12 +168,12 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     public void enemyTeamConstructor(String name, Players mb1, Players mb2,
                                      Players set, Players op, Players oh1,
                                      Players oh2, int chance) {
-        set = new Setters(1, 0);
-        mb1 = new MiddleBlockers(2, 0);
-        oh1 = new OutsideHitter(3, 0);
-        op = new OppositeHitter(4, 0);
-        mb2 = new MiddleBlockers(5, 0);
-        oh2 = new OutsideHitter(6, 0);
+        set = new Setters((int) Math.random() * 2 + 1, 0);
+        mb1 = new MiddleBlockers((int) Math.random() * 2 + 3, 0);
+        oh1 = new OutsideHitter((int) Math.random() * 2 + 5, 0);
+        op = new OppositeHitter((int) Math.random() * 2 + 7, 0);
+        mb2 = new MiddleBlockers((int) Math.random() * 2 + 9, 0);
+        oh2 = new OutsideHitter((int) Math.random() * 2 + 11, 0);
 
         EnemyTeam e;
         e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
@@ -237,13 +237,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.setGameState("D", "A");
             printer("Ball passed to Setter", Color.BLACK);
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
-            if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
-                game.myAttack();
-                game.enemyDefend();
-                endMyAttack();
-            }
+            afterDA();
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
-            endMyDefence();
+            afterAD(game.enemyChooseSet());
         } else if (game.getGameState1().equals("E")) {
             game.setGameState("S", "SN");
         } else if (game.getGameState1().equals("F")) {
@@ -255,6 +251,18 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    private void afterAD(String dir) {
+        printer(game.enemyChooseAttack(dir), Color.BLACK);
+        endMyDefence();
+    }
+
+    private void afterDA() {
+        if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
+            game.myAttack();
+            game.enemyDefend();
+            endMyAttack();
+        }
+    }
 
 
     // MODIFIES: this, game

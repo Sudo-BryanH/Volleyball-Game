@@ -24,7 +24,6 @@ public class Game {
     private Players selectDefensive;
 
 
-
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
     public Game(Team myTeam, EnemyTeam enemyTeam) {
         this.myScore = 0;
@@ -491,6 +490,50 @@ public class Game {
 
     public Players getSelectDefensive() {
         return selectDefensive;
+    }
+
+    public String enemyChooseAttack(String dir) {
+
+        if (dir.equals("left") || dir.equals("right")) {
+            int chanceOPH = (int) Math.random() * 2;
+            for (Players p : enemyTeam.getStarters()) {
+                if (dir.equals("left")) {
+                    enemyTeam.attack(0, chanceOPH, ball);
+                } else {
+                    enemyTeam.attack(2, chanceOPH, ball);
+                }
+            }
+
+        } else {
+            int chanceMB = (int) Math.random() * 3;
+            enemyTeam.attack(1, chanceMB, ball);
+        }
+
+        return "The ball has been set to the " + dir;
+    }
+
+    public String enemyChooseSet() {
+        String dir = null;
+        int set;
+        if (enemyTeam.isSetterBack()) {
+            int chanceB = (int) Math.random() * 3;
+            set = chanceB;
+            enemyTeam.set(chanceB, ball);
+        } else {
+            int chanceF = (int) Math.random() * 2;
+            set = chanceF;
+            enemyTeam.set(chanceF, ball);
+        }
+
+        if (set == 0) {
+            dir = "left";
+        } else if (set == 1) {
+            dir = "middle";
+        } else {
+            dir = "right";
+        }
+
+        return dir;
     }
 }
 
