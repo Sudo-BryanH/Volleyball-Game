@@ -55,7 +55,6 @@ public class Ball {
     // EFFECTS: move's this ball to position X
     public void moveToX(int x) {
         this.moveToXPos = x  * SCALE;
-        //setDX();
         moveState = true;
 
     }
@@ -69,7 +68,8 @@ public class Ball {
         moveState = true;
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: moves by speed if mvoe state is true
     public void move() {
 
         if (moveState) {
@@ -96,26 +96,14 @@ public class Ball {
             }
 
             if (currentXPos == moveToXPos && currentYPos == moveToYPos) {
-                moveState = true;
+                moveState = false; // TODO if ball behaviour is odd, return to true
             }
         }
 
 
     }
 
-    /*
-    public void setDY() {
-        dy = Math.abs(currentYPos - moveToYPos) / 240;
-    }
-    */
 
-    public void setDX() {
-        if ((Math.abs(currentXPos - moveToXPos)) != 0) {
-            dx = dy * (Math.abs((currentYPos - moveToYPos) / (currentXPos - moveToXPos)));
-        } else {
-            dx = dy / 2;
-        }
-    }
 
 
     public boolean getMoveState() {

@@ -202,17 +202,12 @@ public class Game {
         return this.attackPlayer;
     }
 
-    public void removeSelected() {
-        this.attackPlayer = null;
-    }
 
     // MODIFIES: this
     // EFFECTS: moves players in myTeam to their positions according to gamestate
     public void adjustPos1() {
         switch (gameState1) {
-            case "SN":
-                myTeam.serveReceivePos();
-                break;
+
             case "S":
                 myTeam.startPosServe();
                 break;
@@ -237,9 +232,7 @@ public class Game {
 
     public void adjustPos0() {
         switch (gameState0) {
-            case "SN":
-                enemyTeam.serveReceivePos();
-                break;
+
             case "S":
                 enemyTeam.startPosServe();
                 break;
@@ -281,13 +274,6 @@ public class Game {
         }
     }
 
-    public int getServePos() {
-        return servePos;
-    }
-
-    public void setServePos(int s) {
-        servePos = s;
-    }
 
     // REQUIRES: checkReceive = true
     // EFFECTS: finds the player that receives it and has the player receive it
@@ -295,16 +281,16 @@ public class Game {
 
         if (gameState0.equals("D") || gameState0.equals("SN")) {
             for (Players p : enemyTeam.getStarters()) {
-                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
-                        (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE
+                      &&  (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
                     p.receive(ball);
                 }
             }
 
         } else if (gameState1.equals("D") || gameState1.equals("SN")) {
             for (Players p : myTeam.getStarters()) {
-                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE &&
-                        (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE
+                      &&  (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
                     p.receive(ball);
                 }
             }

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CourtRenderer extends JPanel implements ActionListener {
+public class CourtRenderer extends JPanel {
 
 
     Game game;
@@ -226,25 +226,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
 
     }
 
-    // MODIFIES: this
-    // EFFECTS: places buttons to allow users to choose where to serve
-    public void makeServeButtons() {
-        if (game.getGameState1().equals("S")) {
-            one = new JButton("1");
-            one.setBounds(9 * 30, (3 * 30) + 100, 20, 20);
-            one.setBackground(Color.GREEN);
-            one.addActionListener(this);
-            one.setOpaque(true);
-            add(one);
-            zero = new JButton("0");
-            zero.setBounds(3 * 30, (3 * 30) + 100, 20, 20);
-            zero.setBackground(Color.GREEN);
-            zero.setOpaque(true);
-            zero.addActionListener(this);
-            add(zero);
-        }
 
-    }
 
 
     protected void paintComponent(Graphics g) {
@@ -261,13 +243,5 @@ public class CourtRenderer extends JPanel implements ActionListener {
     }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == one) {
-            game.setServePos(1);
-        } else if (e.getSource() == zero) {
-            game.setServePos(0);
-        }
 
-    }
 }

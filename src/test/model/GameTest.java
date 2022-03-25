@@ -88,17 +88,17 @@ public class GameTest {
     @Test
     public void testMyScore() {
         testGame.myScore();
-        assertEquals("1 : 0", testGame.getScore());
+        assertEquals(1, testGame.getMyScore());
         testGame.myScore();
-        assertEquals("2 : 0", testGame.getScore());
+        assertEquals(2, testGame.getMyScore());
     }
 
     @Test
     public void testEnemyScore() {
         testGame.enemyScore();
-        assertEquals("0 : 1", testGame.getScore());
+        assertEquals(1, testGame.getEnemyScore());
         testGame.enemyScore();
-        assertEquals("0 : 2", testGame.getScore());
+        assertEquals(2, testGame.getEnemyScore());
     }
 
     @Test
@@ -136,14 +136,14 @@ public class GameTest {
         backrow.add(testMB2);
         backrow.add(testOP);
 
-        assertTrue(testGame.checkReceive(6, 19, backrow));
-        assertTrue(testGame.checkReceive(6, 20, backrow));
-        assertTrue(testGame.checkReceive(6, 18, backrow));
-        assertTrue(testGame.checkReceive(5, 19, backrow));
-        assertTrue(testGame.checkReceive(7, 20, backrow));
-        assertFalse(testGame.checkReceive(8, 21, backrow));
-        assertFalse(testGame.checkReceive(7, 22, backrow));
-        assertFalse(testGame.checkReceive(8, 22, backrow));
+        assertTrue(testGame.checkReceive(6 * 30, 19 * 30 + 100, backrow));
+        assertTrue(testGame.checkReceive(6 * 30, 20 * 30 + 100, backrow));
+        assertTrue(testGame.checkReceive(6 * 30, 18 * 30 + 100, backrow));
+        assertTrue(testGame.checkReceive(5 * 30, 19 * 30 + 100, backrow));
+        assertTrue(testGame.checkReceive(7 * 30, 20 * 30 + 100, backrow));
+        assertFalse(testGame.checkReceive(8 * 30, 21 * 30 + 100, backrow));
+        assertFalse(testGame.checkReceive(7 * 30, 22 * 30 + 100, backrow));
+        assertFalse(testGame.checkReceive(8 * 30, 22 * 30 + 100, backrow));
 
 
     }
@@ -160,9 +160,9 @@ public class GameTest {
 
     @Test
     public void testGetScore() {
-        assertEquals("0 : 0", testGame.getScore());
-        testGame.myScore();
-        assertEquals("1 : 0", testGame.getScore());
+        assertEquals(testMyTeam.getName() + "| " + testGame.getMyScore() + "| |" + testGame.getEnemyScore()
+                + " |" + testETeam.getName(), testGame.getScore());
+
     }
 
     @Test
@@ -228,6 +228,52 @@ public class GameTest {
     }
 
     // TODO All random values can be accounted for if it can produce the same type
+
+    @Test
+    public void testGetSetGameState() {
+
+        testGame.setGameState("A", "D");
+        assertEquals("A", testGame.getGameState0());
+        assertEquals("D", testGame.getGameState1());
+
+        testGame.setGameState("D", "A");
+        assertEquals("D", testGame.getGameState0());
+        assertEquals("A", testGame.getGameState1());
+
+    }
+
+    @Test
+    public void testBall() {
+
+        assertNull(testGame.getBall());
+        testGame.decBall(mikasa);
+        assertEquals(mikasa, testGame.getBall());
+    }
+
+    @Test
+    public void testGetSetAttackPlayer() {
+        Players p = new OutsideHitter(3, 1);
+        Players q = new MiddleBlockers(4, 1);
+        assertNull(testGame.getAttackPlayer());
+        testGame.setAttackPlayer(p);
+        assertEquals(p, testGame.getAttackPlayer());
+        testGame.setAttackPlayer(q);
+        assertEquals(q, testGame.getAttackPlayer());
+
+    }
+
+    @Test
+    public void testMakeServe() {
+        testGame.decBall(mikasa);
+        testGame.setGameState("S", "A");
+        testGame.makeServe();
+        assertEquals(9 * 30, mikasa.getMoveToXPos());
+        assertEquals(21 * 30 + 100, mikasa.getMoveToYPos());
+
+        assertEquals(3 * 30, mikasa.getMoveToXPos());
+        assertEquals(21 * 30 + 100, mikasa.getMoveToYPos());
+
+    }
 
 
 }

@@ -75,7 +75,7 @@ public class OppositeHitter implements Players {
     public void moveToX(int x) {
         //this.posX = x  * SCALE;
         this.newPosX = x  * SCALE;
-        setDX();
+
         this.moveState = true;
 
     }
@@ -87,7 +87,7 @@ public class OppositeHitter implements Players {
     public void moveToY(int y) {
         //this.posY = y * SCALE + Y_TRANS;
         this.newPosY = y * SCALE + Y_TRANS;
-        setDY();
+
         this.moveState = true;
     }
     //
@@ -245,17 +245,7 @@ public class OppositeHitter implements Players {
         return side;
     }
 
-    @Override
-    public void setMoveState() {
 
-        moveState = !moveState;
-
-    }
-
-    @Override
-    public boolean getMoveState() {
-        return moveState;
-    }
 
     @Override
     public int getNewPosX() {
@@ -267,15 +257,7 @@ public class OppositeHitter implements Players {
         return newPosY;
     }
 
-    @Override
-    public void setDY() {
-        dy = Math.abs(posY - newPosY) / SPEED;
-    }
 
-    @Override
-    public void setDX() {
-        dx = Math.abs(posX - newPosX) / SPEED;
-    }
 
     @Override
     public void moveBySpeed() {

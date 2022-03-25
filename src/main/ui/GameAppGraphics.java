@@ -162,6 +162,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: constructs enemy team
     public void enemyTeamConstructor(String name, int chance) {
         Players set = new Setters((int) Math.random() * 2 + 1, 0);
         Players mb1 = new MiddleBlockers((int) Math.random() * 2 + 3, 0);
@@ -190,6 +192,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: constructs my team
     private Team myTeamConstructor(List<Players> starters, List<Players> roster) {
         String name = "My Team";
 
@@ -235,12 +239,18 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             afterAD(game.enemyChooseSet());
         } else if (game.getGameState1().equals("E")) {
             game.setGameState("S", "SN");
-            ball.moveToX(0);
-            ball.moveToY(0);
+            ball.directX(1);
+            ball.directY(0);
+            sleepThread(2);
+            game.makeServe();
+
         } else if (game.getGameState1().equals("F")) {
             game.setGameState("SN", "S");
-            ball.moveToX(12);
-            ball.moveToY(24);
+            ball.directX(11);
+            ball.directY(24);
+            sleepThread(2);
+            game.makeServe();
+
         }
 
         game.adjustPos1();
@@ -251,6 +261,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // MODIFIES: this, game
     // EFFECTS: changes the state of the game to "D" "A" and receives the ball
     private void afterSSN() {
+
         printer("Opponent serving", Color.BLACK);
         game.receive();
         game.setGameState("D", "A");
@@ -416,6 +427,21 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             changeState();
         }
 
+    }
+
+    // REQUIRES: positive number s
+    // MODIFIES: this
+    // EFFECFTS: shuts down the thread to allow gaps in animation
+    private void sleepThread(int s) {
+
+        for (int i = 0; i < s; i++) {
+            try {
+                printer("Serving...", Color.BLACK);
+                Thread.sleep(i * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

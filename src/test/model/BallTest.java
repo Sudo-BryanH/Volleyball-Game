@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BallTest {
 
@@ -25,59 +25,82 @@ public class BallTest {
     }
 
     @Test
-    public void testGetXPos() {
+    public void testGetSetNewXPos() {
         assertEquals(0, mikasa.getMoveToXPos());
         mikasa.moveToX(12);
-        assertEquals(12, mikasa.getMoveToXPos());
+        assertTrue(mikasa.getMoveState());
+        assertEquals(12 * 30, mikasa.getMoveToXPos());
         mikasa.moveToX(6);
-        assertEquals(6, mikasa.getMoveToXPos());
+        assertEquals(6 * 30, mikasa.getMoveToXPos());
         assertEquals(0, molten.getMoveToXPos());
         molten.moveToX(12);
-        assertEquals(12, molten.getMoveToXPos());
+        assertEquals(12 * 30, molten.getMoveToXPos());
         molten.moveToX(6);
-        assertEquals(6, molten.getMoveToXPos());
+        assertEquals(6 * 30, molten.getMoveToXPos());
     }
 
     @Test
-    public void testGetYPos() {
+    public void testGetSetNewYPos() {
         assertEquals(0, mikasa.getMoveToYPos());
         mikasa.moveToY(24);
-        assertEquals(24, mikasa.getMoveToYPos());
+        assertTrue(mikasa.getMoveState());
+        assertEquals(24 * 30 + 100, mikasa.getMoveToYPos());
         mikasa.moveToY(16);
-        assertEquals(16, mikasa.getMoveToYPos());
-        assertEquals(0, molten.getMoveToXPos());
-        molten.moveToX(12);
-        assertEquals(12, molten.getMoveToXPos());
-        molten.moveToX(6);
-        assertEquals(6, molten.getMoveToXPos());
+        assertEquals(16 * 30 + 100, mikasa.getMoveToYPos());
+        assertEquals(0, molten.getMoveToYPos());
+        molten.moveToY(12);
+        assertEquals(12 * 30 + 100, molten.getMoveToYPos());
+        molten.moveToY(6);
+        assertEquals(6 * 30 + 100, molten.getMoveToYPos());
+    }
+
+
+    @Test
+    public void testDirectXY() {
+        mikasa.directY(3);
+        assertEquals(190, mikasa.getCurrentYPos());
+        assertFalse(mikasa.getMoveState());
+        mikasa.directX(3);
+        assertEquals(90, mikasa.getCurrentXPos());
+        mikasa.directY(12);
+        assertEquals(460, mikasa.getCurrentYPos());
+        mikasa.directX(9);
+        assertEquals(270, mikasa.getCurrentXPos());
     }
 
     @Test
-    public void testMoveToX() {
-        assertEquals(0, mikasa.getMoveToXPos());
-        mikasa.moveToX(12);
-        assertEquals(12, mikasa.getMoveToXPos());
-        mikasa.moveToX(6);
-        assertEquals(6, mikasa.getMoveToXPos());
-        assertEquals(0, molten.getMoveToXPos());
-        molten.moveToX(12);
-        assertEquals(12, molten.getMoveToXPos());
-        molten.moveToX(6);
-        assertEquals(6, molten.getMoveToXPos());
-    }
+    public void testMoveBySpeed() {
+        molten.directY(0);
+        molten.directX(0);
+        assertFalse(molten.getMoveState());
+        assertEquals(0, molten.getCurrentXPos());
+        assertEquals(100, molten.getCurrentYPos());
+        molten.moveToX(2);
+        molten.moveToY(2);
+        assertTrue(molten.getMoveState());
 
-    @Test
-    public void testMoveToY() {
-        assertEquals(0, mikasa.getMoveToYPos());
-        mikasa.moveToY(24);
-        assertEquals(24, mikasa.getMoveToYPos());
-        mikasa.moveToY(16);
-        assertEquals(16, mikasa.getMoveToYPos());
-        assertEquals(0, molten.getMoveToXPos());
-        molten.moveToX(12);
-        assertEquals(12, molten.getMoveToXPos());
-        molten.moveToX(6);
-        assertEquals(6, molten.getMoveToXPos());
+        molten.move();
+        assertEquals(12, molten.getCurrentXPos());
+        assertEquals(124, molten.getCurrentYPos());
+
+        molten.move();
+        molten.move();
+        assertEquals(36, molten.getCurrentXPos());
+        assertEquals(160, molten.getCurrentYPos());
+
+        molten.move();
+        assertEquals(48, molten.getCurrentXPos());
+        assertEquals(160, molten.getCurrentYPos());
+
+        molten.move();
+        assertEquals(60, molten.getCurrentXPos());
+        assertEquals(160, molten.getCurrentYPos());
+
+        molten.move();
+        assertEquals(60, molten.getCurrentXPos());
+        assertEquals(160, molten.getCurrentYPos());
+        assertFalse(molten.getMoveState());
+
     }
 
 

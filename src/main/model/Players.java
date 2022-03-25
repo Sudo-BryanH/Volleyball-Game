@@ -70,18 +70,10 @@ public interface Players {
     // EFFECTS: returns the side of this player
     public int getSide();
 
-    public void setMoveState();
-
-    // EFFECTS: returns move state, true if posX != newPosX, false otherwise
-    public boolean getMoveState();
 
     public int getNewPosX();
 
     public int getNewPosY();
-
-    public void setDY();
-
-    public void setDX();
 
     public void moveBySpeed();
 
