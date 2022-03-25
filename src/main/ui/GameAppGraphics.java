@@ -170,6 +170,14 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         Players mb2 = new MiddleBlockers((int) Math.random() * 2 + 9, 0);
         Players oh2 = new OutsideHitter((int) Math.random() * 2 + 11, 0);
 
+
+        set.setRotation(1);
+        mb1.setRotation(2);
+        oh1.setRotation(3);
+        op.setRotation(4);
+        mb2.setRotation(5);
+        oh2.setRotation(6);
+
         EnemyTeam e;
         e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
         e.setChance(chance);

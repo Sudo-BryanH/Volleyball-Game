@@ -3,7 +3,7 @@
     "enemyTeam": [
         {
             "side": 0,
-            "rotation": 3,
+            "rotation": 4,
             "playingPosition": "Setter",
             "playerNum": 1
         },
@@ -21,7 +21,7 @@
         },
         {
             "side": 0,
-            "rotation": 3,
+            "rotation": 1,
             "playingPosition": "Opposite Hitter",
             "playerNum": 7
         },
@@ -46,49 +46,43 @@
             "side": 1,
             "rotation": 2,
             "playingPosition": "Setter",
-            "playerNum": 10
+            "playerNum": 5
         },
         {
             "side": 1,
             "rotation": 3,
             "playingPosition": "Middle Blocker",
-            "playerNum": 5
+            "playerNum": 1
         },
         {
             "side": 1,
             "rotation": 4,
             "playingPosition": "Outside Hitter",
-            "playerNum": 3
+            "playerNum": 4
         },
         {
             "side": 1,
             "rotation": 5,
             "playingPosition": "Opposite Hitter",
-            "playerNum": 1
+            "playerNum": 2
         },
         {
             "side": 1,
             "rotation": 6,
             "playingPosition": "Middle Blocker",
-            "playerNum": 12
+            "playerNum": 11
         },
         {
             "side": 1,
             "rotation": 1,
             "playingPosition": "Outside Hitter",
-            "playerNum": 8
+            "playerNum": 6
         },
         {
             "side": 1,
             "rotation": 0,
-            "playingPosition": "Setter",
-            "playerNum": 3
-        },
-        {
-            "side": 1,
-            "rotation": 0,
-            "playingPosition": "Outside Hitter",
-            "playerNum": 7
+            "playingPosition": "Middle Blocker",
+            "playerNum": 12
         }
     ],
     "myName": "My Team"
