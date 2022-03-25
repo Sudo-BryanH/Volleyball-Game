@@ -17,9 +17,9 @@ public class CourtRenderer extends JPanel {
 
     static int P_TRANS = -15;
     static int B_TRANS = -25;
-    JButton one;
-    JButton zero;
 
+    // MODIFIES: this
+    // EFFECTS: constructs a new court renderer panel
     public CourtRenderer(Game game) {
 
         this.game = game;
@@ -31,6 +31,8 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: paints the ball
     private void ballSetup(Graphics g) {
 
         Ball ball = game.getBall();
@@ -51,19 +53,22 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: paints the players
     private void playersSetup(Graphics g) {
 
         paintMyTeam(g);
         paintEnemyTeam(g);
     }
 
+    // MODIFIES: this
+    // EFFECTS: paints the players on my team
     public void paintMyTeam(Graphics g) {
 
         for (Players p : game.getMyTeam().getStarters()) {
             int x = p.getPosX();
             int y = p.getPosY();
             int num = p.getNum();
-            String pos = p.getShortPos();
 
 
             if ((game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter"))
@@ -75,12 +80,11 @@ public class CourtRenderer extends JPanel {
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
             }
             g.setColor(new Color(50, 140, 220));
-            g.drawString(pos, x, (y + P_TRANS));
+            g.drawString(p.getShortPos(), x, (y + P_TRANS));
             g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Monospaced Bold", 20, 20));
+            g.setFont(new Font("Monospaced Bold", 20, 12));
             g.drawString("" + num, x - 10, y + 10);
-            g.setFont(new Font("Quicksand", 20, 12));
             if (p == game.getAttackPlayer()) {
                 drawPossibleAttacks(g, p, Color.GREEN);
             }
@@ -89,6 +93,8 @@ public class CourtRenderer extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a ring to select players
     private void paintHalos(Graphics g, int side, Players p) {
         int x = p.getPosX();
         int y = p.getPosY();
@@ -118,6 +124,8 @@ public class CourtRenderer extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: paints the enemy Team players
     public void paintEnemyTeam(Graphics g) {
         for (Players p: game.getEnemyTeam().getStarters()) {
 
@@ -126,20 +134,20 @@ public class CourtRenderer extends JPanel {
             int x = p.getPosX();
             int y = p.getPosY();
             int num = p.getNum();
-            String pos = p.getShortPos();
+
 
             paintHalos(g, 0, p);
 
             if (game.getGameState0().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter")) {
                 g.setColor(Color.RED);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                g.drawString(pos, x, (y + P_TRANS));
+                g.drawString(p.getShortPos(), x, (y + P_TRANS));
                 g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
                 drawPossibleAttacks(g, p, Color.RED);
             } else {
                 g.setColor(Color.darkGray);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
-                g.drawString(pos, x, (y + P_TRANS));
+                g.drawString(p.getShortPos(), x, (y + P_TRANS));
                 g.drawString("(" + x / 30 + ", " + ((y - 100) / 30) + ")", x, (y - 30));
 
             }
@@ -152,6 +160,8 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the possible atttack of a given player
     private void drawPossibleAttacks(Graphics g, Players p, Color color) {
         g.setColor(color);
         for (Point point : p.getAttackPoints(p.getSide())) {
@@ -168,6 +178,8 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the lines of the court
     private void orangeSetup(Graphics g) {
 
 
@@ -187,6 +199,8 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the court
     public void courtSetup(Graphics g) {
 
         g.setColor(Color.white);
@@ -195,6 +209,8 @@ public class CourtRenderer extends JPanel {
         orangeSetup(g);
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the blue of the court
     public void blueSetup(Graphics g) {
 
         g.setColor(new Color(0, 181, 226));
@@ -204,6 +220,8 @@ public class CourtRenderer extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the gridlines and scoreboard
     public void scoreBoardAndGrid(Graphics g) {
 
         for (int i = 0; i <= 24; i++) {
@@ -228,7 +246,8 @@ public class CourtRenderer extends JPanel {
 
 
 
-
+    // MODIFIES: this
+    // EFFECTS: paints the entire panel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -237,7 +256,6 @@ public class CourtRenderer extends JPanel {
         g.setFont(new Font("Quicksand", 20, 12));
         playersSetup(g);
         ballSetup(g);
-        //makeServeButtons();
 
 
     }

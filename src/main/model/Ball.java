@@ -105,7 +105,7 @@ public class Ball {
 
 
 
-
+    // EFFECTS: returns moveState of the ball
     public boolean getMoveState() {
         return moveState;
     }

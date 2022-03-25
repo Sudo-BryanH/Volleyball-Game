@@ -238,24 +238,36 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
             afterAD(game.enemyChooseSet());
         } else if (game.getGameState1().equals("E")) {
-            game.setGameState("S", "SN");
-            ball.directX(1);
-            ball.directY(0);
-            sleepThread(2);
-            game.makeServe();
+            afterEE();
 
         } else if (game.getGameState1().equals("F")) {
-            game.setGameState("SN", "S");
-            ball.directX(11);
-            ball.directY(24);
-            sleepThread(2);
-            game.makeServe();
+            afterFF();
 
         }
 
         game.adjustPos1();
         game.adjustPos0();
 
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: changes the state of the game to "S" "SN" and serves the ball
+    private void afterEE() {
+        game.setGameState("S", "SN");
+        ball.directX(1);
+        ball.directY(0);
+        sleepThread(2);
+        game.makeServe();
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: changes the state of the game to "SN" "S" and serves the ball
+    private void afterFF() {
+        game.setGameState("SN", "S");
+        ball.directX(11);
+        ball.directY(24);
+        sleepThread(2);
+        game.makeServe();
     }
 
     // MODIFIES: this, game

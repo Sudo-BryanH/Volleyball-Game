@@ -51,12 +51,7 @@ public class AddPlayers implements ActionListener {
         frame.setSize(400, 600);
         createTextArea();
 
-        done.setBounds(10, 530, 360, 40);
-        done.setSize(380, 40);
-        done.setBackground(new Color(30, 144, 255));
-        done.setForeground(Color.WHITE);
-        done.setOpaque(true);
-        done.addActionListener(this);
+        doneButton();
         frame.add(done);
         comboBox.addActionListener(this);
         comboBox.setBackground(Color.WHITE);
@@ -78,6 +73,15 @@ public class AddPlayers implements ActionListener {
         frame.add(blank);
         frame.setVisible(true);
 
+    }
+
+    private void doneButton() {
+        done.setBounds(10, 530, 360, 40);
+        done.setSize(380, 40);
+        done.setBackground(new Color(30, 144, 255));
+        done.setForeground(Color.WHITE);
+        done.setOpaque(true);
+        done.addActionListener(this);
     }
 
     // EFFECTS: creates the text area

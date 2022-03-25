@@ -241,6 +241,8 @@ public class OutsideHitter implements Players {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: moves player by dx and dy untl it reaches it's final destination
     @Override
     public void moveBySpeed() {
         if (moveState) {
@@ -272,6 +274,8 @@ public class OutsideHitter implements Players {
         }
     }
 
+
+    // EFFECTS: returns the list of points this player can attack
     @Override
     public ArrayList<Point> getAttackPoints(int side) {
         ArrayList<Point> spikes = new ArrayList<Point>();
@@ -289,6 +293,8 @@ public class OutsideHitter implements Players {
         return spikes;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the number for this player
     @Override
     public void declareNum(int num) {
         playerNum = num;

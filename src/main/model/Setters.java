@@ -266,11 +266,14 @@ public class Setters implements Players {
         }
     }
 
+    // EFFECTS: returns the list of points this player can attack
     @Override
     public ArrayList<Point> getAttackPoints(int side) {
         return null;
     }
 
+    // MODIFIES this
+    // EFFECTS: gives the player a number
     @Override
     public void declareNum(int num) {
         playerNum = num;

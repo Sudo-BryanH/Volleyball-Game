@@ -43,6 +43,7 @@ public class DeclarePlayers implements ActionListener {
 
     List<Players> players = new ArrayList<>();
 
+
     // EFFECTS: constructs a declare players object
     public DeclarePlayers(Game game) {
         this.game = game;
@@ -53,6 +54,7 @@ public class DeclarePlayers implements ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: adds players to players list
     public void createPlayers() {
         players.add(setter);
@@ -63,6 +65,7 @@ public class DeclarePlayers implements ActionListener {
         players.add(outside2);
     }
 
+    // MODIFIES: this
     // EFFECTS: constructs a declareplayer object
     public DeclarePlayers() {
         frame = new JFrame();
@@ -86,44 +89,59 @@ public class DeclarePlayers implements ActionListener {
         done.setForeground(Color.WHITE);
         done.setOpaque(true);
         done.addActionListener(this);
+
+        playerNumberTextFields();
         frame.add(done);
+        frame.add(set);
+        frame.add(mid1);
+        frame.add(mid2);
+        frame.add(oh1);
+        frame.add(oh2);
+        frame.add(op);
+
+        enemyTeamButtons();
+
+        JButton blank = new JButton();
+        blank.setBounds(10, 320, 160, 40);
+        frame.add(blank);
 
 
+        frame.setVisible(true);
+
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: customizes the text fields
+    private void playerNumberTextFields() {
         set.setBounds(20, 20, 360, 40);
         set.setBackground(Color.lightGray);
         set.addActionListener(this);
-        frame.add(set);
 
 
         mid1.setBounds(20, 70, 360, 40);
         mid1.setBackground(Color.lightGray);
         mid1.addActionListener(this);
-        frame.add(mid1);
 
 
-        //mid2.setBackground(Color.gray);
         mid2.setBounds(20, 120, 360, 40);
         mid2.setBackground(Color.lightGray);
         mid2.addActionListener(this);
-        frame.add(mid2);
 
-        //op.setBackground(Color.gray);
         op.setBounds(20, 170, 360, 40);
         op.setBackground(Color.lightGray);
         op.addActionListener(this);
-        frame.add(op);
 
-        //oh1.setBackground(Color.gray);
         oh1.setBounds(20, 220, 360, 40);
         oh1.setBackground(Color.lightGray);
         oh1.addActionListener(this);
-        frame.add(oh1);
 
         oh2.setBounds(20, 270, 360, 40);
         oh2.setBackground(Color.lightGray);
         oh2.addActionListener(this);
-        frame.add(oh2);
+    }
 
+    private void enemyTeamButtons() {
         weakTeam = new JButton("Weak Team");
         weakTeam.setBounds(10, 320, 190, 40);
         weakTeam.addActionListener(this);
@@ -135,15 +153,6 @@ public class DeclarePlayers implements ActionListener {
         strongTeam.addActionListener(this);
         strongTeam.setForeground(Color.BLACK);
         frame.add(strongTeam);
-
-        JButton blank = new JButton();
-        blank.setBounds(10, 320, 160, 40);
-        frame.add(blank);
-
-
-        frame.setVisible(true);
-
-
     }
 
     // MODIFIES this
@@ -162,7 +171,7 @@ public class DeclarePlayers implements ActionListener {
     }
 
 
-    // EFFEECTS: returns if enough information is given to move to the next ui
+    // EFFECTS: returns if enough information is given to move to the next ui
     public boolean allInput() {
         boolean playersDeclared = true;
         boolean enemyDeclared = false;
@@ -188,45 +197,82 @@ public class DeclarePlayers implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == done) {
-            if (allInput()) {
-                frame.setVisible(false);
-                new AddPlayers(players, enemyTeam);
-            }
+            donePressed();
         }
 
         if (e.getSource() == set) {
-            int num = parseInt(set.getText().substring("Choose the Setter's Number: ".length(), set.getText().length()));
-            setter.declareNum(num);
-            textArea.setText("\n Your setter's number is: " + setter.getNum());
+            setterChosen();
         } else if (e.getSource() == mid1) {
-            int num = parseInt(mid1.getText().substring("Choose the first Middle Blocker's Number: ".length(), mid1.getText().length()));
-            middle1.declareNum(num);
-            textArea.setText("\n Your first middle's number is: " + middle1.getNum());
+            middle1Chosen();
         } else if (e.getSource() == mid2) {
-            int num = parseInt(mid2.getText().substring("Choose the second Middle Blocker's Number: ".length(), mid2.getText().length()));
-            middle2.declareNum(num);
-            textArea.setText("\n Your second middle's number is: " + middle2.getNum());
+            middle2Chosen();
         } else if (e.getSource() == oh1) {
-            int num = parseInt(oh1.getText().substring("Choose the first Outside Hitter's Number: ".length(), oh1.getText().length()));
-            outside1.declareNum(num);
-            textArea.setText("\n Your first outside's number is: " + outside1.getNum());
+            outside1Chosen();
         } else if (e.getSource() == oh2) {
-            int num = parseInt(oh2.getText().substring("Choose the second Outside Hitter's Number: ".length(), oh2.getText().length()));
-            outside2.declareNum(num);
-            textArea.setText("\n Your second outside's number is: " + outside2.getNum());
+            outside2Chosen();
         } else if (e.getSource() == op) {
-            int num = parseInt(op.getText().substring("Choose the Opposite Hitter's Number: ".length(), op.getText().length()));
-            opposite.declareNum(num);
-            textArea.setText("\n Your opposite's number is: " + opposite.getNum());
+            oppositeChosen();
         }
 
         if (e.getSource() == strongTeam) {
-            this.enemyTeam = "Strong Team";
-            textArea.setText("\n You have chosen to play the strong team");
+            enemyButton("Strong Team");
         } else if (e.getSource() == weakTeam) {
-            this.enemyTeam = "Weak Team";
-            textArea.setText("\n You have chosen to play the weak team");
+            enemyButton("Weak Team");
         }
+    }
+
+    private void donePressed() {
+        if (allInput()) {
+            frame.setVisible(false);
+            new AddPlayers(players, enemyTeam);
+        }
+    }
+
+    private void enemyButton(String team) {
+        this.enemyTeam = team;
+        textArea.setText("\n You have chosen to play the" + team);
+    }
+
+    private void oppositeChosen() {
+        int num = parseInt(op.getText().substring("Choose the Opposite Hitter's Number: ".length(),
+                op.getText().length()));
+        opposite.declareNum(num);
+        textArea.setText("\n Your opposite's number is: " + opposite.getNum());
+    }
+
+    private void outside2Chosen() {
+        int num = parseInt(oh2.getText().substring("Choose the second Outside Hitter's Number: ".length(),
+                oh2.getText().length()));
+        outside2.declareNum(num);
+        textArea.setText("\n Your second outside's number is: " + outside2.getNum());
+    }
+
+    private void outside1Chosen() {
+        int num = parseInt(oh1.getText().substring("Choose the first Outside Hitter's Number: ".length(),
+                oh1.getText().length()));
+        outside1.declareNum(num);
+        textArea.setText("\n Your first outside's number is: " + outside1.getNum());
+    }
+
+    private void middle2Chosen() {
+        int num = parseInt(mid2.getText().substring("Choose the second Middle Blocker's Number: ".length(),
+                mid2.getText().length()));
+        middle2.declareNum(num);
+        textArea.setText("\n Your second middle's number is: " + middle2.getNum());
+    }
+
+    private void middle1Chosen() {
+        int num = parseInt(mid1.getText().substring("Choose the first Middle Blocker's Number: ".length(),
+                mid1.getText().length()));
+        middle1.declareNum(num);
+        textArea.setText("\n Your first middle's number is: " + middle1.getNum());
+    }
+
+    private void setterChosen() {
+        int num = parseInt(set.getText().substring("Choose the Setter's Number: ".length(),
+                set.getText().length()));
+        setter.declareNum(num);
+        textArea.setText("\n Your setter's number is: " + setter.getNum());
     }
 
 

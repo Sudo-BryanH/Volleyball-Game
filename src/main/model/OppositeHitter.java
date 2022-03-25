@@ -259,6 +259,9 @@ public class OppositeHitter implements Players {
 
 
 
+    // MODIFIES: this
+    // EFFECTS: moves player by dx and dy untl it reaches it's final destination
+
     @Override
     public void moveBySpeed() {
         if (moveState) {
@@ -290,6 +293,8 @@ public class OppositeHitter implements Players {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: gives the player the number
     @Override
     public void declareNum(int num) {
         playerNum = num;

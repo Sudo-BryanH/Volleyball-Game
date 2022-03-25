@@ -35,7 +35,12 @@ public class EnemyTeamTest {
         testOP = new OppositeHitter(1, 0);
         testMB3 = new MiddleBlockers(7, 0);
         testSet2 = new Setters(2, 0);
-
+        testMB1.setRotation(1);
+        testMB2.setRotation(5);
+        testOH1.setRotation(3);
+        testOH2.setRotation(6);
+        testSet.setRotation(1);
+        testOP.setRotation(4);
         testTeam = new EnemyTeam("testTeam", testSet, testMB1, testMB2,
                 testOH1, testOH2, testOP);
 
@@ -99,66 +104,66 @@ public class EnemyTeamTest {
     @Test
     public void testStartPosServe(){
         testTeam.startPosServe();
-        assertEquals(0, testSet.getPosX());
-        assertEquals(0, testSet.getPosY());
-        assertEquals(6, testMB1.getPosX());
-        assertEquals(4, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(5, testOH1.getPosY());
-        assertEquals(10, testOP.getPosX());
-        assertEquals(10, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(10, testMB2.getPosY());
-        assertEquals(2, testOH2.getPosX());
-        assertEquals(10, testOH2.getPosY());
+        assertEquals(0, testSet.getNewPosX());
+        assertEquals(0, testSet.getNewPosY());
+        assertEquals(6, testMB1.getNewPosX());
+        assertEquals(4, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(5, testOH1.getNewPosY());
+        assertEquals(10, testOP.getNewPosX());
+        assertEquals(10, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(10, testMB2.getNewPosY());
+        assertEquals(2, testOH2.getNewPosX());
+        assertEquals(10, testOH2.getNewPosY());
 
         testTeam.changeRotation();
         testTeam.startPosServe();
-        assertEquals(0, testOH2.getPosX());
-        assertEquals(0, testOH2.getPosY());
-        assertEquals(6, testSet.getPosX());
-        assertEquals(4, testSet.getPosY());
-        assertEquals(10, testMB1.getPosX());
-        assertEquals(5, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(10, testOH1.getPosY());
-        assertEquals(6, testOP.getPosX());
-        assertEquals(10, testOP.getPosY());
-        assertEquals(2, testMB2.getPosX());
-        assertEquals(10, testMB2.getPosY());
+        assertEquals(0, testOH2.getNewPosX());
+        assertEquals(0, testOH2.getNewPosY());
+        assertEquals(6, testSet.getNewPosX());
+        assertEquals(4, testSet.getNewPosY());
+        assertEquals(10, testMB1.getNewPosX());
+        assertEquals(5, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(10, testOH1.getNewPosY());
+        assertEquals(6, testOP.getNewPosX());
+        assertEquals(10, testOP.getNewPosY());
+        assertEquals(2, testMB2.getNewPosX());
+        assertEquals(10, testMB2.getNewPosY());
     }
 
     @Test
     public void testStartNoServe(){
 
         testTeam.serveReceivePos();
-        assertEquals(2, testSet.getPosX());
-        assertEquals(5, testSet.getPosY());
-        assertEquals(6, testMB1.getPosX());
-        assertEquals(4, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(5, testOH1.getPosY());
-        assertEquals(10, testOP.getPosX());
-        assertEquals(10, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(10, testMB2.getPosY());
-        assertEquals(2, testOH2.getPosX());
-        assertEquals(10, testOH2.getPosY());
+        assertEquals(2, testSet.getNewPosX());
+        assertEquals(5, testSet.getNewPosY());
+        assertEquals(6, testMB1.getNewPosX());
+        assertEquals(4, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(5, testOH1.getNewPosY());
+        assertEquals(10, testOP.getNewPosX());
+        assertEquals(10, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(10, testMB2.getNewPosY());
+        assertEquals(2, testOH2.getNewPosX());
+        assertEquals(10, testOH2.getNewPosY());
 
         testTeam.changeRotation();
         testTeam.serveReceivePos();
-        assertEquals(2, testOH2.getPosX());
-        assertEquals(5, testOH2.getPosY());
-        assertEquals(6, testSet.getPosX());
-        assertEquals(4, testSet.getPosY());
-        assertEquals(10, testMB1.getPosX());
-        assertEquals(5, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(10, testOH1.getPosY());
-        assertEquals(6, testOP.getPosX());
-        assertEquals(10, testOP.getPosY());
-        assertEquals(2, testMB2.getPosX());
-        assertEquals(10, testMB2.getPosY());
+        assertEquals(2, testOH2.getNewPosX());
+        assertEquals(5, testOH2.getNewPosY());
+        assertEquals(6, testSet.getNewPosX());
+        assertEquals(4, testSet.getNewPosY());
+        assertEquals(10, testMB1.getNewPosX());
+        assertEquals(5, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(10, testOH1.getNewPosY());
+        assertEquals(6, testOP.getNewPosX());
+        assertEquals(10, testOP.getNewPosY());
+        assertEquals(2, testMB2.getNewPosX());
+        assertEquals(10, testMB2.getNewPosY());
     }
 
     @Test
@@ -168,34 +173,34 @@ public class EnemyTeamTest {
         testTeam.changeRotation();
 
         testTeam.defendFSetter();
-        assertEquals(1, testSet.getPosX());
-        assertEquals(11, testSet.getPosY());
-        assertEquals(6, testMB1.getPosX());
-        assertEquals(11, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(11, testOH1.getPosY());
-        assertEquals(2, testOP.getPosX());
-        assertEquals(3, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(4, testMB2.getPosY());
-        assertEquals(10, testOH2.getPosX());
-        assertEquals(3, testOH2.getPosY());
+        assertEquals(1, testSet.getNewPosX());
+        assertEquals(11, testSet.getNewPosY());
+        assertEquals(6, testMB1.getNewPosX());
+        assertEquals(11, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(11, testOH1.getNewPosY());
+        assertEquals(2, testOP.getNewPosX());
+        assertEquals(3, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(4, testMB2.getNewPosY());
+        assertEquals(10, testOH2.getNewPosX());
+        assertEquals(3, testOH2.getNewPosY());
 
         testTeam.changeRotation();
         testTeam.defendFSetter();
 
-        assertEquals(1, testSet.getPosX());
-        assertEquals(11, testSet.getPosY());
-        assertEquals(6, testMB1.getPosX());
-        assertEquals(11, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(3, testOH1.getPosY());
-        assertEquals(2, testOP.getPosX());
-        assertEquals(3, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(4, testMB2.getPosY());
-        assertEquals(10, testOH2.getPosX());
-        assertEquals(11, testOH2.getPosY());
+        assertEquals(1, testSet.getNewPosX());
+        assertEquals(11, testSet.getNewPosY());
+        assertEquals(6, testMB1.getNewPosX());
+        assertEquals(11, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(3, testOH1.getNewPosY());
+        assertEquals(2, testOP.getNewPosX());
+        assertEquals(3, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(4, testMB2.getNewPosY());
+        assertEquals(10, testOH2.getNewPosX());
+        assertEquals(11, testOH2.getNewPosY());
 
 
     }
@@ -204,33 +209,33 @@ public class EnemyTeamTest {
     public void testDefendBSetter(){
 
         testTeam.defendBSetter();
-        assertEquals(8, testSet.getPosX());
-        assertEquals(8, testSet.getPosY());
-        assertEquals(3, testMB1.getPosX());
-        assertEquals(3, testMB1.getPosY());
-        assertEquals(9, testOH1.getPosX());
-        assertEquals(3, testOH1.getPosY());
-        assertEquals(2, testOP.getPosX());
-        assertEquals(11, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(11, testMB2.getPosY());
-        assertEquals(10, testOH2.getPosX());
-        assertEquals(11, testOH2.getPosY());
+        assertEquals(8, testSet.getNewPosX());
+        assertEquals(8, testSet.getNewPosY());
+        assertEquals(3, testMB1.getNewPosX());
+        assertEquals(3, testMB1.getNewPosY());
+        assertEquals(9, testOH1.getNewPosX());
+        assertEquals(3, testOH1.getNewPosY());
+        assertEquals(2, testOP.getNewPosX());
+        assertEquals(11, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(11, testMB2.getNewPosY());
+        assertEquals(10, testOH2.getNewPosX());
+        assertEquals(11, testOH2.getNewPosY());
 
         testTeam.changeRotation();
         testTeam.defendBSetter();
-        assertEquals(8, testSet.getPosX());
-        assertEquals(8, testSet.getPosY());
-        assertEquals(3, testMB1.getPosX());
-        assertEquals(3, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(11, testOH1.getPosY());
-        assertEquals(2, testOP.getPosX());
-        assertEquals(11, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(11, testMB2.getPosY());
-        assertEquals(9, testOH2.getPosX());
-        assertEquals(3, testOH2.getPosY());
+        assertEquals(8, testSet.getNewPosX());
+        assertEquals(8, testSet.getNewPosY());
+        assertEquals(3, testMB1.getNewPosX());
+        assertEquals(3, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(11, testOH1.getNewPosY());
+        assertEquals(2, testOP.getNewPosX());
+        assertEquals(11, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(11, testMB2.getNewPosY());
+        assertEquals(9, testOH2.getNewPosX());
+        assertEquals(3, testOH2.getNewPosY());
     }
 
     @Test
@@ -240,33 +245,33 @@ public class EnemyTeamTest {
         testTeam.changeRotation();
 
         testTeam.attackFSetter();
-        assertEquals(8, testSet.getPosX());
-        assertEquals(10, testSet.getPosY());
-        assertEquals(6, testMB1.getPosX());
-        assertEquals(11, testMB1.getPosY());
-        assertEquals(12, testOH1.getPosX());
-        assertEquals(11, testOH1.getPosY());
-        assertEquals(3, testOP.getPosX());
-        assertEquals(3, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(5, testMB2.getPosY());
-        assertEquals(10, testOH2.getPosX());
-        assertEquals(3, testOH2.getPosY());
+        assertEquals(8, testSet.getNewPosX());
+        assertEquals(10, testSet.getNewPosY());
+        assertEquals(6, testMB1.getNewPosX());
+        assertEquals(11, testMB1.getNewPosY());
+        assertEquals(12, testOH1.getNewPosX());
+        assertEquals(11, testOH1.getNewPosY());
+        assertEquals(3, testOP.getNewPosX());
+        assertEquals(3, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(5, testMB2.getNewPosY());
+        assertEquals(10, testOH2.getNewPosX());
+        assertEquals(3, testOH2.getNewPosY());
 
         testTeam.changeRotation();
         testTeam.attackFSetter();
-        assertEquals(8, testSet.getPosX());
-        assertEquals(10, testSet.getPosY());
-        assertEquals(6, testMB1.getPosX());
-        assertEquals(11, testMB1.getPosY());
-        assertEquals(10, testOH1.getPosX());
-        assertEquals(3, testOH1.getPosY());
-        assertEquals(3, testOP.getPosX());
-        assertEquals(3, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(5, testMB2.getPosY());
-        assertEquals(12, testOH2.getPosX());
-        assertEquals(11, testOH2.getPosY());
+        assertEquals(8, testSet.getNewPosX());
+        assertEquals(10, testSet.getNewPosY());
+        assertEquals(6, testMB1.getNewPosX());
+        assertEquals(11, testMB1.getNewPosY());
+        assertEquals(10, testOH1.getNewPosX());
+        assertEquals(3, testOH1.getNewPosY());
+        assertEquals(3, testOP.getNewPosX());
+        assertEquals(3, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(5, testMB2.getNewPosY());
+        assertEquals(12, testOH2.getNewPosX());
+        assertEquals(11, testOH2.getNewPosY());
 
 
 
@@ -276,33 +281,33 @@ public class EnemyTeamTest {
     public void testAttackBSetter(){
 
         testTeam.attackBSetter();
-        assertEquals(4, testSet.getPosX());
-        assertEquals(8, testSet.getPosY());
-        assertEquals(3, testMB1.getPosX());
-        assertEquals(3, testMB1.getPosY());
-        assertEquals(9, testOH1.getPosX());
-        assertEquals(3, testOH1.getPosY());
-        assertEquals(0, testOP.getPosX());
-        assertEquals(11, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(11, testMB2.getPosY());
-        assertEquals(12, testOH2.getPosX());
-        assertEquals(11, testOH2.getPosY());
+        assertEquals(4, testSet.getNewPosX());
+        assertEquals(8, testSet.getNewPosY());
+        assertEquals(3, testMB1.getNewPosX());
+        assertEquals(3, testMB1.getNewPosY());
+        assertEquals(9, testOH1.getNewPosX());
+        assertEquals(3, testOH1.getNewPosY());
+        assertEquals(0, testOP.getNewPosX());
+        assertEquals(11, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(11, testMB2.getNewPosY());
+        assertEquals(12, testOH2.getNewPosX());
+        assertEquals(11, testOH2.getNewPosY());
 
         testTeam.changeRotation();
         testTeam.attackBSetter();
-        assertEquals(4, testSet.getPosX());
-        assertEquals(8, testSet.getPosY());
-        assertEquals(3, testMB1.getPosX());
-        assertEquals(3, testMB1.getPosY());
-        assertEquals(12, testOH1.getPosX());
-        assertEquals(11, testOH1.getPosY());
-        assertEquals(0, testOP.getPosX());
-        assertEquals(11, testOP.getPosY());
-        assertEquals(6, testMB2.getPosX());
-        assertEquals(11, testMB2.getPosY());
-        assertEquals(9, testOH2.getPosX());
-        assertEquals(3, testOH2.getPosY());
+        assertEquals(4, testSet.getNewPosX());
+        assertEquals(8, testSet.getNewPosY());
+        assertEquals(3, testMB1.getNewPosX());
+        assertEquals(3, testMB1.getNewPosY());
+        assertEquals(12, testOH1.getNewPosX());
+        assertEquals(11, testOH1.getNewPosY());
+        assertEquals(0, testOP.getNewPosX());
+        assertEquals(11, testOP.getNewPosY());
+        assertEquals(6, testMB2.getNewPosX());
+        assertEquals(11, testMB2.getNewPosY());
+        assertEquals(9, testOH2.getNewPosX());
+        assertEquals(3, testOH2.getNewPosY());
 
     }
 
@@ -452,5 +457,27 @@ public class EnemyTeamTest {
         assertEquals(10, testTeam.getChance());
         testTeam.setChance(3);
         assertEquals(3, testTeam.getChance());
+    }
+
+    @Test
+    public void movePlayers() {
+
+        testMB1.moveToX(3);
+        testMB1.moveToY(3);
+
+        assertEquals(90, testMB1.getNewPosX());
+        assertEquals(190, testMB1.getNewPosY());
+
+        testSet.moveToX(9);
+        testSet.moveToY(12);
+
+        assertEquals(270, testSet.getNewPosX());
+        assertEquals(460, testSet.getNewPosY());
+
+        assertEquals(0, testOH1.getNewPosX());
+        assertEquals(0, testOH1.getNewPosY());
+
+
+
     }
 }
