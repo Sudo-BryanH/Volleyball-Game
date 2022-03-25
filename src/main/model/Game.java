@@ -281,7 +281,7 @@ public class Game {
         if (gameState0.equals("D") || gameState0.equals("SN")) {
             for (Players p : enemyTeam.getStarters()) {
                 if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE
-                      &&  (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                        &&  (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
                     p.receive(ball);
                 }
             }
@@ -289,7 +289,7 @@ public class Game {
         } else if (gameState1.equals("D") || gameState1.equals("SN")) {
             for (Players p : myTeam.getStarters()) {
                 if ((p.getNewPosX() - ball.getMoveToXPos()) <= 1 * Players.SCALE
-                      &&  (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
+                        &&  (p.getNewPosY() - ball.getMoveToYPos()) <= 1 * Players.SCALE) {
                     p.receive(ball);
                 }
             }
