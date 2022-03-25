@@ -111,8 +111,8 @@ public class AddPlayers implements ActionListener {
         }
 
         rosterPlayers.add(p);
-        textArea.append("\nYou have added player " + p.getPlayingPosition() + " " + playerNum
-                + "\nto your team. \nYou now have " + rosterPlayers.size() + "On your team.");
+        textArea.setText("\nYou have added player " + p.getPlayingPosition() + " " + playerNum
+                + "\nto your team. \nYou now have " + rosterPlayers.size() + " players on your team.");
 
     }
 
