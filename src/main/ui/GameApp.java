@@ -280,7 +280,7 @@ public class GameApp extends JFrame {
         int input;
         if (turn == 0) {
             enemyTeam.startPosServe();
-            myTeam.ServeReceivePos();
+            myTeam.serveReceivePos();
             for (Players p : enemyTeam.getStarters()) {
                 if (p.getRotation() == 1) {
                     p.serve(chance, ball);
@@ -288,7 +288,7 @@ public class GameApp extends JFrame {
             }
             System.out.println("Serve has been made");
         } else if (turn == 1) {
-            enemyTeam.ServeReceivePos();
+            enemyTeam.serveReceivePos();
             myTeam.startPosServe();
             input = intInput("Do you want to serve left[0] or right [1]");
             for (Players p : enemyTeam.getStarters()) {

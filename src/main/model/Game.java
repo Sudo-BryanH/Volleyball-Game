@@ -18,9 +18,11 @@ public class Game {
     private Ball ball;
     private String gameState1; // D for defence, SN for startNoServe, A for set and attack, S for serve
     private String gameState0;
-    Players attackPlayer;
+    private Players attackPlayer;
     private int servePos;
     private Point attackPoint;
+    private Players selectDefensive;
+
 
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
@@ -64,8 +66,8 @@ public class Game {
 
         for (Players p : backrow) {
 
-            int x = p.getPosX();
-            int y = p.getPosY();
+            int x = p.getNewPosX();
+            int y = p.getNewPosY();
             if ((Math.abs(x - ballX) <= 1 * SCALE) && (Math.abs(y - ballY) <= 1 * SCALE)) {
                 return true;
             }
@@ -210,7 +212,7 @@ public class Game {
     public void adjustPos1() {
         switch (gameState1) {
             case "SN":
-                myTeam.ServeReceivePos();
+                myTeam.serveReceivePos();
                 break;
             case "S":
                 myTeam.startPosServe();
@@ -230,14 +232,14 @@ public class Game {
                 }
                 break;
             default:
-                myTeam.ServeReceivePos();
+                myTeam.serveReceivePos();
         }
     }
 
     public void adjustPos0() {
         switch (gameState0) {
             case "SN":
-                enemyTeam.ServeReceivePos();
+                enemyTeam.serveReceivePos();
                 break;
             case "S":
                 enemyTeam.startPosServe();
@@ -257,7 +259,7 @@ public class Game {
                 }
                 break;
             default:
-                enemyTeam.ServeReceivePos();
+                enemyTeam.serveReceivePos();
         }
     }
 
@@ -342,19 +344,23 @@ public class Game {
             enemyScore();
             enemyTeam.changeRotation();
             ball.moveToX(0);
-            ball.moveToY(0);
+            ball.moveToY(100);
+            enemyTeam.startPosServe();
         } else {
             myScore();
             myTeam.changeRotation();
             ball.moveToX(12);
             ball.moveToY(24);
+            enemyTeam.serveReceivePos();
         }
     }
 
     public String chooseAttack(int x, int y) {
         if (y > 460 && y <= 520) {
+            attackPlayer = null;
             if (chooseSet(x) != null) {
                 attackPoint = null;
+                mySet();
                 return "You've chosen to set to the " + chooseSet(x) + ". \nClick a green target to attack.";
             } else {
                 return "Click a hitter in green.";
@@ -421,11 +427,11 @@ public class Game {
     }
 
     public void mySet() {
-        if (getAttackPlayer().getPlayingPosition().equals("OH")) {
+        if (getAttackPlayer().getShortPos().equals("OH")) {
             myTeam.set(0, ball);
-        } else if (getAttackPlayer().getPlayingPosition().equals("MB")) {
+        } else if (getAttackPlayer().getShortPos().equals("MB")) {
             myTeam.set(1, ball);
-        } else {
+        } else if (getAttackPlayer().getShortPos().equals("OP")) {
             myTeam.set(2, ball);
         }
     }
@@ -445,13 +451,46 @@ public class Game {
 
         if (chance == 1) {
             for (Players p : enemyTeam.getStarters()) {
-                if (p.getRotation() <= 3 && !p.getShortPos().equals("S")) {
+                if (p.getRotation() < 4 && !p.getShortPos().equals("S")) {
                     p.moveToX((int) attackPoint.getX());
                     p.moveToY((int) attackPoint.getY());
                     break;
                 }
             }
         }
+    }
+
+    public String chooseDefense(int x, int y) {
+        if (selectDefensive == null) {
+            return selectPlayer(x, y);
+        } else {
+            return moveSelected(x, y);
+        }
+
+    }
+
+    private String moveSelected(int x, int y) {
+        int num = selectDefensive.getNum();
+        selectDefensive.moveToX(x / 30);
+        selectDefensive.moveToY((y - 100) / 30);
+        selectDefensive = null;
+        return "Player #" + num + " has been moved to (" + x + " ," + y + ")";
+
+    }
+
+    private String selectPlayer(int x, int y) {
+        for (Players p : myTeam.getRoster()) {
+            if (Math.abs(p.getPosX() - x) < 40 && Math.abs(p.getPosY() - y) < 40) {
+                selectDefensive = p;
+                return "Player #" + p.getNum() + " selected. Click anywhere to move this player. ";
+            }
+        }
+
+        return null;
+    }
+
+    public Players getSelectDefensive() {
+        return selectDefensive;
     }
 }
 

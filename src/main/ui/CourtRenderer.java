@@ -25,7 +25,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
         this.game = game;
 
 
-        setPreferredSize(new Dimension(360, 820));
+        setPreferredSize(new Dimension(360, 880));
         setBackground(Color.WHITE);
         setOpaque(true);
 
@@ -67,7 +67,7 @@ public class CourtRenderer extends JPanel implements ActionListener {
 
 
             if ((game.getGameState1().equals("A") && p.getRotation() >= 4 && !p.getPlayingPosition().equals("Setter"))
-                    || p == game.getAttackPlayer()) {
+                    || p == game.getAttackPlayer() || p == game.getSelectDefensive()) {
                 g.setColor(Color.green);
                 g.fillOval(x + P_TRANS, y + P_TRANS, 30, 30);
             } else {
@@ -198,8 +198,8 @@ public class CourtRenderer extends JPanel implements ActionListener {
 
         g.setColor(new Color(0, 181, 226));
         g.fillRect(0, 0, 360, 100);
-/*        g.setColor(new Color(0, 181, 226));
-        g.fillRect(0, 820, 360, 100);*/
+        g.setColor(new Color(0, 181, 226));
+        g.fillRect(0, 820, 360, 60);
 
     }
 

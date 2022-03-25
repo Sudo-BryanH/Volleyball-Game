@@ -138,7 +138,7 @@ public class MyTeamTest {
 
     @Test
     public void testStartNoServe(){
-        testTeam.ServeReceivePos();
+        testTeam.serveReceivePos();
         assertEquals(10 * Players.SCALE, testSet.getPosX());
         assertEquals(19 * Players.SCALE + Players.Y_TRANS, testSet.getPosY());
         assertEquals(6 * Players.SCALE, testMB1.getPosX());
@@ -153,7 +153,7 @@ public class MyTeamTest {
         assertEquals(14 * Players.SCALE + Players.Y_TRANS, testOH2.getPosY());
 
         testTeam.changeRotation();
-        testTeam.ServeReceivePos();
+        testTeam.serveReceivePos();
         assertEquals(10 * Players.SCALE, testOH2.getPosX());
         assertEquals(19 * Players.SCALE + Players.Y_TRANS, testOH2.getPosY());
         assertEquals(6 * Players.SCALE, testSet.getPosX());
@@ -487,7 +487,7 @@ public class MyTeamTest {
 
     @Test
     public void movePlayers() {
-        testTeam.ServeReceivePos();
+        testTeam.serveReceivePos();
         testMB1.moveToX(3);
         testMB1.moveToY(3);
 

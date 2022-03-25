@@ -14,7 +14,7 @@ public interface Team {
 
     // MODIFIES: players
     // EFFECTS: puts players in this starting position
-    public void ServeReceivePos();
+    public void serveReceivePos();
 
     // MODIFIES: players
     // EFFECTS: puts players in this starting position

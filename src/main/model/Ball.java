@@ -9,8 +9,8 @@ public class Ball {
     private int moveToXPos;
     private static int SCALE = 30;
     private static int Y_TRANS = 100;
-    private int dy = 12;
-    private int dx = 6;
+    private int dy = 24;
+    private int dx = 12;
     private boolean moveState;
 
 

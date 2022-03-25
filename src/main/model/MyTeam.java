@@ -134,7 +134,7 @@ public class MyTeam implements Team {
     // EFFECTS: moves the players into formation for receiving opponent serves
 
     @Override
-    public void ServeReceivePos() {
+    public void serveReceivePos() {
         for (Players p : starters) {
             if (p.getRotation() == 1) {
                 p.moveToX(10);

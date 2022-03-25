@@ -52,7 +52,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     JsonReader jsonReader;
     GameData gameData;
     private static final String JSON_STORE = "./data/mostRecentGameData.json";
-    private static final int INTERVAL = 42;
+    private static final int INTERVAL = 17;
     private JButton nextButton;
     private JTextArea instructions;
     private JButton quitButton;
@@ -89,7 +89,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         court = new CourtRenderer(game);
         addMouseListener(this);
         nextButton = new JButton("Next");
-        nextButton.setPreferredSize(new Dimension(360, 100));
+        nextButton.setPreferredSize(new Dimension(360, 30));
         nextButton.setBackground(new Color(30, 144, 255));
         nextButton.setOpaque(true);
         nextButton.addActionListener(this);
@@ -99,12 +99,12 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         instructions.setOpaque(true);
         printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
         quitButton = new JButton("Quit & Save");
-        quitButton.setPreferredSize(new Dimension(180, 100));
+        quitButton.setPreferredSize(new Dimension(180, 30));
         quitButton.setBackground(Color.RED);
         quitButton.setOpaque(true);
         quitButton.addActionListener(this);
         changePlayerButton = new JButton("Switch Players");
-        changePlayerButton.setPreferredSize(new Dimension(180, 100));
+        changePlayerButton.setPreferredSize(new Dimension(180, 30));
         changePlayerButton.setBackground(Color.WHITE);
         changePlayerButton.setOpaque(true);
         changePlayerButton.addActionListener(this);
@@ -136,7 +136,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         this.myTeam = gameData.getMyTeam();
         game.setEnemyTeam(enemyTeam);
         game.setMyTeam(myTeam);
-        game.getMyTeam().ServeReceivePos();
+        game.getMyTeam().serveReceivePos();
         game.getEnemyTeam().startPosServe();
 
     }
@@ -144,9 +144,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
     // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
-    public void setUp(List<Players> starters, List<Players> roster, String eTeam) {
+    public void setUp(List<Players> starters, List<Players> roster, String eteam) {
 
-        if (eTeam.equals("Strong Team")) {
+        if (eteam.equals("Strong Team")) {
             enemyTeamConstructor("Strong team", strongMB1, strongMB2, strongSet,
                     strongOP, strongOH1, strongOH2, 2);
         } else {
@@ -154,12 +154,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
                     weakOP, weakOH1, weakOH2, 5);
         }
 
-        //myTeam = myTeamConstructor(input, mySet, myMB1, myMB2, myOH1, myOH2, myOP);
         myTeam = myTeamConstructor(starters, roster);
 
-
         game = new Game(myTeam, enemyTeam);
-        game.getMyTeam().ServeReceivePos();
+        game.getMyTeam().serveReceivePos();
         game.getEnemyTeam().startPosServe();
         gameData = new GameData(game);
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -181,6 +179,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
         e.setChance(chance);
         enemyTeam = e;
+        e.changeRotation();
+        e.changeRotation();
+        e.changeRotation();
         //game.setEnemyTeam(e);
         // May cause errors with subtypes
 
@@ -198,7 +199,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         MyTeam m;
         m = new MyTeam(roster, name);
-        m.ServeReceivePos();
+        m.serveReceivePos();
 
         return m; // May cause errors with subtypes
 
@@ -226,7 +227,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             printer("Our serve", Color.BLACK);
             game.receive();
             game.setGameState("A", "D");
-            printer("Ball passed to Setter", Color.BLACK);
+            printer("Move players to defend the court by"
+                    + " clicking on them\n and then somewhere else."
+                    + "\nTry to match up the players to as many red targets as\npossible. "
+                    + "Note that only backrow players can receive. \nPress next when you're done.", Color.BLACK);
         } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
             printer("Opponent serving", Color.BLACK);
             game.receive();
@@ -234,13 +238,16 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             printer("Ball passed to Setter", Color.BLACK);
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
             if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
-                game.mySet();
                 game.myAttack();
                 game.enemyDefend();
                 endMyAttack();
             }
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
             endMyDefence();
+        } else if (game.getGameState1().equals("E")) {
+            game.setGameState("S", "SN");
+        } else if (game.getGameState1().equals("F")) {
+            game.setGameState("SN", "S");
         }
 
         game.adjustPos1();
@@ -258,10 +265,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         if (scored) {
             printer("Your Opponent has scored.", Color.RED);
             game.endRally(0);
-            game.setGameState("S", "SN");
+            game.setGameState("E", "E");
         } else {
-            printer("You have received your opponent's attack.", new Color(40, 71, 82));
-            game.endRally(1);
+            printer("You have received your opponent's attack.",
+                    new Color(40, 71, 82));
             game.receive();
             game.setGameState("D", "A");
         }
@@ -275,9 +282,12 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         if (scored) {
             printer("Your team has scored.", Color.red);
             game.endRally(1);
-            game.setGameState("SN", "S");
+            game.setGameState("F", "F");
         } else {
-            printer("Your opponent has received your attack.", new Color(40, 71, 82));
+            printer("You have received your opponent's attack. \nMove players to defend the court by"
+                    + " clicking on them\n and then somewhere else."
+                    + "\nTry to match up the players to as many red targets as\n possible. "
+                    + "Note that only backrow players can receive. \nPress next when you're done.", new Color(40, 71, 82));
             game.receive();
             game.setGameState("A", "D");
         }
@@ -330,6 +340,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         printer("You've clicked at (" + e.getX() + " ," + e.getY() + ")", new Color(21, 71, 52));
         if (game.getGameState1().equals("A")) {
             printer(game.chooseAttack(e.getX(), e.getY()), Color.BLACK);
+        } else if (game.getGameState1().equals("D")) {
+            printer(game.chooseDefense(e.getX(), e.getY()), Color.BLACK);
         }
     }
 
