@@ -15,6 +15,7 @@ public class GameData {
 
 
 
+
     // EFFECTS: constructs a new game data, declaring team objects with empty arrays and other specifications
     public GameData(Game game) {
         myTeam = game.getMyTeam();
