@@ -227,6 +227,7 @@ public class GameTest {
         assertEquals(0, testGame2.getEnemyScore());
     }
 
+    // TODO All random values can be accounted for if it can produce the same type
 
 
 }

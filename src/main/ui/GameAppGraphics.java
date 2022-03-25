@@ -13,39 +13,19 @@ import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 public class GameAppGraphics extends JFrame implements MouseListener, ActionListener {
 
-    JFrame frame;
+
     CourtRenderer court;
     Game game;
 
     Team myTeam;
-    EnemyTeam weakTeam;
-    EnemyTeam strongTeam;
-    Scanner scan = new Scanner(System.in);
-    Players weakMB1;
-    Players weakMB2;
-    Players weakSet;
-    Players weakOH1;
-    Players weakOH2;
-    Players weakOP;
-    Players strongMB1;
-    Players strongMB2;
-    Players strongSet;
-    Players strongOH1;
-    Players strongOH2;
-    Players strongOP;
     EnemyTeam enemyTeam;
     Ball ball;
-    int turn;
 
     Timer timer;
-    DeclarePlayers addPlayer;
-    int setNum;
-    int attackNum;
-    boolean state;
+
 
 
     JsonWriter jsonWriter;
@@ -57,7 +37,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     private JTextArea instructions;
     private JButton quitButton;
     private JButton changePlayerButton;
-    private int servePos;
+    private JPanel rightSidePanel;
 
 
     public GameAppGraphics() {
@@ -88,34 +68,53 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         court = new CourtRenderer(game);
         addMouseListener(this);
+        nextButton();
+        rightSidePanel();
+        quitButton();
+        changePlayerButton();
+        add(court);
+        add(rightSidePanel);
+        add(nextButton);
+        add(changePlayerButton);
+        add(quitButton);
+        setVisible(true);
+    }
+
+    private void nextButton() {
         nextButton = new JButton("Next");
         nextButton.setPreferredSize(new Dimension(360, 30));
         nextButton.setBackground(new Color(30, 144, 255));
         nextButton.setOpaque(true);
         nextButton.addActionListener(this);
-        instructions = new JTextArea();
-        instructions.setPreferredSize(new Dimension(350, 810));
-        instructions.setBackground(Color.lightGray);
-        instructions.setOpaque(true);
-        printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
-        quitButton = new JButton("Quit & Save");
-        quitButton.setPreferredSize(new Dimension(180, 30));
-        quitButton.setBackground(Color.RED);
-        quitButton.setOpaque(true);
-        quitButton.addActionListener(this);
+    }
+
+    private void changePlayerButton() {
         changePlayerButton = new JButton("Switch Players");
         changePlayerButton.setPreferredSize(new Dimension(180, 30));
         changePlayerButton.setBackground(Color.WHITE);
         changePlayerButton.setOpaque(true);
         changePlayerButton.addActionListener(this);
-        add(court);
-        add(instructions);
-        add(nextButton);
-        add(changePlayerButton);
-        add(quitButton);
+    }
 
-        //pack();
-        setVisible(true);
+    private void quitButton() {
+        quitButton = new JButton("Quit & Save");
+        quitButton.setPreferredSize(new Dimension(180, 30));
+        quitButton.setBackground(Color.RED);
+        quitButton.setOpaque(true);
+        quitButton.addActionListener(this);
+    }
+
+    private void rightSidePanel() {
+        rightSidePanel = new JPanel();
+        rightSidePanel.setPreferredSize(new Dimension(359, 879));
+        rightSidePanel.setBackground(Color.WHITE);
+        rightSidePanel.setOpaque(true);
+        instructions = new JTextArea();
+        instructions.setPreferredSize(new Dimension(340, 380));
+        instructions.setBackground(Color.lightGray);
+        instructions.setOpaque(true);
+        rightSidePanel.add(instructions);
+        printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
     }
 
 
@@ -147,11 +146,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     public void setUp(List<Players> starters, List<Players> roster, String eteam) {
 
         if (eteam.equals("Strong Team")) {
-            enemyTeamConstructor("Strong team", strongMB1, strongMB2, strongSet,
-                    strongOP, strongOH1, strongOH2, 2);
+            enemyTeamConstructor("Strong team", 2);
         } else {
-            enemyTeamConstructor("Weak team", weakMB1, weakMB2, weakSet,
-                    weakOP, weakOH1, weakOH2, 5);
+            enemyTeamConstructor("Weak team", 5);
         }
 
         myTeam = myTeamConstructor(starters, roster);
@@ -165,15 +162,13 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    public void enemyTeamConstructor(String name, Players mb1, Players mb2,
-                                     Players set, Players op, Players oh1,
-                                     Players oh2, int chance) {
-        set = new Setters((int) Math.random() * 2 + 1, 0);
-        mb1 = new MiddleBlockers((int) Math.random() * 2 + 3, 0);
-        oh1 = new OutsideHitter((int) Math.random() * 2 + 5, 0);
-        op = new OppositeHitter((int) Math.random() * 2 + 7, 0);
-        mb2 = new MiddleBlockers((int) Math.random() * 2 + 9, 0);
-        oh2 = new OutsideHitter((int) Math.random() * 2 + 11, 0);
+    public void enemyTeamConstructor(String name, int chance) {
+        Players set = new Setters((int) Math.random() * 2 + 1, 0);
+        Players mb1 = new MiddleBlockers((int) Math.random() * 2 + 3, 0);
+        Players oh1 = new OutsideHitter((int) Math.random() * 2 + 5, 0);
+        Players op = new OppositeHitter((int) Math.random() * 2 + 7, 0);
+        Players mb2 = new MiddleBlockers((int) Math.random() * 2 + 9, 0);
+        Players oh2 = new OutsideHitter((int) Math.random() * 2 + 11, 0);
 
         EnemyTeam e;
         e = new EnemyTeam(name, set, mb1, mb2, oh1, oh2, op);
@@ -209,7 +204,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // EFFECTS: changes instruction text to message in color
     public void printer(String message, Color color) {
         instructions.setForeground(Color.black);
-        instructions.setText("Game State for our team: " + game.getGameState1());
+        instructions.setFont(new Font("Quicksand", 0, 13));
+        instructions.setText("INSTRUCTIONS\n");
+        instructions.append("\nGame State for our team: " + game.getGameState1());
         instructions.append("\nGame State for opponent team: " + game.getGameState0());
         instructions.setForeground(color);
         instructions.append("\n" + message);
@@ -219,31 +216,23 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // EFFECTS: changes the state of the game. Also decides whether to continue or end the game.
     public void changeState() {
         if (game.getGameState1().equals("N") && game.getGameState0().equals("N")) { // ONLY at the start of a game
-            game.setGameState("S", "SN");
-            printer("Let's begin the game", Color.BLACK);
-            game.makeServe();
-            printer("Ball passed to Setter", Color.BLACK);
+            afterNN();
         } else if (game.getGameState1().equals("S") && game.getGameState0().equals("SN")) {
-            printer("Our serve", Color.BLACK);
-            game.receive();
-            game.setGameState("A", "D");
-            printer("\nMove players to defend the court by"
-                    + " clicking on them\n and then where you want them to go.\n"
-                    + "\nHint: Try to match up the players to as many \nred targets as possible. "
-                    + "Note that only back row players can receive.\n \nPress next when you're done.", Color.BLACK);
+            afterSNS();
         } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
-            printer("Opponent serving", Color.BLACK);
-            game.receive();
-            game.setGameState("D", "A");
-            printer("Ball passed to Setter", Color.BLACK);
+            afterSSN();
         } else if (game.getGameState0().equals("D") && game.getGameState1().equals("A")) {
             afterDA();
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
             afterAD(game.enemyChooseSet());
         } else if (game.getGameState1().equals("E")) {
             game.setGameState("S", "SN");
+            ball.moveToX(0);
+            ball.moveToY(0);
         } else if (game.getGameState1().equals("F")) {
             game.setGameState("SN", "S");
+            ball.moveToX(12);
+            ball.moveToY(24);
         }
 
         game.adjustPos1();
@@ -251,11 +240,45 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    // MODIFIES: this, game
+    // EFFECTS: changes the state of the game to "D" "A" and receives the ball
+    private void afterSSN() {
+        printer("Opponent serving", Color.BLACK);
+        game.receive();
+        game.setGameState("D", "A");
+        printer("Ball passed to Setter", Color.BLACK);
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: changes the state of the game to "A" "D" and receives the ball
+    private void afterSNS() {
+        printer("Our serve", Color.BLACK);
+        game.receive();
+        game.setGameState("A", "D");
+        printer("\nMove players to defend the court by"
+                + " clicking on them\n and then where you want them to go.\n"
+                + "\nHint: Try to match up the players to as many \nred targets as possible. "
+                + "Note that only back row players can receive.\n \nPress next when you're done.", Color.BLACK);
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: changes the state of the game to "S" and "SN" then serves
+    private void afterNN() {
+        game.setGameState("S", "SN");
+        printer("Let's begin the game", Color.BLACK);
+        game.makeServe();
+        printer("Ball passed to Setter", Color.BLACK);
+    }
+
+    // MODIFIES: this, game
+    // EFFECTS: enemy chooses attack, our team chooses defense and determines if a point is scored. Then changes state
     private void afterAD(String dir) {
         printer(game.enemyChooseAttack(dir), Color.BLACK);
         endMyDefence(dir);
     }
 
+    // MODIFIES: this, game
+    // EFFECTS: our team chooses attack, enemy chooses defense and determines if a point is scored. Then changes state
     private void afterDA() {
         if (game.getAttackPlayer() != null && game.getAttackPoint() != null) {
             game.motionAttack();
@@ -295,7 +318,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             printer("You have received your opponent's attack.\n \nMove players to defend the court by"
                     + " clicking on them\n and then where you want them to go.\n"
                     + "\nHint: Try to match up the players to as many \nred targets as possible. "
-                    + "Note that only back row players can receive.\n \nPress next when you're done.", new Color(40, 71, 82));
+                    + "Note that only back row players can receive.\n \nPress next when you're done.",
+                    new Color(40, 71, 82));
             game.receive();
             game.setGameState("A", "D");
         }
@@ -330,6 +354,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     }
 
 
+    // MODIFIES: this, game
+    // EFFECTS: after each tick, visuals get updated and objects move if needed
     private void addTimer() {
         timer = new Timer(INTERVAL, new ActionListener() {
             @Override

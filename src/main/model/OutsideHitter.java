@@ -28,8 +28,8 @@ public class OutsideHitter implements Players {
     // EFFECTS: constructs an Outside Hitter object with player number and starting rotation of 0 (TBD)
     public OutsideHitter(int playerNum, int side) {
         this.playerNum = playerNum;
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = 60;
+        this.posY = 460;
         this.side = side;
 
 

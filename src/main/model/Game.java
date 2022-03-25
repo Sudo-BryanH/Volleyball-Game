@@ -342,14 +342,10 @@ public class Game {
 
             enemyScore();
             enemyTeam.changeRotation();
-            ball.moveToX(0);
-            ball.moveToY(100);
             enemyTeam.startPosServe();
         } else {
             myScore();
             myTeam.changeRotation();
-            ball.moveToX(12);
-            ball.moveToY(24);
             enemyTeam.serveReceivePos();
         }
     }

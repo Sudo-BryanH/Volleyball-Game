@@ -31,8 +31,8 @@ public class MiddleBlockers implements Players {
     public MiddleBlockers(int playerNum, int side) {
         this.playerNum = playerNum;
         this.side = side;
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = 180;
+        this.posY = 460;
 
 
     }

@@ -30,8 +30,8 @@ public class Setters implements Players {
         this.side = side;
         //this.rotationNum = 1;
         this.dumps = 0;
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = 300;
+        this.posY = 460;
 
     }
 

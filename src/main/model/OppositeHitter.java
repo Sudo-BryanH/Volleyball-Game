@@ -29,9 +29,9 @@ public class OppositeHitter implements Players {
     public OppositeHitter(int playerNum, int side) {
         this.playerNum = playerNum;
         this.side = side;
-        this.rotationNum = 4;
-        this.posX = 0;
-        this.posY = 0;
+        //this.rotationNum = 4;
+        this.posX = 300;
+        this.posY = 460;
 
     }
 
