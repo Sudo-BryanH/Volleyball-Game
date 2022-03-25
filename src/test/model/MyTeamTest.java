@@ -469,11 +469,15 @@ public class MyTeamTest {
         testMB1.moveToX(3);
         testMB1.moveToY(3);
 
+        testTeam.movePlayers();
+
         assertEquals(90, testMB1.getNewPosX());
         assertEquals(190, testMB1.getNewPosY());
 
         testSet.moveToX(9);
         testSet.moveToY(12);
+
+        testTeam.movePlayers();
 
         assertEquals(270, testSet.getNewPosX());
         assertEquals(460, testSet.getNewPosY());

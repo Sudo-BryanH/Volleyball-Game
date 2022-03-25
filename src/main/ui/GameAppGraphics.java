@@ -227,8 +227,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // MODIFIES: this, game
     // EFFECTS: changes the state of the game. Also decides whether to continue or end the game.
     public void changeState() {
+        int chance = (int) (Math.random() * 2);
         if (game.getGameState1().equals("N") && game.getGameState0().equals("N")) { // ONLY at the start of a game
-            afterNN();
+            afterNN(chance);
         } else if (game.getGameState1().equals("S") && game.getGameState0().equals("SN")) {
             afterSNS();
         } else if (game.getGameState0().equals("S") && game.getGameState1().equals("SN")) {
@@ -238,10 +239,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         } else if (game.getGameState1().equals("D") && game.getGameState0().equals("A")) {
             afterAD(game.enemyChooseSet());
         } else if (game.getGameState1().equals("E")) {
-            afterEE();
+            afterEE(chance);
 
         } else if (game.getGameState1().equals("F")) {
-            afterFF();
+            afterFF(chance);
 
         }
 
@@ -252,22 +253,22 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     // MODIFIES: this, game
     // EFFECTS: changes the state of the game to "S" "SN" and serves the ball
-    private void afterEE() {
+    private void afterEE(int chance) {
         game.setGameState("S", "SN");
         ball.directX(1);
         ball.directY(0);
         sleepThread(2);
-        game.makeServe();
+        game.makeServe(chance);
     }
 
     // MODIFIES: this, game
     // EFFECTS: changes the state of the game to "SN" "S" and serves the ball
-    private void afterFF() {
+    private void afterFF(int chance) {
         game.setGameState("SN", "S");
         ball.directX(11);
         ball.directY(24);
         sleepThread(2);
-        game.makeServe();
+        game.makeServe(chance);
     }
 
     // MODIFIES: this, game
@@ -294,10 +295,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     // MODIFIES: this, game
     // EFFECTS: changes the state of the game to "S" and "SN" then serves
-    private void afterNN() {
+    private void afterNN(int chance) {
         game.setGameState("S", "SN");
         printer("Let's begin the game", Color.BLACK);
-        game.makeServe();
+        game.makeServe(chance);
         printer("Ball passed to Setter", Color.BLACK);
     }
 

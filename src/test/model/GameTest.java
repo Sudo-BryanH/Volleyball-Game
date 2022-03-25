@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -269,16 +270,26 @@ public class GameTest {
 
     }
 
-    /*@Test
+    @Test
     public void testMakeServe() {
         testGame.decBall(mikasa);
         testGame.setGameState("S", "A");
-        testGame.makeServe();
-        assertEquals(9 * 30, mikasa.getMoveToXPos());
-        assertEquals(730, mikasa.getMoveToYPos());
+        testGame.makeServe(0);
+        assertEquals(90, mikasa.getMoveToXPos());
+        assertEquals(21 * 30 + 100, mikasa.getMoveToYPos());
+        testGame.makeServe(1);
+        assertEquals(270, mikasa.getMoveToXPos());
+        assertEquals(21 * 30 + 100, mikasa.getMoveToYPos());
+        testGame.setGameState("A", "S");
+        testGame.makeServe(0);
+        assertEquals(90, mikasa.getMoveToXPos());
+        assertEquals(3 * 30 + 100, mikasa.getMoveToYPos());
+        testGame.makeServe(1);
+        assertEquals(270, mikasa.getMoveToXPos());
+        assertEquals(3 * 30 + 100, mikasa.getMoveToYPos());
 
 
-    }*/
+    }
 
     @Test
     public void testReceive() {
@@ -331,6 +342,28 @@ public class GameTest {
 
         assertEquals("Player #1 will spike to the (6.0 , 3.0). \n Press next to continue. ",
                 testGame.chooseAttack(6 * 30 , 3 * 30 + 100));
+    }
+
+    @Test
+    public void testGetSetAttackPoint() {
+        Point p = new Point(40, 50);
+        assertEquals(null, testGame.getAttackPoint());
+        testGame.setAttackPoint(p);
+        assertEquals(p, testGame.getAttackPoint());
+    }
+
+    @Test
+    public void testChooseDefense() {
+        assertNull(testGame.getSelectDefensive());
+        assertEquals(null, testGame.chooseDefense(90, 110));
+        testMyTeam.defendBSetter();
+        assertEquals("Player #10 selected. Click anywhere to move this player. ",
+                testGame.chooseDefense(180, 460));
+        assertEquals(testMB1, testGame.getSelectDefensive());
+        assertEquals("Player #10 has been moved to (600, 600)", testGame.chooseDefense(600, 600));
+        assertEquals(600, testMB1.getNewPosX());
+        assertEquals(580, testMB1.getNewPosY());
+
     }
 
 

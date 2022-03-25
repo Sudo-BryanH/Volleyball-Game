@@ -257,8 +257,7 @@ public class Game {
 
     // MODIFIES: this
     // EFFECTS: makes a serve based on the gamestate
-    public void makeServe() {
-        int chance = (int) (Math.random() * 2);
+    public void makeServe(int chance) {
         if (gameState1.equals("S")) {
             for (Players p : myTeam.getStarters()) {
                 if (p.getRotation() == 1) {
@@ -474,7 +473,7 @@ public class Game {
         selectDefensive.moveToX(x / 30);
         selectDefensive.moveToY((y - 100) / 30);
         selectDefensive = null;
-        return "Player #" + num + " has been moved to (" + x + " ," + y + ")";
+        return "Player #" + num + " has been moved to (" + x + ", " + y + ")";
 
     }
 
