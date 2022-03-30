@@ -84,7 +84,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         nextButton();
         quitButton();
         allPlayersPanel();
-        courtPlayersDropDown();
+        //courtPlayersDropDown();
         changePlayerButton();
         rightSidePanel();
         add(court);
@@ -128,7 +128,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    // MODIFIES: this
+/*    // MODIFIES: this
     // EFFECTS: creates the panels and combo boxes that allow for switching players
     private void courtPlayersDropDown() {
         switchPanel = new JPanel();
@@ -196,7 +196,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         }
 
 
-    }
+    }*/
 
     private void nextButton() {
         nextButton = new JButton("Next");
@@ -235,8 +235,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
         rightSidePanel.add(nextButton);
         rightSidePanel.add(allPlayersList);
-        rightSidePanel.add(switchPanel);
-        rightSidePanel.add(changePlayerButton);
+        /*rightSidePanel.add(switchPanel);*/
+        /*rightSidePanel.add(changePlayerButton);*/
         rightSidePanel.add(quitButton);
 
     }
@@ -532,7 +532,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.quit();
         } else if (e.getSource() == nextButton) {
             changeState();
-        } else if (e.getSource() == changePlayerButton) {
+        } /*else if (e.getSource() == changePlayerButton) {
             switchStarters();
         } else if (e.getSource() == courtPlayers) {
             courtIndexNum = courtPlayers.getSelectedIndex() - 1;
@@ -540,14 +540,14 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             benchPlayersDropDown();
         } else if (e.getSource() == benchPlayers) {
             benchIndexNum = benchPlayers.getSelectedIndex();
-        }
+        }*/
 
     }
 
     // MODIFIES this, game
     // EFFECTS: switches the players based on what has been previously selected
 
-    private void switchStarters() {
+/*    private void switchStarters() {
         if (benchIndexNum != -1 && courtIndexNum != -1) {
 
             int benchNum = Integer.parseInt(bench.get(benchIndexNum));
@@ -558,7 +558,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             courtIndexNum = -1;
             benchIndexNum = -1;
         }
-    }
+    }*/
 
     // REQUIRES: positive number s
     // MODIFIES: this
