@@ -2,7 +2,13 @@ package model;
 
 // Game class. Information about the game such as score and turn are stored here.
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import ui.SplashScreen;
+
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +28,11 @@ public class Game {
     private int servePos;
     private Point attackPoint;
     private Players selectDefensive;
+    JsonWriter jsonWriter;
+    JsonReader jsonReader;
+    GameData gameData;
+    private static final String JSON_STORE = "./data/mostRecentGameData.json";
+
 
 
     // EFFECTS: Constructs a game object with score 0, turn num 0, and two teams to play each other.
@@ -34,12 +45,41 @@ public class Game {
         this.gameState1 = null;
         this.gameState0 = null;
         this.servePos = 0;
+        gameData = new GameData(this);
+        jsonWriter = new JsonWriter(JSON_STORE);
+
     }
 
     public Game() {
         this.turn = 0;
         this.gameState1 = "N";
         this.gameState0 = "N";
+        instantiateGame();
+
+
+    }
+
+    public void instantiateGame() {
+        try {
+            jsonReader = new JsonReader(JSON_STORE, this);
+            gameData = jsonReader.read();
+            // TODO: make event here for loaded game + write tests
+        } catch (IOException f) {
+            System.out.println("Well, guess that didn't work. Let's start a new game then.");
+            new SplashScreen();
+            System.exit(0);
+        }
+        setEnemyScore(gameData.getEnemyScore());
+        setMyScore(gameData.getMyScore());
+
+        this.enemyTeam = gameData.getEnemyTeam();
+        this.myTeam = gameData.getMyTeam();
+        setEnemyTeam(enemyTeam);
+        setMyTeam(myTeam);
+        getMyTeam().serveReceivePos();
+        getEnemyTeam().startPosServe();
+        gameData = new GameData(this);
+        jsonWriter = new JsonWriter(JSON_STORE);
     }
 
 
@@ -543,6 +583,30 @@ public class Game {
         }
 
         return dir;
+    }
+
+
+    // EFFECTS: end game and saves data
+    public void quit() {
+        save();
+        System.exit(0);
+    }
+
+    // EFFECTS: determines if the player wants to save. If yes, save game data
+    public void save() {
+
+        try {
+
+            jsonWriter = new JsonWriter(JSON_STORE);
+            jsonWriter.open();
+            jsonWriter.write(gameData);
+            // TODO: put an event here
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+
+        }
+
     }
 }
 

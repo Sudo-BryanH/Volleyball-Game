@@ -120,23 +120,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     private void instantiateGame() {
         game = new Game();
-        try {
-            jsonReader = new JsonReader(JSON_STORE, game);
-            gameData = jsonReader.read();
-        } catch (IOException f) {
-            System.out.println("Well, guess that didn't work. Let's start a new game then.");
-            new SplashScreen();
-            System.exit(0);
-        }
-        game.setEnemyScore(gameData.getEnemyScore());
-        game.setMyScore(gameData.getMyScore());
 
-        this.enemyTeam = gameData.getEnemyTeam();
-        this.myTeam = gameData.getMyTeam();
-        game.setEnemyTeam(enemyTeam);
-        game.setMyTeam(myTeam);
-        game.getMyTeam().serveReceivePos();
-        game.getEnemyTeam().startPosServe();
 
     }
 
@@ -156,8 +140,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         game = new Game(myTeam, enemyTeam);
         game.getMyTeam().serveReceivePos();
         game.getEnemyTeam().startPosServe();
-        gameData = new GameData(game);
-        jsonWriter = new JsonWriter(JSON_STORE);
+
 
 
     }
@@ -278,7 +261,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         printer("Opponent serving", Color.BLACK);
         game.receive();
         game.setGameState("D", "A");
-        printer("Ball passed to Setter", Color.BLACK);
+        printer("Click one of the green players to get them to attack", Color.BLACK);
     }
 
     // MODIFIES: this, game
@@ -299,7 +282,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         game.setGameState("S", "SN");
         printer("Let's begin the game", Color.BLACK);
         game.makeServe(chance);
-        printer("Ball passed to Setter", Color.BLACK);
+        printer("Press Next to pass to Setter", Color.BLACK);
     }
 
     // MODIFIES: this, game
@@ -362,28 +345,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     }
 
 
-    // EFFECTS: end game and saves data
-    private void quit() {
-        save();
-        System.exit(0);
-    }
-
-    // EFFECTS: determines if the player wants to save. If yes, save game data
-    private void save() {
-
-        try {
-
-            jsonWriter = new JsonWriter(JSON_STORE);
-            jsonWriter.open();
-            jsonWriter.write(gameData);
-            jsonWriter.close();
-            printer("Saved data to " + JSON_STORE, Color.RED);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
-
-        }
-
-    }
 
 
     // MODIFIES: this, game
@@ -435,7 +396,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quitButton) {
-            quit();
+            game.quit();
         } else if (e.getSource() == nextButton) {
             changeState();
         }
@@ -449,7 +410,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         for (int i = 0; i < s; i++) {
             try {
-                printer("Serving...", Color.BLACK);
+                printer("Press Next when the ball stops moving", Color.BLACK);
                 Thread.sleep(i * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
