@@ -4,95 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 // MyTeam represents the team of players that the user controls.
 
-public class MyTeam implements Team {
+public class MyTeam extends Team {
 
-    private String name;
-    private Players setter;
-    private Players middle1;
-    private Players outside1;
-    private Players opposite;
-    private Players middle2;
-    private Players outside2;
-
-    private List<Players> roster = new ArrayList<>();
-    private List<Players> starters = new ArrayList<>();
 
 
     // EFFECTS: Constructs a new team with 1 setter, 2 middle blockers, 2 outside hitters, and 1 opposite hitter
     public MyTeam(String name, Players s, Players mb1, Players mb2, Players oh1, Players oh2,
                   Players op) {
-        this.name = name;
-        this.setter = s;
-        this.middle1 = mb1;
-        this.outside1 = oh1;
-        this.opposite = op;
-        this.middle2 = mb2;
-        this.outside2 = oh2;
-
-        roster.add(setter);
-        roster.add(middle1);
-        roster.add(outside1);
-        roster.add(opposite);
-        roster.add(middle2);
-        roster.add(outside2);
-
-        starters.add(setter);
-        starters.add(middle1);
-        starters.add(outside1);
-        starters.add(opposite);
-        starters.add(middle2);
-        starters.add(outside2);
-
-        arrangeMbOh();
+        super(name, s, mb1, mb2, oh1, oh2, op);
 
     }
 
     // REQUIRES: a list with at least 6 players with required positions; players must already have their own rotations
     // EFFECTS: Constructs a new team
     public MyTeam(List<Players> members, String name) {
-        this.name = name;
-
-        for (Players p : members) {
-            addPlayer(p);
-            if (p.getRotation() != 0) {
-                addStartingPlayer(p);
-                if (p.getPlayingPosition().equals("Setter")) {
-                    this.setter = p;
-                } else if (p.getPlayingPosition().equals("Opposite Hitter")) {
-                    this.opposite = p;
-                } else if (p.getPlayingPosition().equals("Outside Hitter")) {
-                    chooseMbOh(p);
-                } else {
-                    chooseMbOh(p);
-
-                }
-            }
-
-        }
+        super(members, name);
     }
-
-    // MODIFIES: player object
-    // EFFECTS: assignes initial rotation to players
-    public void chooseMbOh(Players p) {
-        if (p.getPlayingPosition().equals("Outside Hitter")) {
-            if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
-                this.outside2 = p;
-            } else {
-                this.outside1 = p;
-            }
-        } else {
-            if (Math.abs(Math.abs(6 - setter.getRotation()) - Math.abs(6 - p.getRotation())) == 1) {
-                this.middle1 = p;
-            } else {
-                this.middle2 = p;
-
-            }
-        }
-    }
-
-
-
-
 
 
     // TODO subtract 1 from every x value unless 0
@@ -312,31 +239,6 @@ public class MyTeam implements Team {
 
     }
 
-    // MODIFIES: players rotations
-    // EFFECTS: gives middle blockers and outside hitters their starting rotation num
-
-    @Override
-    public void arrangeMbOh() {
-        middle1.setRotation(2);
-        middle2.setRotation(5);
-        outside1.setRotation(3);
-        outside2.setRotation(6);
-
-    }
-
-    // EFFECTS: returns the list of players in a team's roster
-
-    @Override
-    public List<Players> getRoster() {
-        return roster;
-    }
-
-    // EFFECTS: returns the list of players in a team's starting list
-
-    @Override
-    public List<Players> getStarters() {
-        return starters;
-    }
 
 
     // REQUIRES: ogNum = num of a player already in starters,
@@ -346,23 +248,6 @@ public class MyTeam implements Team {
     // player of newNum and adds player of newNum to starters
 
 
-    @Override
-    public void changeStarters(int ogNum, int newNum) {
-        Players sub = getPlayer(newNum);
-        Players og = getStartingPlayer(ogNum);
-
-        int rotation = og.getRotation();
-        sub.setRotation(rotation);
-        starters.remove(og);
-        addStartingPlayer(sub);
-    }
-
-    // EFFECTS: Adds player p to players
-    @Override
-    public void addPlayer(Players p) {
-        roster.add(p);
-    }
-
     // EFFECTS: Adds player p to starters
     @Override
     public void addStartingPlayer(Players p) {
@@ -370,14 +255,7 @@ public class MyTeam implements Team {
     }
 
     // TODO write tests
-    @Override
-    public boolean isSetterBack() {
-        if (setter.getRotation() == 1 || setter.getRotation() == 2 || setter.getRotation() == 3) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     @Override
     public void set(int dir, Ball ball) {
@@ -414,16 +292,6 @@ public class MyTeam implements Team {
         return name;
     }
 
-    // MODIFIES: players
-    // EFFECTS: moves each player by their speeds
-    @Override
-    public void movePlayers() {
-        for (Players p : starters) {
-            p.moveBySpeed();
-        }
-
-    }
-
     // MODIFIES; this
     // EFFECTS: creates a player, then adds it to this
     @Override
@@ -440,46 +308,17 @@ public class MyTeam implements Team {
             p = new OppositeHitter(playerNum, 1);
         }
 
+        // TODO put event here
+
         addPlayer(p);
         return "\nYou have added player " + p.getPlayingPosition() + " " + playerNum
                 + "\nto your team. \nYou now have " + getRoster().size() + " players on your team.";
 
 
     }
-
-
-    // REQUIRES: a player number of a player already in the starters list
-    // EFFECTS: retrieves a starting player from the starters list
-    @Override
-    public Players getStartingPlayer(int playerNum) {
-        Players chosenOne = null;
-
-        for (Players p : starters) {
-            if (p.getNum() == playerNum) {
-                chosenOne = p;
-
-
-            }
-        }
-
-        return chosenOne;
-    }
-
-    // REQUIRES: a player number of a player already in the roster list
-    // EFFECTS: retrieves a starting player from the roster list
-    @Override
-    public Players getPlayer(int playerNum) {
-        Players chosenOne = null;
-
-        for (Players p : roster) {
-            if (p.getNum() == playerNum) {
-                chosenOne = p;
-
-
-            }
-        }
-
-        return chosenOne;
-    }
 }
+
+
+
+
 

@@ -5,68 +5,22 @@ import java.util.List;
 // EnemyTeam class represents an enemy team holding players and the chance that the
 // interfaces uses to control movements of each player.
 
-public class EnemyTeam implements Team {
+public class EnemyTeam extends Team {
 
-    private String name;
-    private Players setter;
-    private Players middle1;
-    private Players outside1;
-    private Players opposite;
-    private Players middle2;
-    private Players outside2;
     private int chance;
 
-    private List<Players> roster = new ArrayList<>();
-    private List<Players> starters = new ArrayList<>();
 
     // EFFECTS: Constructs a new team with 1 setter, 2 middle blockers, 2 outside hitters, and 1 opposite hitter
     public EnemyTeam(String name, Players s, Players mb1, Players mb2, Players oh1, Players oh2,
                      Players op) {
-        this.name = name;
-        this.setter = s;
-        this.middle1 = mb1;
-        this.outside1 = oh1;
-        this.opposite = op;
-        this.middle2 = mb2;
-        this.outside2 = oh2;
-
-        roster.add(setter);
-        roster.add(middle1);
-        roster.add(outside1);
-        roster.add(opposite);
-        roster.add(middle2);
-        roster.add(outside2);
-
-        starters.add(setter);
-        starters.add(middle1);
-        starters.add(outside1);
-        starters.add(opposite);
-        starters.add(middle2);
-        starters.add(outside2);
-
-        arrangeMbOh();
+        super(name, s, mb1, mb2, oh1, oh2, op);
 
     }
 
     public EnemyTeam(List<Players> members, String name, int chance) {
-        this.name = name;
+        super(members, name);
         this.chance = chance;
-        for (Players p : members) {
-            addPlayer(p);
-            if (p.getRotation() != 0) {
-                addStartingPlayer(p);
-                if (p.getPlayingPosition().equals("Setter")) {
-                    this.setter = p;
-                } else if (p.getPlayingPosition().equals("Opposite Hitter")) {
-                    this.opposite = p;
-                } else if (p.getPlayingPosition().equals("Outside Hitter")) {
-                    chooseMbOh(p);
-                } else {
-                    chooseMbOh(p);
-                }
-            }
 
-        }
     }
 
     public void chooseMbOh(Players p) {
@@ -286,81 +240,9 @@ public class EnemyTeam implements Team {
         }
     }
 
-    // MODIFIES: player rotations
-    // EFFECTS: changes the rotation of each player in starters
-    @Override
-    public void changeRotation() {
-        for (Players p : starters) {
-            if (p.getRotation() == 6) {
-                p.setRotation(1);
-
-            } else {
-                p.setRotation(p.getRotation() + 1);
-            }
-        }
-
-    }
-
-    // MODIFIES: players rotations
-    // EFFECTS: gives middle blockers and outside hitters their starting rotation num
-    @Override
-    public void arrangeMbOh() {
-        middle1.setRotation(2);
-        middle2.setRotation(5);
-        outside1.setRotation(3);
-        outside2.setRotation(6);
-
-    }
-
-    // EFFECTS: returns the list of players in a team's roster
-    @Override
-    public List<Players> getRoster() {
-        return roster;
-    }
-
-    // EFFECTS: returns the lsit of players in a team's starting list
-    @Override
-    public List<Players> getStarters() {
-        return starters;
-    }
 
 
-    // REQUIRES: ogNum = num of a player already in starters,
-    // newNum be of the same type of player as ogNum and in roster
-    // MODIFIES: this
-    // EFFECTS: removes player of ogNum from starters, gives his rotation number to
-    // player of newNum and adds player of newNum to starters
-    @Override
-    public void changeStarters(int ogNum, int newNum) {
-        Players sub = getPlayer(newNum);
-        Players og = getStartingPlayer(ogNum);
-        int rotation = og.getRotation();
-        sub.setRotation(rotation);
-        starters.remove(og);
-        addStartingPlayer(sub);
-    }
 
-    // EFFECTS: Adds player p to the roster
-    @Override
-    public void addPlayer(Players p) {
-        roster.add(p);
-    }
-
-    // EFFECTS: Adds player p to starters
-    @Override
-    public void addStartingPlayer(Players p) {
-        starters.add(p);
-    }
-
-    // EFFECTS: determines if the setter is in the backrow
-    @Override
-    public boolean isSetterBack() {
-        if (setter.getRotation() == 1 || setter.getRotation() == 2 || setter.getRotation() == 3) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     // REQUIRES: dir [0, 2]
     // MODIFIES: this
@@ -398,44 +280,6 @@ public class EnemyTeam implements Team {
         }
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    // REQUIRES: a player number of a player already in the starters list
-    // EFFECTS: retrieves a starting player from the starters list
-    @Override
-    public Players getStartingPlayer(int playerNum) {
-        Players chosenOne = null;
-
-        for (Players p : starters) {
-            if (p.getNum() == playerNum) {
-                chosenOne = p;
-
-
-            }
-        }
-
-        return chosenOne;
-    }
-
-    // REQUIRES: a player number of a player already in the roster list
-    // EFFECTS: retrieves a starting player from the roster list
-    @Override
-    public Players getPlayer(int playerNum) {
-        Players chosenOne = null;
-
-        for (Players p : roster) {
-            if (p.getNum() == playerNum) {
-                chosenOne = p;
-
-
-            }
-        }
-
-        return chosenOne;
-    }
 
 
     public int getChance() {
@@ -447,15 +291,7 @@ public class EnemyTeam implements Team {
         this.chance = c;
     }
 
-    // MODIFIES: players
-    // EFFECTS: moves each player by their speeds
-    @Override
-    public void movePlayers() {
-        for (Players p : starters) {
-            p.moveBySpeed();
-        }
 
-    }
 
     @Override
     public String createPlayer(int playerType, int playerNum) {
