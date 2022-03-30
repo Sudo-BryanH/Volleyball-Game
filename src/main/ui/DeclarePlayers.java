@@ -14,6 +14,7 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
+// User interface to allow users to declares the first six players and choose which team to play against
 public class DeclarePlayers implements ActionListener {
 
     JFrame frame;

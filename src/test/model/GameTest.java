@@ -2,8 +2,10 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.JsonReader;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +95,7 @@ public class GameTest {
         assertEquals(6, testMyTeam.getStarters().size());
         assertEquals(6, testETeam.getRoster().size());
         assertEquals(6, testETeam.getStarters().size());
+        assertEquals(mikasa, testGame.getBall());
     }
 
     @Test
@@ -385,6 +388,69 @@ public class GameTest {
             testGame.enemyScore();
         }
         assertFalse(testGame.gameOver());
+    }
+
+    @Test
+    public void testInstantiateGame() {
+        JsonReader reader = new JsonReader("./data/sampleGameData1to12.json", testGame);
+
+        try {
+            GameData gd = reader.read();
+            fail("File should not have been found");
+        } catch (IOException e) {
+
+        }
+
+        reader = new JsonReader("./data/sampleGameData1to1.json", testGame);
+
+        try {
+            GameData gd = reader.read();
+            testMyTeam = gd.getMyTeam();
+            checkMyTeam("nothing", testMyTeam);
+            testETeam = gd.getEnemyTeam();
+            checkEnemyTeam("weak team", testETeam, 5);
+            assertEquals(1, gd.getMyScore());
+            assertEquals(1, gd.getEnemyScore());
+
+            checkPlayers(1, 2, "Setter", 0, testMyTeam.getRoster().get(0));
+            checkPlayers(2, 3, "Middle Blocker", 0, testMyTeam.getRoster().get(1));
+            checkPlayers(3, 4, "Outside Hitter", 0, testMyTeam.getRoster().get(2));
+            checkPlayers(4, 5, "Opposite Hitter", 0, testMyTeam.getRoster().get(3));
+            checkPlayers(5, 6, "Middle Blocker", 0, testMyTeam.getRoster().get(4));
+            checkPlayers(6, 1, "Outside Hitter", 0, testMyTeam.getRoster().get(5));
+
+            checkPlayers(1, 5, "Setter", 1, testETeam.getRoster().get(0));
+            checkPlayers(2, 6, "Middle Blocker", 1, testETeam.getRoster().get(1));
+            checkPlayers(3, 1, "Outside Hitter", 1, testETeam.getRoster().get(2));
+            checkPlayers(4, 2, "Opposite Hitter", 1, testETeam.getRoster().get(3));
+            checkPlayers(5, 3, "Middle Blocker", 1, testETeam.getRoster().get(4));
+            checkPlayers(6, 4, "Outside Hitter", 1, testETeam.getRoster().get(5));
+
+
+        } catch (IOException e) {
+            fail("Could not read from rile");
+        }
+    }
+
+
+    protected void checkPlayers(int num, int rotation, String position, int side, Players p){
+        assertEquals(num, p.getNum());
+        assertEquals(rotation, p.getRotation());
+        assertEquals(position, p.getPlayingPosition());
+        assertEquals(side, p.getSide());
+
+    }
+
+    protected void checkMyTeam(String name, Team t){
+        assertEquals(name, t.getName());
+
+    }
+
+    protected void checkEnemyTeam(String name, EnemyTeam eTeam, int chance){
+        assertEquals(name, eTeam.getName());
+        assertEquals(chance, eTeam.getChance());
+
+
     }
 
 

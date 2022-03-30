@@ -1,6 +1,7 @@
 package model;
 
-// Game class. Information about the game such as score and turn are stored here.
+// Game class. Information about the game such as score and turn are stored here as well as different functions of the
+// game such as loading, saving, attacking, defending and controlling opponent team.
 
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -80,6 +81,8 @@ public class Game {
         getEnemyTeam().startPosServe();
         gameData = new GameData(this);
         jsonWriter = new JsonWriter(JSON_STORE);
+        Event e = new Event("The previous game has loaded with a score of: " + getScore());
+        EventLog.getInstance().logEvent(e);
     }
 
 
@@ -588,8 +591,15 @@ public class Game {
 
     // EFFECTS: end game and saves data
     public void quit() {
-
+        printLog(EventLog.getInstance());
         System.exit(0);
+    }
+
+    private void printLog(EventLog el) {
+        for (Event e : el) {
+            System.out.println(e);
+        }
+
     }
 
     // EFFECTS: determines if the player wants to save. If yes, save game data
@@ -601,6 +611,9 @@ public class Game {
             jsonWriter.open();
             jsonWriter.write(gameData);
             // TODO: put an event here
+
+            Event e = new Event("Game saved with the score: " + getScore());
+            EventLog.getInstance().logEvent(e);
             jsonWriter.close();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);

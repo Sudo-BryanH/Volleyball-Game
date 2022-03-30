@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Creates the visuals and user interface of the game
 public class GameAppGraphics extends JFrame implements MouseListener, ActionListener {
 
 
@@ -113,11 +114,11 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     private void listBench() {
         bench = null;
         bench = new ArrayList<>();
-        bench.add("Switch in with one of the following players: ");
+        bench.add("Switch in one of the following players: ");
         if (selectedPlayerType != null) {
             for (Players p : game.getMyTeam().getRoster()) {
                 if (p.getShortPos().equals(selectedPlayerType) && p.getRotation() == 0) {
-                    bench.add(p.getPlayingPosition() + ": " + p.getNum());
+                    bench.add(p.getPlayingPosition() + ": #" + p.getNum());
                 }
             }
         }
@@ -133,7 +134,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         playersOnCourt = new ArrayList<>();
         playersOnCourt.add("Pick one of these to switch out: ");
         for (Players p : game.getMyTeam().getStarters()) {
-            playersOnCourt.add(p.getPlayingPosition() + ": " + p.getNum());
+            playersOnCourt.add(p.getPlayingPosition() + ": #" + p.getNum());
         }
 
 

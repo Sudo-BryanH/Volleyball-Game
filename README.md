@@ -69,3 +69,7 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
   - This includes the score, rotations of the teams, players etc.
 - As a user, I should be able to retrieve and continue playing saved matches.
   - This includes the score, rotations of the teams, players etc.
+
+
+![](../../../Desktop/Screen Shot 2022-03-30 at 9.41.45 AM.png)
+![](../../../Desktop/Screen Shot 2022-03-30 at 9.46.56 AM.png)

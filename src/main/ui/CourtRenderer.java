@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Renders the court where the game occurs
 public class CourtRenderer extends JPanel {
 
 

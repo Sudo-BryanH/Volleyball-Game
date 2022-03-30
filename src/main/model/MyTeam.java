@@ -22,7 +22,6 @@ public class MyTeam extends Team {
     }
 
 
-    // TODO subtract 1 from every x value unless 0
     // MODIFIES: player positions
     // EFFECTS: moves the players into formation for serving
 
@@ -308,7 +307,9 @@ public class MyTeam extends Team {
             p = new OppositeHitter(playerNum, 1);
         }
 
-        // TODO put event here
+        Event e = new Event("A new player " + p.getPlayingPosition() + " #" + p.getNum() + " was "
+                + "added to your team");
+        EventLog.getInstance().logEvent(e);
 
         addPlayer(p);
         return "\nYou have added player " + p.getPlayingPosition() + " " + playerNum

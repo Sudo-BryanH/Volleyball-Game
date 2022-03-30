@@ -12,6 +12,7 @@ import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 
+// Add Players user interface and visuals, allows users to decide how many players they want to add to the team, if any
 public class AddPlayers implements ActionListener {
 
     JFrame frame;

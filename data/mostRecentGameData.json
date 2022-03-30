@@ -77,6 +77,30 @@
             "rotation": 2,
             "playingPosition": "Outside Hitter",
             "playerNum": 6
+        },
+        {
+            "side": 1,
+            "rotation": 0,
+            "playingPosition": "Setter",
+            "playerNum": 9
+        },
+        {
+            "side": 1,
+            "rotation": 0,
+            "playingPosition": "Middle Blocker",
+            "playerNum": 10
+        },
+        {
+            "side": 1,
+            "rotation": 0,
+            "playingPosition": "Middle Blocker",
+            "playerNum": 11
+        },
+        {
+            "side": 1,
+            "rotation": 0,
+            "playingPosition": "Opposite Hitter",
+            "playerNum": 16
         }
     ],
     "myName": "My Team"

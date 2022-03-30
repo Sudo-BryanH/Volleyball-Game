@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// First page when the game loads up, asks user whether to start a new game or load an old one
 public class SplashScreen extends JFrame implements ActionListener {
 
     JFrame frame = new JFrame();
