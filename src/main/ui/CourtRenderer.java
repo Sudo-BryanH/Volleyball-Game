@@ -26,7 +26,7 @@ public class CourtRenderer extends JPanel {
         this.game = game;
 
 
-        setPreferredSize(new Dimension(360, 880));
+        setPreferredSize(new Dimension(360, 920));
         setBackground(Color.WHITE);
         setOpaque(true);
 

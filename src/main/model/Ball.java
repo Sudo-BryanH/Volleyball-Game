@@ -96,7 +96,7 @@ public class Ball {
             }
 
             if (currentXPos == moveToXPos && currentYPos == moveToYPos) {
-                moveState = false; // TODO if ball behaviour is odd, return to true
+                moveState = false;
             }
         }
 

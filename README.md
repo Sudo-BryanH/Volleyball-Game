@@ -54,7 +54,7 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 
 ## User Stories
 
-### Phase 1 user stories
+### Phase 1 User Stories
 - As a user, I should be able to create and add an arbitrary number of players to my teams
 - As a user, I should be able to choose which opposing team I want to play
 - As a user, I should be able to choose my starting 6 players
@@ -63,13 +63,14 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 - As a user, I want to see the scoreboard
 - As a user, I want to see which enemies are potential attackers
 
-### Phase 2 user stories
+### Phase 2 User Stories
  
 - As a user, I should be able to save my current match. 
   - This includes the score, rotations of the teams, players etc.
 - As a user, I should be able to retrieve and continue playing saved matches.
   - This includes the score, rotations of the teams, players etc.
 
+### Phase 4 Event Logging Examples:
 
 ![](../../../Desktop/Screen Shot 2022-03-30 at 9.41.45 AM.png)
 ![](../../../Desktop/Screen Shot 2022-03-30 at 9.46.56 AM.png)

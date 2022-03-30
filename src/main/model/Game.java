@@ -409,7 +409,7 @@ public class Game {
     // EFFECTS: Chooses an attackPoint where attackPlayer should hit
     private String chooseAttackPos(int x, int y) {
         for (Point p : attackPlayer.getAttackPoints(1)) {
-            if (Math.abs(p.getX() * 30 - x) < 40 && Math.abs((p.getY() * 30) + 100 - y) < 40) {
+            if (Math.abs(p.getX() * SCALE - x) < 40 && Math.abs((p.getY() * SCALE) + Y_TRANS - y) < 40) {
                 attackPoint = p;
                 return "(" + p.getX() + " , " + p.getY() + ")";
             }
@@ -430,7 +430,7 @@ public class Game {
             for (Players p : myTeam.getStarters()) {
                 message = declareSelected("middle", p, "MB");
             }
-        } else if (x >= 300) {
+        } else if (x >= 0) {
             for (Players p : myTeam.getStarters()) {
                 message = declareSelected("right", p, "OP");
             }
@@ -513,8 +513,8 @@ public class Game {
     // EFFECTS: Defensiveselect moves to the x, y and becomes null
     private String moveSelected(int x, int y) {
         int num = selectDefensive.getNum();
-        selectDefensive.moveToX(x / 30);
-        selectDefensive.moveToY((y - 100) / 30);
+        selectDefensive.moveToX(x / SCALE);
+        selectDefensive.moveToY((y - Y_TRANS) / SCALE);
         selectDefensive = null;
         return "Player #" + num + " has been moved to (" + x + ", " + y + ")";
 

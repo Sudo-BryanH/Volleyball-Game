@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     private JPanel switchPanel;
     private JComboBox courtPlayers;
     private JComboBox benchPlayers;
-    private String selectedPlayerType;
+    private int courtIndexNum;
+    private int benchIndexNum;
+    private JScrollPane allPlayersList;
 
 
 
@@ -55,6 +55,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         ball = new Ball();
         game.decBall(ball);
         game.setGameState("N", "N");
+        courtIndexNum = -1;
+        benchIndexNum = -1;
         myGuI();
         addTimer();
 
@@ -65,6 +67,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         ball = new Ball();
         game.decBall(ball);
         game.setGameState("N", "N");
+        courtIndexNum = -1;
+        benchIndexNum = -1;
         myGuI();
         addTimer();
     }
@@ -79,7 +83,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         addMouseListener(this);
         nextButton();
         quitButton();
-        switchPlayersDropdown();
+        allPlayersPanel();
+        courtPlayersDropDown();
         changePlayerButton();
         rightSidePanel();
         add(court);
@@ -89,23 +94,75 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     }
 
     // MODIFIES: this
+    // EFFECTS: creates the list of all players in the roster
+    private void allPlayersPanel() {
+
+        List<String[]> data = new ArrayList<>();
+        String[] columnNames = { "Position", "Number", "Rotation", "On the court?" };
+        data.add(columnNames);
+
+
+        for (Players p : game.getMyTeam().getRoster()) {
+            String[] playerData = { p.getPlayingPosition(), Integer.toString(p.getNum()),
+                    Integer.toString(p.getRotation()), Boolean.toString(p.getRotation() != 0) };
+            data.add(playerData);
+
+        }
+
+        String[][] arrayData = data.toArray(new String[0][]);
+
+        // Column Names
+
+        // Initializing the JTable
+        JTable playersTable = new JTable(arrayData, columnNames);
+        playersTable.setBounds(30, 40, 200, 300);
+        playersTable.setGridColor(Color.darkGray);
+
+        // adding it to JScrollPane
+        allPlayersList = new JScrollPane(playersTable);
+        allPlayersList.setPreferredSize(new Dimension(360, 150));
+
+        // Frame Visible = true
+        allPlayersList.setVisible(true);
+        playersTable.setVisible(true);
+
+    }
+
+    // MODIFIES: this
     // EFFECTS: creates the panels and combo boxes that allow for switching players
-    private void switchPlayersDropdown() {
+    private void courtPlayersDropDown() {
         switchPanel = new JPanel();
         switchPanel.setPreferredSize(new Dimension(360, 70));
         listCourtPlayers();
-        listBench();
+        benchPlayersDropDown();
         courtPlayers = new JComboBox(playersOnCourt.toArray());
-        benchPlayers = new JComboBox(bench.toArray());
         courtPlayers.addActionListener(this);
-        benchPlayers.addActionListener(this);
         courtPlayers.setBounds(0, 0, 360, 30);
+        switchPanel.add(courtPlayers);
+        switchPanel.add(benchPlayers);
+        if (courtIndexNum == -1) {
+            courtPlayers.setVisible(true);
+        } else {
+            courtPlayers.setVisible(false);
+        }
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the panels and combo boxes that allow for switching players
+    private void benchPlayersDropDown() {
+
+        listBench();
+        benchPlayers = new JComboBox(bench.toArray());
         benchPlayers.setBounds(0, 40, 360, 30);
         benchPlayers.setForeground(Color.black);
-        if (selectedPlayerType == null) {
+        benchPlayers.addActionListener(this);
+
+        if (courtIndexNum == -1) {
             benchPlayers.setVisible(false);
+        } else {
+            benchPlayers.setVisible(true);
         }
-        switchPanel.add(courtPlayers);
         switchPanel.add(benchPlayers);
     }
 
@@ -115,10 +172,11 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         bench = null;
         bench = new ArrayList<>();
         bench.add("Switch in one of the following players: ");
-        if (selectedPlayerType != null) {
+        if (courtIndexNum != -1) {
+            Players cp = game.getMyTeam().getStarters().get(courtIndexNum);
             for (Players p : game.getMyTeam().getRoster()) {
-                if (p.getShortPos().equals(selectedPlayerType) && p.getRotation() == 0) {
-                    bench.add(p.getPlayingPosition() + ": #" + p.getNum());
+                if (p.getShortPos().equals(cp.getShortPos()) && p.getRotation() == 0) {
+                    bench.add("" + p.getNum());
                 }
             }
         }
@@ -176,9 +234,11 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         rightSidePanel.add(instructions);
         printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
         rightSidePanel.add(nextButton);
+        rightSidePanel.add(allPlayersList);
         rightSidePanel.add(switchPanel);
         rightSidePanel.add(changePlayerButton);
         rightSidePanel.add(quitButton);
+
     }
 
 
@@ -373,7 +433,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         Boolean scored = game.checkScore();
 
         if (scored) {
-            printer("Your opponent set " + dir + " and scored.", Color.RED);
+            printer("Your opponent set " + dir + " and scored. Press Next to continue", Color.RED);
             game.endRally(0);
             if (game.gameOver()) {
                 game.quit();
@@ -393,7 +453,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         Boolean scored = game.checkScore();
 
         if (scored) {
-            printer("Your team has scored.", Color.red);
+            printer("Your team has scored. Press Next to continue.", Color.red);
             if (game.gameOver()) {
                 game.quit();
             }
@@ -414,9 +474,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    public void listBenchPlayers() {
 
-    }
 
 
 
@@ -474,8 +532,32 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             game.quit();
         } else if (e.getSource() == nextButton) {
             changeState();
+        } else if (e.getSource() == changePlayerButton) {
+            switchStarters();
+        } else if (e.getSource() == courtPlayers) {
+            courtIndexNum = courtPlayers.getSelectedIndex() - 1;
+            benchPlayers.setVisible(true);
+            benchPlayersDropDown();
+        } else if (e.getSource() == benchPlayers) {
+            benchIndexNum = benchPlayers.getSelectedIndex();
         }
 
+    }
+
+    // MODIFIES this, game
+    // EFFECTS: switches the players based on what has been previously selected
+
+    private void switchStarters() {
+        if (benchIndexNum != -1 && courtIndexNum != -1) {
+
+            int benchNum = Integer.parseInt(bench.get(benchIndexNum));
+            int courtNum = game.getMyTeam().getStarters().get(courtIndexNum).getNum();
+            game.getMyTeam().changeStarters(courtNum, benchNum);
+            courtPlayersDropDown();
+            benchPlayers.setVisible(false);
+            courtIndexNum = -1;
+            benchIndexNum = -1;
+        }
     }
 
     // REQUIRES: positive number s

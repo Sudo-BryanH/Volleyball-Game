@@ -165,7 +165,7 @@ public class GameApp extends JFrame {
             }
         }
 
-        // TODO check if user wants to change starting players
+
         System.out.println("Game has ended");
         System.out.println("The final score for this set is " + game.getScore() + "your team to the enemy team.");
         System.out.println("Thank you for playing");

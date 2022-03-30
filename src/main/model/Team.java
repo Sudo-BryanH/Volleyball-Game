@@ -160,7 +160,10 @@ public abstract class Team {
         Players og = getStartingPlayer(ogNum);
 
         int rotation = og.getRotation();
+        og.setRotation(0);
         sub.setRotation(rotation);
+        sub.directMoveY(og.posY);
+        sub.directMoveX(og.posX);
         starters.remove(og);
         addStartingPlayer(sub);
     }

@@ -50,7 +50,7 @@ public class MiddleBlockers extends Players {
     // MODIFIES: ball object
     // EFFECTS: sends the ball to (6, 6)(2, 5)(10, 5) if side 1
     // or (6, 18)(2, 19)(10, 19) if side 0
-    // TODO Change to meet requirements of players
+
     @Override
     public void spike(int dir, Ball ball) {
         if (side == 1) {
