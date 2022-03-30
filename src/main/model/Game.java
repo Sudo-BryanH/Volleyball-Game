@@ -588,7 +588,7 @@ public class Game {
 
     // EFFECTS: end game and saves data
     public void quit() {
-        save();
+
         System.exit(0);
     }
 
@@ -607,6 +607,12 @@ public class Game {
 
         }
 
+    }
+
+    // EFFECTS: returns whether teh game is over or not i.e. if at least 15 points has been scored
+    // and scores differ by at least 2
+    public Boolean gameOver() {
+        return ((myScore >= 15 || enemyScore >= 15) && Math.abs(myScore - enemyScore) >= 2);
     }
 }
 

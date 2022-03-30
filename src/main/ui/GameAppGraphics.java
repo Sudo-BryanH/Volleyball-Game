@@ -38,6 +38,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     private JButton quitButton;
     private JButton changePlayerButton;
     private JPanel rightSidePanel;
+    String[] courtPlayers;
+    String[] benchPlayers;
 
 
     public GameAppGraphics() {
@@ -69,14 +71,12 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         court = new CourtRenderer(game);
         addMouseListener(this);
         nextButton();
-        rightSidePanel();
         quitButton();
         changePlayerButton();
+        rightSidePanel();
         add(court);
         add(rightSidePanel);
-        add(nextButton);
-        add(changePlayerButton);
-        add(quitButton);
+
         setVisible(true);
     }
 
@@ -115,6 +115,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         instructions.setOpaque(true);
         rightSidePanel.add(instructions);
         printer("Welcome to the Volleyball Game. \nFollow the instructions onscreen.", Color.BLACK);
+        rightSidePanel.add(nextButton);
+        rightSidePanel.add(changePlayerButton);
+        rightSidePanel.add(quitButton);
     }
 
 
@@ -311,6 +314,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         if (scored) {
             printer("Your opponent set " + dir + " and scored.", Color.RED);
             game.endRally(0);
+            if (game.gameOver()) {
+                game.quit();
+            }
             game.setGameState("E", "E");
         } else {
             printer("You have received your opponent's attack.",
@@ -327,6 +333,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         if (scored) {
             printer("Your team has scored.", Color.red);
+            if (game.gameOver()) {
+                game.quit();
+            }
             game.endRally(1);
             game.setGameState("F", "F");
         } else {
@@ -396,6 +405,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quitButton) {
+            game.save();
             game.quit();
         } else if (e.getSource() == nextButton) {
             changeState();

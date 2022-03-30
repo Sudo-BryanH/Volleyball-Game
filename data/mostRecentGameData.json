@@ -39,42 +39,42 @@
         }
     ],
     "enemyScore": 1,
-    "myScore": 1,
+    "myScore": 2,
     "enemyName": "Weak team",
     "myTeam": [
         {
             "side": 1,
-            "rotation": 2,
+            "rotation": 3,
             "playingPosition": "Setter",
             "playerNum": 1
         },
         {
             "side": 1,
-            "rotation": 3,
+            "rotation": 4,
             "playingPosition": "Middle Blocker",
             "playerNum": 2
         },
         {
             "side": 1,
-            "rotation": 4,
+            "rotation": 5,
             "playingPosition": "Outside Hitter",
             "playerNum": 5
         },
         {
             "side": 1,
-            "rotation": 5,
+            "rotation": 6,
             "playingPosition": "Opposite Hitter",
             "playerNum": 4
         },
         {
             "side": 1,
-            "rotation": 6,
+            "rotation": 1,
             "playingPosition": "Middle Blocker",
             "playerNum": 3
         },
         {
             "side": 1,
-            "rotation": 1,
+            "rotation": 2,
             "playingPosition": "Outside Hitter",
             "playerNum": 6
         }

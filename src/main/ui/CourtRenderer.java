@@ -215,8 +215,7 @@ public class CourtRenderer extends JPanel {
 
         g.setColor(new Color(0, 181, 226));
         g.fillRect(0, 0, 360, 100);
-        g.setColor(new Color(0, 181, 226));
-        g.fillRect(0, 820, 360, 60);
+        g.fillRect(0, 820, 360, 100);
 
     }
 

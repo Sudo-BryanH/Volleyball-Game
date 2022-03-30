@@ -366,5 +366,26 @@ public class GameTest {
 
     }
 
+    @Test
+    public void testGameOver() {
+        assertFalse(testGame.gameOver());
+
+        testGame.myScore();
+        assertFalse(testGame.gameOver());
+        testGame.enemyScore();
+        assertFalse(testGame.gameOver());
+
+        for (int i = 0; i < 14; i++) {
+            testGame.myScore();
+        }
+
+        assertTrue(testGame.gameOver());
+
+        for (int i = 0; i < 13; i++) {
+            testGame.enemyScore();
+        }
+        assertFalse(testGame.gameOver());
+    }
+
 
 }
