@@ -18,6 +18,7 @@ public abstract class Team {
     protected Players middle2;
     protected Players outside2;
 
+    // EFFECTS: constrcts a team
     public Team(String name, Players s, Players mb1, Players mb2, Players oh1, Players oh2,
                 Players op) {
         this.name = name;
@@ -49,6 +50,7 @@ public abstract class Team {
 
     }
 
+    // EFFECTS: constrcts a team
     public Team(List<Players> members, String name) {
 
         this.name = name;
@@ -153,7 +155,7 @@ public abstract class Team {
     // EFFECTS: removes player of ogNum from starters, gives his rotation number to
     // player of newNum and adds player of newNum to starters
 
-      public void changeStarters(int ogNum, int newNum) {
+    public void changeStarters(int ogNum, int newNum) {
         Players sub = getPlayer(newNum);
         Players og = getStartingPlayer(ogNum);
 

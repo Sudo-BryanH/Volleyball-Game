@@ -144,7 +144,7 @@ public class MiddleBlockersTest {
     @Test
     public void testSet() {
         testPlayer.set(2, mikasa);
-        assertEquals(12 * 30,mikasa.getMoveToXPos());
+        assertEquals(11 * 30,mikasa.getMoveToXPos());
         assertEquals(13 * 30 + 100,mikasa.getMoveToYPos());
 
         testPlayer.set(0, mikasa);
@@ -160,7 +160,7 @@ public class MiddleBlockersTest {
         assertEquals(11 * 30 + 100,mikasa.getMoveToYPos());
 
         testEPlayer.set(0, mikasa);
-        assertEquals(12 * 30,mikasa.getMoveToXPos());
+        assertEquals(11 * 30,mikasa.getMoveToXPos());
         assertEquals(11 * 30 + 100,mikasa.getMoveToYPos());
 
         testEPlayer.set(1, mikasa);

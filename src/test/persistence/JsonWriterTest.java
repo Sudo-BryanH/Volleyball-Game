@@ -122,7 +122,7 @@ public class JsonWriterTest extends JsonTest{
 
     @Test
     public void createGameData1to0IOfail() {
-        newGame = new Game();
+
         JsonReader reader = new JsonReader("./data/whatever.json", newGame);
 
         try {
@@ -169,7 +169,7 @@ public class JsonWriterTest extends JsonTest{
     @Test
     public void createGameData1to0() {
         newGame = new Game();
-        JsonReader reader = new JsonReader(JSON_STORE, newGame);
+        JsonReader reader = new JsonReader(JSON_STORE, game);
 
         try {
             game.myScore();
@@ -186,17 +186,17 @@ public class JsonWriterTest extends JsonTest{
             assertEquals(1, gd.getMyScore());
             assertEquals(0, gd.getEnemyScore());
 
-            checkPlayers(1, 2, "Setter", 1, myTeam.getRoster().get(0));
+            checkPlayers(1, 1, "Setter", 1, myTeam.getRoster().get(0));
             checkPlayers(2, 3, "Middle Blocker", 1, myTeam.getRoster().get(1));
             checkPlayers(3, 4, "Outside Hitter", 1, myTeam.getRoster().get(2));
-            checkPlayers(4, 5, "Opposite Hitter", 1, myTeam.getRoster().get(3));
+            checkPlayers(4, 1, "Opposite Hitter", 1, myTeam.getRoster().get(3));
             checkPlayers(5, 6, "Middle Blocker", 1, myTeam.getRoster().get(4));
             checkPlayers(6, 1, "Outside Hitter", 1, myTeam.getRoster().get(5));
 
-            checkPlayers(1, 4, "Setter", 0, enemyTeam.getRoster().get(0));
+            checkPlayers(1, 3, "Setter", 0, enemyTeam.getRoster().get(0));
             checkPlayers(2, 5, "Middle Blocker", 0, enemyTeam.getRoster().get(1));
             checkPlayers(3, 6, "Outside Hitter", 0, enemyTeam.getRoster().get(2));
-            checkPlayers(4, 1, "Opposite Hitter", 0, enemyTeam.getRoster().get(3));
+            checkPlayers(4, 3, "Opposite Hitter", 0, enemyTeam.getRoster().get(3));
             checkPlayers(5, 2, "Middle Blocker", 0, enemyTeam.getRoster().get(4));
             checkPlayers(6, 3, "Outside Hitter", 0, enemyTeam.getRoster().get(5));
 
