@@ -44,7 +44,7 @@ public class DeclarePlayers implements ActionListener {
     List<Players> players = new ArrayList<>();
 
 
-    // EFFECTS: constructs a declare players object
+/*    // EFFECTS: constructs a declare players object
     public DeclarePlayers(Game game) {
         this.game = game;
         frame = new JFrame();
@@ -52,7 +52,7 @@ public class DeclarePlayers implements ActionListener {
         createPlayers();
         designLayout();
 
-    }
+    }*/
 
     // MODIFIES: this
     // EFFECTS: adds players to players list
@@ -223,9 +223,24 @@ public class DeclarePlayers implements ActionListener {
 
     private void donePressed() {
         if (allInput()) {
+            Team myTeam = createTeam();
             frame.setVisible(false);
-            new AddPlayers(players, enemyTeam);
+            new AddPlayers(myTeam, enemyTeam);
         }
+    }
+
+    // EFFECTS: creates a team
+    private Team createTeam() {
+        setter.setRotation(1);
+        middle1.setRotation(2);
+        outside1.setRotation(3);
+        opposite.setRotation(4);
+        middle2.setRotation(5);
+        outside2.setRotation(6);
+
+        Team myTeam = new MyTeam("My Team", setter, middle1, middle2, outside1, outside2, opposite);
+
+        return myTeam;
     }
 
     private void enemyButton(String team) {

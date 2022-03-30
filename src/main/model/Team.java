@@ -80,6 +80,8 @@ public interface Team {
 
     public void movePlayers();
 
+    public String createPlayer(int playerType, int playerNum);
+
 
 
 

@@ -1,35 +1,6 @@
 package ui;
 
-import model.*;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.List;
-import java.util.Scanner;
-import model.*;
-import persistence.JsonReader;
-import persistence.JsonWriter;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.List;
-import java.util.Scanner;
-
-import javax.swing.*;
 
 public class Main {
 
@@ -38,6 +9,12 @@ public class Main {
         new SplashScreen();
 
 
+        // TODO implement the Event and EventLog classes
+        // NOTES:
+        // - For each player added from the addPlayer screen, make sure to create an event. Put in a list that will be
+        //      passed into the game constructor. Then pass that list into the eventLog
+        // - For logging the saved game, make save() method return an Event so when it is called, it can be added to the
+        //      eventLog
     }
 
 

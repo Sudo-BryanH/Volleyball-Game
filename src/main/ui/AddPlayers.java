@@ -25,6 +25,7 @@ public class AddPlayers implements ActionListener {
     int playerNum = -1;
     boolean canAdd;
     String enemyTeam;
+    Team myTeam;
 
     String[] playerTypes = {"Setter", "Middle Blocker", "Outside Hitter", "Opposite Hitter"};
     JComboBox comboBox = new JComboBox(playerTypes);
@@ -41,6 +42,17 @@ public class AddPlayers implements ActionListener {
         for (Players p : players) {
             rosterPlayers.add(p);
         }
+        designLayout();
+
+    }
+
+
+    // EFFECTS: constructs AddPlayer UI
+    public AddPlayers(Team myTeam, String enemyTeam) {
+        frame = new JFrame();
+        this.enemyTeam = enemyTeam;
+        this.myTeam = myTeam;
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         designLayout();
 
     }
@@ -101,7 +113,7 @@ public class AddPlayers implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: adds player as specified by user
-    private void addPlayer() {
+    public void addPlayer() {
         Players p = null;
 
         if (playerType == 0) {
@@ -114,9 +126,9 @@ public class AddPlayers implements ActionListener {
             p = new OppositeHitter(playerNum, 1);
         }
 
-        rosterPlayers.add(p);
+        myTeam.addPlayer(p);
         textArea.setText("\nYou have added player " + p.getPlayingPosition() + " " + playerNum
-                + "\nto your team. \nYou now have " + rosterPlayers.size() + " players on your team.");
+                + "\nto your team. \nYou now have " + myTeam.getRoster().size() + " players on your team.");
 
     }
 
@@ -130,13 +142,13 @@ public class AddPlayers implements ActionListener {
             playerType = comboBox.getSelectedIndex();
         } else if (e.getSource() == add) {
             if (inputAll()) {
-                addPlayer();
+                textArea.setText(myTeam.createPlayer(playerType, playerNum));
                 playerType = -1;
                 playerNum = -1;
             }
         } else if (e.getSource() == done) {
             //frame.setVisible(false);
-            new GameAppGraphics(startingPlayers, rosterPlayers, enemyTeam);
+            new GameAppGraphics(myTeam, enemyTeam);
         } else if (e.getSource() == num) {
             playerNum = parseInt(num.getText().substring("Player Number: ".length(), num.getText().length()));
         }

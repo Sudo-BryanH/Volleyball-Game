@@ -457,5 +457,10 @@ public class EnemyTeam implements Team {
 
     }
 
+    @Override
+    public String createPlayer(int playerType, int playerNum) {
+        return null;
+    }
+
 
 }

@@ -424,7 +424,28 @@ public class MyTeam implements Team {
 
     }
 
+    // MODIFIES; this
+    // EFFECTS: creates a player, then adds it to this
+    @Override
+    public String createPlayer(int playerType, int playerNum) {
+        Players p = null;
 
+        if (playerType == 0) {
+            p = new Setters(playerNum, 1);
+        } else if (playerType == 1) {
+            p = new MiddleBlockers(playerNum, 1);
+        } else if (playerType == 2) {
+            p = new OutsideHitter(playerNum, 1);
+        } else if (playerType == 3) {
+            p = new OppositeHitter(playerNum, 1);
+        }
+
+        addPlayer(p);
+        return "\nYou have added player " + p.getPlayingPosition() + " " + playerNum
+                + "\nto your team. \nYou now have " + getRoster().size() + " players on your team.";
+
+
+    }
 
 
     // REQUIRES: a player number of a player already in the starters list

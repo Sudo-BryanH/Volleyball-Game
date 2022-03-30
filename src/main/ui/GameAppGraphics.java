@@ -51,8 +51,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    public GameAppGraphics(List<Players> starters, List<Players> roster, String enemyTeam) {
-        setUp(starters, roster, enemyTeam);
+    public GameAppGraphics(Team myTeam, String enemyTeam) {
+        setUp(myTeam, enemyTeam);
         ball = new Ball();
         game.decBall(ball);
         game.setGameState("N", "N");
@@ -143,7 +143,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     // MODIFIES: this, MyTeam, EnemyTeam, game
     // EFFECTS: Creates enemies teams and sets up your team and players. Then, decide which team you will be playing
-    public void setUp(List<Players> starters, List<Players> roster, String eteam) {
+    public void setUp(Team myTeam, String eteam) {
 
         if (eteam.equals("Strong Team")) {
             enemyTeamConstructor("Strong team", 2);
@@ -151,7 +151,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
             enemyTeamConstructor("Weak team", 5);
         }
 
-        myTeam = myTeamConstructor(starters, roster);
+        myTeam.serveReceivePos();
 
         game = new Game(myTeam, enemyTeam);
         game.getMyTeam().serveReceivePos();
@@ -192,7 +192,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
-    // MODIFIES: this
+/*    // MODIFIES: this
     // EFFECTS: constructs my team
     private Team myTeamConstructor(List<Players> starters, List<Players> roster) {
         String name = "My Team";
@@ -210,7 +210,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         return m; // May cause errors with subtypes
 
-    }
+    }*/
 
     // MODIFIES: this
     // EFFECTS: changes instruction text to message in color

@@ -489,6 +489,27 @@ public class MyTeamTest {
 
     }
 
+    @Test
+    public void testCreatePlayer() {
+
+        assertEquals("\nYou have added player Setter " + 12
+                + "\nto your team. \nYou now have " + 9 + " players on your team.",
+                testTeam.createPlayer(0, 12));
+
+        assertEquals("\nYou have added player Middle Blocker " + 14
+                        + "\nto your team. \nYou now have " + 10 + " players on your team.",
+                testTeam.createPlayer(1, 14));
+
+        assertEquals("\nYou have added player Outside Hitter " + 15
+                        + "\nto your team. \nYou now have " + 11 + " players on your team.",
+                testTeam.createPlayer(2, 15));
+
+        assertEquals("\nYou have added player Opposite Hitter " + 16
+                        + "\nto your team. \nYou now have " + 12 + " players on your team.",
+                testTeam.createPlayer(3, 16));
+
+    }
+
 
 }
 
