@@ -99,8 +99,8 @@ The previous game has loaded with a score of: My Team| 1| |1 |Weak team
 Wed Mar 30 19:09:53 PDT 2022
 Game saved with the score: My Team| 2| |1 |Weak team
 
-## Phase 4 Task 2 UML Diagram and Reflection
-![](projectUML.png)
+## Phase 4 Task 3 UML Diagram and Reflection
+![](UML_Design_Diagram.png)
 
 One improvement I would have made to the design of the classes is to centralize all aspects of 
 the logic of the game from the GameAppGraphics class to the Game class. While I have managed to refactor most of the code 
