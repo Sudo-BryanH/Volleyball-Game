@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ import static java.lang.Integer.parseInt;
 public class DeclarePlayers implements ActionListener {
 
     JFrame frame;
-    Game game;
+    Team myTeam;
     JButton done = new JButton("Continue");
     JTextArea textArea;
     JButton weakTeam;
@@ -55,23 +53,13 @@ public class DeclarePlayers implements ActionListener {
 
     }*/
 
-    // MODIFIES: this
-    // EFFECTS: adds players to players list
-    public void createPlayers() {
-        players.add(setter);
-        players.add(middle1);
-        players.add(outside1);
-        players.add(opposite);
-        players.add(middle2);
-        players.add(outside2);
-    }
+
 
     // MODIFIES: this
     // EFFECTS: constructs a declareplayer object
     public DeclarePlayers() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        createPlayers();
         designLayout();
 
     }
@@ -224,14 +212,14 @@ public class DeclarePlayers implements ActionListener {
 
     private void donePressed() {
         if (allInput()) {
-            Team myTeam = createTeam();
+            createTeam();
             frame.setVisible(false);
             new AddPlayers(myTeam, enemyTeam);
         }
     }
 
     // EFFECTS: creates a team
-    private Team createTeam() {
+    private void createTeam() {
         setter.setRotation(1);
         middle1.setRotation(2);
         outside1.setRotation(3);
@@ -239,9 +227,8 @@ public class DeclarePlayers implements ActionListener {
         middle2.setRotation(5);
         outside2.setRotation(6);
 
-        Team myTeam = new MyTeam("My Team", setter, middle1, middle2, outside1, outside2, opposite);
+        myTeam = new MyTeam("My Team", setter, middle1, middle2, outside1, outside2, opposite);
 
-        return myTeam;
     }
 
     private void enemyButton(String team) {

@@ -6,15 +6,11 @@ import model.Players;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 // Renders the court where the game occurs
 public class CourtRenderer extends JPanel {
 
-
     Game game;
-
 
     static int P_TRANS = -15;
     static int B_TRANS = -25;

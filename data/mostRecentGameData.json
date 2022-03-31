@@ -46,54 +46,66 @@
             "side": 1,
             "rotation": 3,
             "playingPosition": "Setter",
-            "playerNum": 10
+            "playerNum": 1
         },
         {
             "side": 1,
             "rotation": 4,
             "playingPosition": "Middle Blocker",
-            "playerNum": 5
+            "playerNum": 2
         },
         {
             "side": 1,
             "rotation": 5,
             "playingPosition": "Outside Hitter",
-            "playerNum": 3
+            "playerNum": 5
         },
         {
             "side": 1,
             "rotation": 6,
             "playingPosition": "Opposite Hitter",
-            "playerNum": 1
+            "playerNum": 4
         },
         {
             "side": 1,
             "rotation": 1,
             "playingPosition": "Middle Blocker",
-            "playerNum": 12
+            "playerNum": 3
         },
         {
             "side": 1,
             "rotation": 2,
             "playingPosition": "Outside Hitter",
-            "playerNum": 8
+            "playerNum": 6
         },
         {
             "side": 1,
             "rotation": 0,
             "playingPosition": "Setter",
-            "playerNum": 3
+            "playerNum": 9
+        },
+        {
+            "side": 1,
+            "rotation": 0,
+            "playingPosition": "Setter",
+            "playerNum": 10
         },
         {
             "side": 1,
             "rotation": 0,
             "playingPosition": "Middle Blocker",
-            "playerNum": 13
+            "playerNum": 8
         },
         {
             "side": 1,
             "rotation": 0,
             "playingPosition": "Outside Hitter",
+            "playerNum": 13
+        },
+        {
+            "side": 1,
+            "rotation": 0,
+            "playingPosition": "Opposite Hitter",
             "playerNum": 16
         }
     ],

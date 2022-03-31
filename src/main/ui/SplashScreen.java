@@ -10,7 +10,7 @@ public class SplashScreen extends JFrame implements ActionListener {
     JFrame frame = new JFrame();
     JButton loadSaved = new JButton("Load the previous saved game");
     JButton loadNew = new JButton("Start a new game");
-    Boolean load;
+
 
     // EFFECTS: constructs a splash screen
     public SplashScreen() {

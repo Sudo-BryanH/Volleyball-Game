@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 public class MiddleBlockers extends Players {
 
-
-
-
     private static final Point SPIKELEFT1 = new Point(10, 5);
     private static final Point SPIKERIGHT1 = new Point(2, 5);
     private static final Point SPIKEMID1 = new Point(6, 6);

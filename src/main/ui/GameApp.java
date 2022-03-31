@@ -43,7 +43,6 @@ public class GameApp extends JFrame {
     EnemyTeam enemyTeam;
     Ball ball = new Ball();
     int turn;
-    CourtRenderer court;
 
     JsonWriter jsonWriter;
     JsonReader jsonReader;

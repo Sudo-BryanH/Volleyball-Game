@@ -26,7 +26,6 @@ public class Game {
     private String gameState1; // D for defence, SN for startNoServe, A for set and attack, S for serve
     private String gameState0;
     private Players attackPlayer;
-    private int servePos;
     private Point attackPoint;
     private Players selectDefensive;
     JsonWriter jsonWriter;
@@ -45,7 +44,8 @@ public class Game {
         this.enemyTeam = enemyTeam;
         this.gameState1 = null;
         this.gameState0 = null;
-        this.servePos = 0;
+        ball = new Ball();
+        decBall(ball);
         gameData = new GameData(this);
         jsonWriter = new JsonWriter(JSON_STORE);
 
@@ -55,6 +55,8 @@ public class Game {
         this.turn = 0;
         this.gameState1 = "N";
         this.gameState0 = "N";
+        ball = new Ball();
+        decBall(ball);
         instantiateGame();
 
 

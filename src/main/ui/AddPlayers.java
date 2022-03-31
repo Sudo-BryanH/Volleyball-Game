@@ -16,7 +16,6 @@ import static java.lang.Integer.parseInt;
 public class AddPlayers implements ActionListener {
 
     JFrame frame;
-    Game game;
     JButton add = new JButton("Add");
     JButton done = new JButton("Continue");
     JTextArea textArea;
@@ -24,28 +23,12 @@ public class AddPlayers implements ActionListener {
 
     int playerType = -1;
     int playerNum = -1;
-    boolean canAdd;
     String enemyTeam;
     Team myTeam;
 
     String[] playerTypes = {"Setter", "Middle Blocker", "Outside Hitter", "Opposite Hitter"};
     JComboBox comboBox = new JComboBox(playerTypes);
-    List<Players> startingPlayers;
-    List<Players> rosterPlayers;
 
-    // EFFECTS: constructs AddPlayers ui
-    public AddPlayers(List<Players> players, String enemyTeam) {
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        startingPlayers = players;
-        this.enemyTeam = enemyTeam;
-        this.rosterPlayers = new ArrayList<>();
-        for (Players p : players) {
-            rosterPlayers.add(p);
-        }
-        designLayout();
-
-    }
 
 
     // EFFECTS: constructs AddPlayer UI

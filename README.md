@@ -70,7 +70,40 @@ The following rules will be the ones to apply: </br> Note: This is a console gam
 - As a user, I should be able to retrieve and continue playing saved matches.
   - This includes the score, rotations of the teams, players etc.
 
-### Phase 4 Event Logging Examples:
+## Phase 4 Task 2 Event Logging Examples:
 
-![](../../../Desktop/Screen Shot 2022-03-30 at 9.41.45 AM.png)
-![](../../../Desktop/Screen Shot 2022-03-30 at 9.46.56 AM.png)
+#### When starting a new game, when the user quits the game, they should expect to see the extra players they've added and that they saved the game at the end
+Wed Mar 30 19:06:37 PDT 2022
+A new player Setter #9 was added to your team
+
+Wed Mar 30 19:06:41 PDT 2022
+A new player Setter #10 was added to your team
+
+Wed Mar 30 19:06:50 PDT 2022
+A new player Middle Blocker #8 was added to your team
+
+Wed Mar 30 19:07:02 PDT 2022
+A new player Outside Hitter #13 was added to your team
+
+Wed Mar 30 19:07:07 PDT 2022
+A new player Opposite Hitter #16 was added to your team
+
+Wed Mar 30 19:07:38 PDT 2022
+Game saved with the score: My Team| 1| |1 |Weak team
+
+
+#### When playing an old game, the user should only expect to see that they reloaded an old game and saved the game at the end
+Wed Mar 30 19:09:42 PDT 2022
+The previous game has loaded with a score of: My Team| 1| |1 |Weak team
+
+Wed Mar 30 19:09:53 PDT 2022
+Game saved with the score: My Team| 2| |1 |Weak team
+
+## Phase 4 Task 2 UML Diagram and Reflection
+![](projectUML.png)
+
+One improvement I would have made to the design of the classes is to centralize all aspects of 
+the logic of the game from the GameAppGraphics class to the Game class. While I have managed to refactor most of the code 
+to do this, there are some smaller functionality like instantiating an enemy team that could have 
+been put into the Game class to further reduce coupling and cohesion. 
+

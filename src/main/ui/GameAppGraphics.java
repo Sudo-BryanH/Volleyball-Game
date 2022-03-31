@@ -17,21 +17,11 @@ import java.util.List;
 public class GameAppGraphics extends JFrame implements MouseListener, ActionListener {
 
 
-    CourtRenderer court;
-    Game game;
+    private CourtRenderer court;
+    private Game game;
+    private EnemyTeam enemyTeam;
+    private Timer timer;
 
-    Team myTeam;
-    EnemyTeam enemyTeam;
-    Ball ball;
-
-    Timer timer;
-
-
-
-    JsonWriter jsonWriter;
-    JsonReader jsonReader;
-    GameData gameData;
-    private static final String JSON_STORE = "./data/mostRecentGameData.json";
     private static final int INTERVAL = 17;
     private JButton nextButton;
     private JTextArea instructions;
@@ -52,8 +42,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     public GameAppGraphics() {
 
         instantiateGame();
-        ball = new Ball();
-        game.decBall(ball);
         game.setGameState("N", "N");
         courtIndexNum = -1;
         benchIndexNum = -1;
@@ -64,8 +52,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     public GameAppGraphics(Team myTeam, String enemyTeam) {
         setUp(myTeam, enemyTeam);
-        ball = new Ball();
-        game.decBall(ball);
         game.setGameState("N", "N");
         courtIndexNum = -1;
         benchIndexNum = -1;
@@ -362,8 +348,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // EFFECTS: changes the state of the game to "S" "SN" and serves the ball
     private void afterEE(int chance) {
         game.setGameState("S", "SN");
-        ball.directX(1);
-        ball.directY(0);
+        game.getBall().directX(1);
+        game.getBall().directY(0);
         sleepThread(2);
         game.makeServe(chance);
     }
@@ -372,8 +358,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     // EFFECTS: changes the state of the game to "SN" "S" and serves the ball
     private void afterFF(int chance) {
         game.setGameState("SN", "S");
-        ball.directX(11);
-        ball.directY(24);
+        game.getBall().directX(11);
+        game.getBall().directY(24);
         sleepThread(2);
         game.makeServe(chance);
     }
