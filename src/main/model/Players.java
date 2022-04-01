@@ -213,10 +213,14 @@ public abstract class Players {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves player immediately to x
     public void directMoveX(int x) {
         this.posX = x * SCALE;
     }
 
+    // MODIFIES: players
+    // EFFECTS: moves player immediately to y
     public void directMoveY(int y) {
         this.posY = y * SCALE + Y_TRANS;
     }
@@ -227,6 +231,8 @@ public abstract class Players {
 
     public abstract ArrayList<Point> getAttackPoints(int side);
 
+    // MODIFIES: this
+    // EFFECTS: declare this player's number
     public void declareNum(int num) {
         playerNum = num;
     }

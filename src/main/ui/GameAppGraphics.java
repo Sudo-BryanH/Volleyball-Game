@@ -38,7 +38,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     private JScrollPane allPlayersList;
 
 
-
+    // EFFECTS: constructs a game UI
     public GameAppGraphics() {
 
         instantiateGame();
@@ -50,6 +50,7 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+    // EFFECTS: constructs a game UI
     public GameAppGraphics(Team myTeam, String enemyTeam) {
         setUp(myTeam, enemyTeam);
         game.setGameState("N", "N");
@@ -59,6 +60,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         addTimer();
     }
 
+    // MODIFIES; this
+    // EFFECTS: designs the visual aspects of the game
     private void myGuI() {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -97,8 +100,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
         String[][] arrayData = data.toArray(new String[0][]);
 
-        // Column Names
-
         // Initializing the JTable
         JTable playersTable = new JTable(arrayData, columnNames);
         playersTable.setBounds(30, 40, 200, 300);
@@ -108,7 +109,6 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         allPlayersList = new JScrollPane(playersTable);
         allPlayersList.setPreferredSize(new Dimension(360, 150));
 
-        // Frame Visible = true
         allPlayersList.setVisible(true);
         playersTable.setVisible(true);
 
@@ -184,6 +184,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }*/
 
+    // MODIFIES: this
+    // EFFECTS: creates a next button
     private void nextButton() {
         nextButton = new JButton("Next");
         nextButton.setPreferredSize(new Dimension(360, 30));
@@ -192,6 +194,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         nextButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a changePlayerButton
     private void changePlayerButton() {
         changePlayerButton = new JButton("Switch Players");
         changePlayerButton.setPreferredSize(new Dimension(180, 30));
@@ -200,6 +204,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         changePlayerButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a quit&save button
     private void quitButton() {
         quitButton = new JButton("Quit & Save");
         quitButton.setPreferredSize(new Dimension(180, 30));
@@ -208,6 +214,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         quitButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates theright side of the game
     private void rightSidePanel() {
         rightSidePanel = new JPanel();
         rightSidePanel.setPreferredSize(new Dimension(359, 879));
@@ -228,9 +236,10 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
     }
 
 
+
+    // EFFECTS: declares a new game
     private void instantiateGame() {
         game = new Game();
-
 
     }
 
@@ -480,6 +489,8 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
         timer.start();
     }
 
+    // MODIFIES: this
+    // EFFECTS: determines what to do when mouse is clicked
     @Override
     public void mouseClicked(MouseEvent e) {
         printer("You've clicked at (" + e.getX() + " ," + e.getY() + ")", new Color(21, 71, 52));
@@ -511,6 +522,9 @@ public class GameAppGraphics extends JFrame implements MouseListener, ActionList
 
     }
 
+
+    // MODIFIES: this, game
+    // EFFECTS: Changes the state of the game or quits when an action is detected
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quitButton) {

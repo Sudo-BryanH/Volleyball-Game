@@ -83,7 +83,7 @@ public class GameTest {
         testGame = new Game(testMyTeam, testETeam);
 
         mikasa = new Ball();
-        testGame.decBall(mikasa);
+        testGame.setBall(mikasa);
 
         testGame2 = new Game();
     }
@@ -274,7 +274,7 @@ public class GameTest {
 
     @Test
     public void testMakeServe() {
-        testGame.decBall(mikasa);
+        testGame.setBall(mikasa);
         testGame.setGameState("S", "A");
         testGame.makeServe(0);
         assertEquals(90, mikasa.getMoveToXPos());

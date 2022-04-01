@@ -240,6 +240,8 @@ public abstract class Team {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new player as specified and adds it to roster
     public abstract String createPlayer(int playerType, int playerNum);
 
 

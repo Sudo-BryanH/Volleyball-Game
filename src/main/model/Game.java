@@ -45,23 +45,26 @@ public class Game {
         this.gameState1 = null;
         this.gameState0 = null;
         ball = new Ball();
-        decBall(ball);
+        setBall(ball);
         gameData = new GameData(this);
         jsonWriter = new JsonWriter(JSON_STORE);
 
     }
 
+    // EFFECTS: Constructs a game, then instantiates it with old data
     public Game() {
         this.turn = 0;
         this.gameState1 = "N";
         this.gameState0 = "N";
         ball = new Ball();
-        decBall(ball);
+        setBall(ball);
         instantiateGame();
 
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Rebuilds the game from old data
     public void instantiateGame() {
         try {
             jsonReader = new JsonReader(JSON_STORE, this);
@@ -96,7 +99,7 @@ public class Game {
         return score;
     }
 
-    public void decBall(Ball ball) {
+    public void setBall(Ball ball) {
         this.ball = ball;
     }
 
