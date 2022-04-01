@@ -105,5 +105,9 @@ Game saved with the score: My Team| 2| |1 |Weak team
 One improvement I would have made to the design of the classes is to centralize all aspects of 
 the logic of the game from the GameAppGraphics class to the Game class. While I have managed to refactor most of the code 
 to do this, there are some smaller functionality like instantiating an enemy team that could have 
-been put into the Game class to further reduce coupling and cohesion. 
+been put into the Game class to further reduce coupling and cohesion.
+Another thing I would have done better was to spearate the functionality in the DeclarePlayers, AddPlayers, 
+and SplashScreen into ui classes in the ui package and model classes in the model package. While the data that is created 
+stored in the current classes isn't a lot, by the SRP, each class should be responsible for a single job and thus it
+would be better to separate the input and output from the logical processing. 
 
