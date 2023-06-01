@@ -1,6 +1,7 @@
 
 # Volleyball Game App
 <img src="https://github.com/Sudo-BryanH/Sudo-BryanH/blob/main/Volleyball%20Game%20Demo.gif" width="240" height="300"/>
+
 ## Introduction
 
 I am a huge fan of volleyball, even if I don't play on any serious level myself. 
